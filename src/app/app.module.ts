@@ -1,4 +1,4 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA, Component } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { Routes, RouterModule } from '@angular/router';
@@ -27,7 +27,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 
 
 const routes: Routes = [
-  { path: '', pathMatch: 'full', redirectTo: 'firstpage' },
+  { path: '', pathMatch: 'full', redirectTo: 'landing' },
+  { path: 'landing', component: LandingComponent },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignUpComponent }
 ];
