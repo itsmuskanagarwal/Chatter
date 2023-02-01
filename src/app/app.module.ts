@@ -1,4 +1,4 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA, Component } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { Routes, RouterModule } from '@angular/router';
@@ -24,12 +24,17 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { DatePipe } from '@angular/common';
 import { MatDividerModule } from '@angular/material/divider';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { AboutComponent } from './about/about.component';
+import { ContactComponent } from './contact/contact.component';
+import { GroupComponent } from './group/group.component';
+import { HeaderComponent } from './header/header.component';
 
 
 const routes: Routes = [
-  { path: '', pathMatch: 'full', redirectTo: 'firstpage' },
+  { path: '', pathMatch: 'full', redirectTo: 'landing' },
   { path: 'login', component: LoginComponent },
-  { path: 'signup', component: SignUpComponent }
+  { path: 'signup', component: SignUpComponent },
+  { path: 'landing', component: LandingComponent}
 ];
 
 @NgModule({
@@ -39,7 +44,11 @@ const routes: Routes = [
     HomeComponent,
     LandingComponent,
     SignUpComponent,
-    ProfileComponent
+    ProfileComponent,
+    AboutComponent,
+    ContactComponent,
+    GroupComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
