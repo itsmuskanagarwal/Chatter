@@ -48,7 +48,8 @@ const routes: Routes = [
     AboutComponent,
     ContactComponent,
     GroupComponent,
-    HeaderComponent
+    HeaderComponent,
+  
   ],
   imports: [
     BrowserModule,

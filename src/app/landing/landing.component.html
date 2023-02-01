@@ -1,33 +1,4 @@
 <body data-spy="scroll" data-target=".navbar" data-offset="40" id="home">
-<nav class="navbar navbar-expand-lg navbar-light fixed-top" data-spy="affix" data-offset-top="0">
-    <div class="container">
-        <a class="navbar-brand" routerLink="landing"><img src="logo.png" alt=""></a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav ml-auto align-items-center">
-                <li class="nav-item">
-                    <a class="nav-link" routerLink="landing">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" routerLink="about">About</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" routerLink="group">Group</a>
-                </li>                   
-                <li class="nav-item">
-                    <a class="nav-link" routerLink="contact">Contact</a>
-                </li>
-                <li class="nav-item">
-                    <a class="- btn btn-primary rounded ml-4" routerLink="signin">Register</a>
-                </li>
-            </ul>
-        </div>
-    </div>          
-</nav>
-<!-- End of page navibation -->
 
 <!-- Page Header -->
 <header class="header" id="home">
@@ -38,12 +9,12 @@
             <p>The Chat Application</p>
 
             <div class="buttons pt-3">
-                <button class="btn btn-primary rounded">LogIn</button>
-                <button class="btn btn-dark rounded">Register</button>
+                <button class="btn btn-primary rounded"  [routerLink]="'/login'">LogIn</button>
+                <button class="btn btn-dark rounded" [routerLink]="'/signup'">Register</button>
             </div>   
         </div>              
         <div class="img-holder">
-            <img src="man.svg" alt="">
+            <img src="https://img.freepik.com/free-vector/hipster-people-talking-using-computers-co-working_74855-5267.jpg?w=900&t=st=1675258716~exp=1675259316~hmac=ab79e8be97cdcc77a2566ec01f19ba3c849b1d21cb273896ae9538ed15392ecd" alt="">
         </div>      
     </div>  
     </header>
