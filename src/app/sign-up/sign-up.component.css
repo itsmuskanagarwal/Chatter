@@ -1,6 +1,5 @@
 .btn-block
 {
-  background-image: linear-gradient(-180deg, #37AEE2 0%, #1E96C8 100%);
   border-radius: .5rem;
   box-sizing: border-box;
   color: #FFFFFF;
@@ -15,5 +14,16 @@
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
+  background-color: #ff7a57;
+  border-color: #ff7a57;
+  text-align:center;
 
+
+}
+
+
+.btn-block:hover {
+  color: #fff;
+  background-color: #ff5c31;
+  border-color: #ff5224;
 }

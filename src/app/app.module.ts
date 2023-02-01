@@ -31,11 +31,17 @@ import { HeaderComponent } from './header/header.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
+
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'landing' },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignUpComponent },
-  { path: 'landing', component: LandingComponent}
+  { path: 'landing', component: LandingComponent},
+  { path: 'group', component: GroupComponent},
+  { path: 'contact', component: ContactComponent},
+  { path: 'about', component: AboutComponent},
+  { path: 'profile', component: ProfileComponent},
+  { path: 'home', component: HomeComponent}
 ];
 
 @NgModule({
@@ -49,7 +55,7 @@ const routes: Routes = [
     AboutComponent,
     ContactComponent,
     GroupComponent,
-    HeaderComponent,
+    HeaderComponent
   
   ],
   imports: [
