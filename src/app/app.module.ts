@@ -29,7 +29,8 @@ import { ContactComponent } from './contact/contact.component';
 import { GroupComponent } from './group/group.component';
 import { HeaderComponent } from './header/header.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+import { ToastrModule } from 'ngx-toastr';
 
 
 const routes: Routes = [
@@ -55,8 +56,7 @@ const routes: Routes = [
     AboutComponent,
     ContactComponent,
     GroupComponent,
-    HeaderComponent
-  
+    HeaderComponent,
   ],
   imports: [
     BrowserModule,
@@ -71,6 +71,8 @@ const routes: Routes = [
     FormsModule,
     MatMenuModule,
     MatListModule,
+    MatSnackBarModule,
+    ToastrModule,
     MatInputModule,
     MatFormFieldModule,
     MatAutocompleteModule,
