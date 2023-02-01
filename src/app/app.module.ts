@@ -28,6 +28,7 @@ import { AboutComponent } from './about/about.component';
 import { ContactComponent } from './contact/contact.component';
 import { GroupComponent } from './group/group.component';
 import { HeaderComponent } from './header/header.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 const routes: Routes = [
@@ -70,7 +71,8 @@ const routes: Routes = [
     MatDividerModule,
     RouterModule.forRoot(routes),
     FlexLayoutModule,
-    MatCardModule
+    MatCardModule,
+    NgbModule
   ],
   exports: [RouterModule],
   providers: [],
