@@ -484,7 +484,7 @@
   }
   
   .img-fluid {
-    max-width: 50%;
+    max-width: 100%;
     height: auto;
   }
   
@@ -493,7 +493,7 @@
     background-color: #fff;
     border: 1px solid #dee2e6;
     border-radius: 0.25rem;
-    max-width: 50%;
+    max-width: 100%;
     height: auto;
   }
   
@@ -4654,7 +4654,7 @@
     font-size: 1.25rem;
     line-height: 1;
     background-color: transparent;
-    border: 1px solid transparent;
+    border: 1px solid #1d2124;
     border-radius: 0.25rem;
   }
   
