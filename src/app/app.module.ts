@@ -25,8 +25,9 @@ import { DatePipe } from '@angular/common';
 import { MatDividerModule } from '@angular/material/divider';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
+
 const routes: Routes = [
-  { path: '', pathMatch: 'full', redirectTo: 'login' },
+  { path: '', pathMatch: 'full', redirectTo: 'firstpage' },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignUpComponent }
 ];
