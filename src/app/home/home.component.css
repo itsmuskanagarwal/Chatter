@@ -6,35 +6,45 @@
     font-family:Arial;
   }
   #container{
-    width:750px;
-    height:800px;
+    max-width: 1080px;
+    max-height: 600px;
+    min-width: auto;
+    min-height: auto;
     background:#eff3f7;
-    margin:0 auto;
+    margin-left:auto;
+    margin-right: auto;
+    margin-top: 100px;
+    margin-bottom: 20px;
     font-size:0;
     border-radius:5px;
-    overflow:hidden;
+    border: 2px #000000;
+    overflow: hidden;
   }
   aside{
-    width:260px;
-    height:800px;
+    max-width:260px;
+    max-height:auto;
+    min-width: auto;
+    min-height: auto;
     background-color:#3b3e49;
     display:inline-block;
     font-size:15px;
-    vertical-align:top;
+    overflow: hidden;
   }
   main{
-    width:490px;
-    height:800px;
+    max-width:800px;
+    max-height:400px;
+    min-width: auto;
+    min-height: auto;
     display:inline-block;
     font-size:15px;
     vertical-align:top;
   }
-  
+
   aside header{
     padding:30px 20px;
   }
   aside input{
-    width:100%;
+    width:auto;
     height:50px;
     line-height:50px;
     padding:0 50px 0 20px;
@@ -42,7 +52,7 @@
     border:none;
     border-radius:3px;
     color:#fff;
-    background-image:url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/ico_search.png);
+    background-image:url(/assets/ico_search.png);
     background-repeat:no-repeat;
     background-position:170px;
     background-size:40px;
@@ -87,7 +97,7 @@
     color:#7e818a;
     font-weight:normal;
   }
-  
+
   .status{
     width:8px;
     height:8px;
@@ -106,8 +116,10 @@
     margin-right:0;
     margin-left:7px;
   }
-  
+
   main header{
+    top: 0;
+    position: sticky;
     height:110px;
     padding:30px 20px 30px 40px;
   }
@@ -135,7 +147,7 @@
     font-weight:normal;
     color:#7e818a;
   }
-  
+
   #chat{
     padding-left:0;
     margin:0;
@@ -191,15 +203,17 @@
       border-color: transparent transparent #aeaeae transparent;
       margin-left:375px;
   }
-  
+
   main footer{
+    position: sticky;
+    bottom: 0;
     height:155px;
     padding:20px 30px 10px 20px;
   }
   main footer textarea{
     resize:none;
-    border:none;
-    display:block;
+    border: 2px;
+    display:inline-block;
     width:100%;
     height:80px;
     border-radius:3px;
@@ -208,6 +222,7 @@
     margin-bottom:13px;
   }
   main footer textarea::placeholder{
+
     color:#ddd;
   }
   main footer img{

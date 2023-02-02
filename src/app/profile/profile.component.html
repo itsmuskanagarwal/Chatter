@@ -48,3 +48,41 @@
   </mat-card>
 </div>
  -->
+ <div
+ class="form-container mat-elevation-z5 text-center"
+>
+ <h1>User Profile</h1>
+ <div class="profile-image">
+   <img
+     width="120"
+     height="120"
+     src="/assets/profile-img.jpg"
+   />
+   <button mat-mini-fab (click)="inputField.click()">
+     <mat-icon>edit</mat-icon>
+   </button>
+ </div>
+ <input #inputField type="file" hidden />
+ <form class="margin-top">
+   <div class="row">
+    <mat-form-field class="example-full-width margin-top">
+      <input matInput placeholder="Name" class="input" type="text">
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="Contact" class="input" type="tel">
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="Email Address" class="input" type="email">
+    </mat-form-field>
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="Display Name" class="input" type="text">
+    </mat-form-field>
+   <div class="margin-top">
+    <a href="#">Change Password</a>
+   </div>
+
+   <button type="submit" class="btn-block margin-top" mat-stroked-button>
+     Save
+   </button>
+  </div>
+ </form>
