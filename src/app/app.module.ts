@@ -25,7 +25,6 @@ import { DatePipe } from '@angular/common';
 import { MatDividerModule } from '@angular/material/divider';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { AboutComponent } from './about/about.component';
-import { ContactComponent } from './contact/contact.component';
 import { GroupComponent } from './group/group.component';
 import { HeaderComponent } from './header/header.component';
 
@@ -37,7 +36,6 @@ const routes: Routes = [
   { path: 'signup', component: SignUpComponent },
   { path: 'landing', component: LandingComponent},
   { path: 'group', component: GroupComponent},
-  { path: 'contact', component: ContactComponent},
   { path: 'about', component: AboutComponent},
   { path: 'profile', component: ProfileComponent},
   { path: 'home', component: HomeComponent}
@@ -52,7 +50,6 @@ const routes: Routes = [
     SignUpComponent,
     ProfileComponent,
     AboutComponent,
-    ContactComponent,
     GroupComponent,
     HeaderComponent
   
