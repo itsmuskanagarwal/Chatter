@@ -27,6 +27,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { AboutComponent } from './about/about.component';
 import { GroupComponent } from './group/group.component';
 import { HeaderComponent } from './header/header.component';
+import { ContactComponent } from './contact/contact.component';
 
 
 
@@ -38,6 +39,7 @@ const routes: Routes = [
   { path: 'group', component: GroupComponent},
   { path: 'about', component: AboutComponent},
   { path: 'profile', component: ProfileComponent},
+  { path: 'contact', component: ContactComponent},
   { path: 'home', component: HomeComponent}
 ];
 
@@ -51,7 +53,8 @@ const routes: Routes = [
     ProfileComponent,
     AboutComponent,
     GroupComponent,
-    HeaderComponent
+    HeaderComponent,
+    ContactComponent
   
   ],
   imports: [
