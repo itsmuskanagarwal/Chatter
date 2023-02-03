@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Contact } from '../contact';
+import { CONTACT } from '../mockup-contacts';
 
 @Component({
   selector: 'app-home',
@@ -7,4 +9,6 @@ import { Component } from '@angular/core';
 })
 export class HomeComponent {
   usernameinhome:string="";
+
+  Contacts = CONTACT;
 }
