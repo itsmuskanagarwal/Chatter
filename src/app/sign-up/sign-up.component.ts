@@ -21,19 +21,26 @@ export class SignUpComponent implements OnInit {
   constructor(private _snackBar: MatSnackBar, private _router:Router, private service:StorageService) {}
 
   signup(username:any, usercontact:any, useremail:any, userpass:any){
-    this._router.navigate(['login']);
+
+    //console.log(this.userdetail);
+    if(username=="" || userpass==""){
+      this._snackBar.open("Invalid Input","OK",{
+        duration:5000
+      });
+    }else{
     this.userdetail={"name": username,
     "contact": usercontact,
     "email":useremail,
     "password":userpass
   };
     this.service.getUserDetails(this.userdetail);
-    //console.log(this.userdetail);
+    this._router.navigate(['login']);
     this._snackBar.open("Hello "+username+", You are Successfully Registered !!","OK",{
       duration:5000
-    });
+  });
 
   }
+}
   ngOnInit(): void {
 
   }

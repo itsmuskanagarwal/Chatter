@@ -25,7 +25,7 @@ export class LoginComponent {
     if (output == true) {
       this.routes.navigate(['/home']);
     } else {
-      this.msg = 'Invalid username or password';
+      this.msg = 'Invalid username or password. If you are a new user, please register ';
       alert(this.msg);
     }
   }
