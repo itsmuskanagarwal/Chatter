@@ -5,21 +5,16 @@ import { Injectable } from '@angular/core';
 })
 export class StorageService {
 
-  public userdetail:{
-    "name":"",
-    "contact": "",
-    "email":"",
-    "password":""
-  } | undefined
+  public userdetail: {
+    "name": string;
+    "contact": string;
+    "email": string;
+    "password": string;
+  }={"name":"", "contact":"", "email":"", "password":""}
 
-  public getUserDetails(userdetail:{"name": "","contact": "","email":"","password":""}){
+  public getUserDetails(userdetail:{"name":string, "contact":string, "email":string, "password":string}){
       this.userdetail=userdetail;
-
-  }
-
-  public setUserDetails(){
-    console.log(this.userdetail);
-      return this.userdetail;
+      console.log(this.userdetail);
   }
 
 }

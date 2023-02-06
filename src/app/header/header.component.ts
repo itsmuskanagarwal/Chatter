@@ -7,14 +7,19 @@ import { StorageService } from '../storage.service';
   styleUrls: ['./header.component.css']
 })
 
-export class HeaderComponent {
+export class HeaderComponent{
 
-  constructor(private service_header:StorageService){
+    usernameinheader:any;
 
+    constructor(private service_header:StorageService){
+    }
+
+    ngDoCheck(){
+      if(this.service_header.userdetail.name!=""){
+        console.log(this.service_header.userdetail.name);
+        this.usernameinheader='Welcome '+this.service_header.userdetail.name;
+      }
   }
-
-  userdetailsinheader=this.service_header.setUserDetails()?.name;
-  usernameinheader=this.userdetailsinheader;
 
   isCollapsed = true;
   toggleCollapsed(): void {

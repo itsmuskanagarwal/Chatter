@@ -2,36 +2,37 @@
  class="form-container mat-elevation-z5 text-center"
 >
  <h1>User Profile</h1>
+
  <div class="profile-image">
    <img
      width="120"
      height="120"
      src="/assets/profile-img.jpg"
    />
-   <button mat-mini-fab (click)="inputField.click()">
+   <button mat-mini-fab (click)="inputField.click();profile_name.disabled=false;profile_contact.disabled=false;profile_email.disabled=false;profile_display.disabled=false;">
      <mat-icon>edit</mat-icon>
    </button>
  </div>
- <input #inputField type="file" hidden />
+ <input #inputField type="file" (change)="onSelectFile($event)" hidden/>
+
  <form class="margin-top">
 
-    <mat-form-field class="example-full-width margin-top">
-      <input matInput placeholder="Name" class="input" type="text">
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="Name" class="input" type="text" value={{userdetailsinprofile.name}} disabled #profile_name>
     </mat-form-field>
     <mat-form-field class="example-full-width">
-      <input matInput placeholder="Contact" class="input" type="tel">
+      <input matInput placeholder="Contact" class="input" type="number" value={{userdetailsinprofile.contact}} disabled #profile_contact>
     </mat-form-field>
     <mat-form-field class="example-full-width">
-      <input matInput placeholder="Email Address" class="input" type="email">
+      <input matInput placeholder="Email Address" class="input" type="email" value={{userdetailsinprofile.email}} disabled #profile_email>
     </mat-form-field>
     <mat-form-field class="example-full-width">
-      <input matInput placeholder="Display Name" class="input" type="text">
+      <input matInput placeholder="Display Name" class="input" type="text" value={{userdetailsinprofile.name}} disabled #profile_display>
     </mat-form-field>
-   <div class="margin-top">
-    <a href="#">Change Password</a>
-   </div>
-
-   <button type="submit" class="btn-block margin-top" mat-stroked-button>
+    <button type="submit" class="btn-block" mat-stroked-button>
+      Change Password
+    </button>
+   <button type="submit" class="btn-block margin-top" mat-stroked-button (click)="save(profile_name.value,profile_contact.value,profile_email.value,profile_display.value)">
      Save
    </button>
  </form>

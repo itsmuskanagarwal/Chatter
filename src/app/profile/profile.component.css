@@ -44,6 +44,7 @@
 
 .margin-top {
     margin-top: 16px;
+    margin-bottom: -10px;
 }
 
 .text-center {
@@ -68,8 +69,6 @@
   background-color: #ff7a57;
   border-color: #ff7a57;
   text-align:center;
-
-
 }
 
 
