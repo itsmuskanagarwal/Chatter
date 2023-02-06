@@ -17,7 +17,7 @@ export class HeaderComponent{
     ngDoCheck(){
       if(this.service_header.userdetail.name!=""){
         console.log(this.service_header.userdetail.name);
-        this.usernameinheader='Welcome '+this.service_header.userdetail.name;
+        this.usernameinheader='Welcome '+this.service_header.userProfileDetail.displayname;
       }
   }
 
