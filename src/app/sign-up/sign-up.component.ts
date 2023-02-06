@@ -21,7 +21,7 @@ export class SignUpComponent implements OnInit {
   constructor(private _snackBar: MatSnackBar, private _router:Router, private service:StorageService) {}
 
   signup(username:any, usercontact:any, useremail:any, userpass:any){
-    this._router.navigate(['home']);
+    this._router.navigate(['login']);
     this.userdetail={"name": username,
     "contact": usercontact,
     "email":useremail,
