@@ -1,5 +1,6 @@
 *{
   box-sizing:border-box;
+
 }
 body{
   background-color:#abd9e9;
@@ -7,9 +8,9 @@ body{
 }
 #container{
   max-width: fit-content;
-  max-height: 600px;
+  max-height: 700px;
   min-width: 1440px;
-  min-height: 600px;
+  min-height: 700px;
    background:#eff3f7;
   margin-left:auto;
   margin-right: auto;
@@ -22,9 +23,9 @@ body{
 }
 aside{
   max-width:300px;
-  max-height: 600px;
+  max-height: 700px;
   min-width: auto;
-  min-height: 600px;
+  min-height: 700px;
   background-color:#3b3e49;
   display:inline-block;
   font-size:15px;
@@ -33,9 +34,9 @@ aside{
 
 main{
   max-width:auto;
-  max-height:600px;
+  max-height:700px;
   min-width: 1180px;
-  min-height: auto;
+  min-height: 700px;
   display:inline-block;
   font-size:15px;
   vertical-align:top;
@@ -131,13 +132,16 @@ main header > *{
   display:inline-block;
   vertical-align:top;
 }
-main header img:first-child{
-  border-radius:50%;
-}
+
 main header img:last-child{
   width:24px;
   margin-top:8px;
+  margin-right: 70px;
+  right: 0;
+  position: absolute;
 }
+
+
 main header div{
   margin-left:10px;
   margin-right:145px;
@@ -159,7 +163,7 @@ main header h3{
   top: 0;
   list-style-type:none;
   overflow-y:scroll;
-  height:320px;
+  height:420px;
   border-top:2px solid #fff;
   border-bottom:2px solid #fff;
 }

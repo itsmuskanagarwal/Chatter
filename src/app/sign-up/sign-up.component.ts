@@ -1,6 +1,7 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
+import { StorageService } from '../storage.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -9,20 +10,30 @@ import { Router } from '@angular/router';
 })
 export class SignUpComponent implements OnInit {
 
+  public userdetail!: {
+    "name": string;
+    "contact": string;
+    "email": string;
+    "password": string;
+  };
 
-  @Output() usernamefromsignup=new EventEmitter();
 
-  constructor(private _snackBar: MatSnackBar, private _router:Router) {}
+  constructor(private _snackBar: MatSnackBar, private _router:Router, private service:StorageService) {}
 
-  signup(username:string, usercontact:string, useremail:string, userpass:string){
-    this._router.navigate(['landing']);
-    this.usernamefromsignup.emit(username);
+  signup(username:any, usercontact:any, useremail:any, userpass:any){
+    this._router.navigate(['home']);
+    this.userdetail={"name": username,
+    "contact": usercontact,
+    "email":useremail,
+    "password":userpass
+  };
+    this.service.getUserDetails(this.userdetail);
+    //console.log(this.userdetail);
     this._snackBar.open("Hello "+username+", You are Successfully Registered !!","OK",{
       duration:5000
     });
-  }
 
-  Roles: any = ['Admin', 'Author', 'Reader'];
+  }
   ngOnInit(): void {
 
   }

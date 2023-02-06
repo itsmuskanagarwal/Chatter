@@ -7,7 +7,7 @@ h1 {
   font-family: 'Poppins', sans-serif, 'arial';
   font-weight: 600;
   font-size: 66px;
-  color: white;
+  color: rgb(235, 128, 21);
   text-align: center;
 }
 
@@ -15,14 +15,14 @@ h4 {
   font-family: 'Roboto', sans-serif, 'arial';
   font-weight: 400;
   font-size: 20px;
-  color: #9b9b9b;
+  color: #f39419;
   line-height: 1.5;
 }
 
 
 input:focus ~ label, textarea:focus ~ label, input:valid ~ label, textarea:valid ~ label {
   font-size: 0.75em;
-  color: #999;
+  color: #387dfe;
   top: -5px;
   -webkit-transition: all 0.225s ease;
   transition: all 0.225s ease;
@@ -43,7 +43,7 @@ input:focus ~ label, textarea:focus ~ label, input:valid ~ label, textarea:valid
 }
 
 .styled-input label {
-  color: #999;
+  color: #444444;
   padding: 1.3rem 30px 1rem 30px;
   position: absolute;
   top: 10px;
@@ -64,8 +64,8 @@ textarea {
   border: 0;
   width: 100%;
   font-size: 1rem;
-  background-color: #2d2d2d;
-  color: white;
+  background-color: #bfbaba;
+  color: rgb(0, 0, 0);
   border-radius: 4px;
 
 }
@@ -125,7 +125,7 @@ textarea {
 }
 
 input[type=checkbox] + label {
-color: #ccc;
+color: #ffffff;
 font-style: italic;
 }
 
@@ -135,6 +135,7 @@ font-style: normal;
 }
 
 .container{
+  margin-top: 50px;
   padding-top: 50px;
   padding-bottom: 100px;
 }
