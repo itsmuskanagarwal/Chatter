@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 // import { USER } from '../user_mockup';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthServiceService } from '../authservice.service';
+import { AuthServiceService } from '../services/authservice.service';
 
 @Component({
   selector: 'app-login',
@@ -25,7 +25,8 @@ export class LoginComponent {
     if (output == true) {
       this.routes.navigate(['/home']);
     } else {
-      this.msg = 'Invalid username or password. If you are a new user, please register ';
+      this.msg =
+        'Invalid username or password. If you are a new user, please register  ';
       alert(this.msg);
     }
   }

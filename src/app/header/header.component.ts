@@ -1,24 +1,22 @@
 import { Component } from '@angular/core';
-import { StorageService } from '../storage.service';
+import { StorageService } from '../services/storage.service';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css']
+  styleUrls: ['./header.component.css'],
 })
+export class HeaderComponent {
+  username: any;
 
-export class HeaderComponent{
+  constructor(private service_header: StorageService) {}
 
-    usernameinheader:any;
-
-    constructor(private service_header:StorageService){
+  ngDoCheck() {
+    if (this.service_header.userdetail.name != '') {
+      console.log(this.service_header.userdetail.name);
+      this.username =
+        'Welcome ' + this.service_header.userProfileDetail.displayname;
     }
-
-    ngDoCheck(){
-      if(this.service_header.userdetail.name!=""){
-        console.log(this.service_header.userdetail.name);
-        this.usernameinheader='Welcome '+this.service_header.userProfileDetail.displayname;
-      }
   }
 
   isCollapsed = true;
