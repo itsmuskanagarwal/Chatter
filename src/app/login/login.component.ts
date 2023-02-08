@@ -12,21 +12,22 @@ import { AuthServiceService } from '../authservice.service';
   providers: [AuthServiceService],
 })
 export class LoginComponent {
-  userName: any;
-  password: any;
   formData: FormGroup | undefined;
+
+  validPassword: boolean | undefined;
 
   constructor(public authservice: AuthServiceService, private routes: Router) {}
 
   msg = '';
   ngOnInit() {}
-  check(uname: string, p: string) {
-    var output = this.authservice.checkusernameandpassword(uname, p);
+  check(username: string, password: string) {
+    var output = this.authservice.checkusernameandpassword(username, password);
     if (output == true) {
       this.routes.navigate(['/home']);
     } else {
-      this.msg = 'Invalid username or password. If you are a new user, please register ';
-      alert(this.msg);
+      this.validPassword = true;
+      this.msg =
+        'Invalid username or password. If you are a new user, please register ';
     }
   }
 }
