@@ -10,7 +10,6 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
   styleUrls: ['./sign-up.component.css'],
 })
 export class SignUpComponent implements OnInit {
-
   public userdetail!: {
     name: string;
     contact: string;
@@ -26,24 +25,31 @@ export class SignUpComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  username: string = "";
-  password: string = "";
-    
+  msg = {
+    feilds: 'Please fill all the fields',
+    password: 'Password does not match',
+  };
+
+  username: string = '';
+  password: string = '';
+
+  validFields: boolean | undefined;
+  validPassword: boolean | undefined;
+  validContact: boolean | undefined;
+
   formData = new FormGroup({
-    username: new FormControl(""),
-    password: new FormControl(""),
-    confirmPassword : new FormControl(""),
-    email : new FormControl(""),
-    contact : new FormControl("")
+    username: new FormControl('', Validators.required),
+    password: new FormControl('', Validators.required),
+    confirmPassword: new FormControl('', Validators.required),
+    email: new FormControl('', Validators.required),
+    contact: new FormControl('', Validators.required),
   });
 
   onClickSubmit(data: any) {
-
-    console.log(data.userame)
-    console.log(data.password)
+    console.log(data.userame);
+    console.log(data.password);
     // console.log(data.contact)
     // console.log(data.email)
-    
 
     this.username = data.username;
     this.password = data.password;
@@ -51,35 +57,44 @@ export class SignUpComponent implements OnInit {
     console.log('Login page: ' + this.username);
     console.log('Login page: ' + this.password);
 
-    if (this.username == '' || this.password == '') 
-    { 
-      console.log("if is working")
-      this._snackBar.open('Invalid Input', 'OK', {
-        duration: 5000,
-      });
-    } 
-    else
-    { console.log("else is working")
-      this.userdetail = 
-      {
-        name: data.username,
-        contact: data.contact,
-        email: data.email,
-        password: data.password,
-      };
+    for (var key in data) {
+      console.log(data[key]);
+      if (data[key] == '' || data[key] == null) {
+        this.validFields = false;
+        break;
+      } else {
+        this.validFields = true;
+      }
+    }
 
-      console.log(this.userdetail)
+    if (data.password == data.confirmPassword) {
+      this.validPassword = true;
+    } else {
+      this.validPassword = false;
+    }
 
-      this.service.getUserDetails(this.userdetail);
-      this.router.navigate(['login']);
-      this._snackBar.open
-      (
-        'Hello ' + this.username + ', You are Successfully Registered !!',
-        'OK',
-        {
-          duration: 5000,
-        }
-      );
+    if (this.validFields == true) {
+      if (this.validPassword == true) {
+        console.log('working');
+        this.userdetail = {
+          name: data.username,
+          contact: data.contact,
+          email: data.email,
+          password: data.password,
+        };
+
+        console.log(this.userdetail);
+
+        this.service.getUserDetails(this.userdetail);
+        this.router.navigate(['login']);
+        this._snackBar.open(
+          'Hello ' + this.username + ', You are Successfully Registered !!',
+          'OK',
+          {
+            duration: 5000,
+          }
+        );
+      }
     }
   }
 }

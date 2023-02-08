@@ -1,8 +1,7 @@
-.btn-block
-{
-  border-radius: .5rem;
+.btn-block {
+  border-radius: 0.5rem;
   box-sizing: border-box;
-  color: #FFFFFF;
+  color: #ffffff;
   display: flex;
   font-size: 16px;
   justify-content: center;
@@ -14,13 +13,16 @@
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
-    background-color: #ff7a57;
-    border-color: #ff7a57;
-    text-align:center;
-  
+  background-color: #ff7a57;
+  border-color: #ff7a57;
+  text-align: center;
 }
 
-
+.error {
+  color: #d8000c;
+  background-color: #ffbaba;
+  font-size: small;
+}
 
 .btn-block:hover {
   color: #fff;
