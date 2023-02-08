@@ -22,39 +22,38 @@
 /* You can add global styles to this file, and also import other style files */
 
 .form-container {
-    display: block;
-    max-width: 600px;
-    margin-top: 100px;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: 60px;
-    background: #eceff1;
-    padding: 48px;
-    border-radius: 16px;
+  display: block;
+  max-width: 600px;
+  margin-top: 100px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 60px;
+  background: #eceff1;
+  padding: 48px;
+  border-radius: 16px;
 }
 
 .form-container mat-form-field {
-    width: 100%;
+  width: 100%;
 }
 
 .center {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 .margin-top {
-    margin-top: 16px;
-    margin-bottom: -10px;
+  margin-top: 16px;
+  margin-bottom: -10px;
 }
 
 .text-center {
-    text-align: center;
+  text-align: center;
 }
-.btn-block
-{
-  border-radius: .5rem;
+.btn-block {
+  border-radius: 0.5rem;
   box-sizing: border-box;
-  color: #FFFFFF;
+  color: #ffffff;
   display: flex;
   font-size: 16px;
   justify-content: center;
@@ -68,9 +67,8 @@
   touch-action: manipulation;
   background-color: #ff7a57;
   border-color: #ff7a57;
-  text-align:center;
+  text-align: center;
 }
-
 
 .btn-block:hover {
   color: #fff;

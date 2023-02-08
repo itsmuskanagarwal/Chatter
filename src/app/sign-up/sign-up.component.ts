@@ -1,8 +1,10 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { StorageService } from '../storage.service';
+import { StorageService } from '../services/storage.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { user } from '../modules/user';
+
 
 @Component({
   selector: 'app-sign-up',
@@ -10,13 +12,8 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
   styleUrls: ['./sign-up.component.css'],
 })
 export class SignUpComponent implements OnInit {
-  public userDetail!: {
-    name: string;
-    contact: string;
-    email: string;
-    password: string;
-  };
 
+  public userDetail!: user;
   constructor(
     private _snackBar: MatSnackBar,
     private router: Router,
@@ -81,11 +78,12 @@ export class SignUpComponent implements OnInit {
           contact: data.contact,
           email: data.email,
           password: data.password,
+          displayname:data.username
         };
 
         console.log(this.userDetail);
 
-        this.service.getUserDetails(this.userDetail);
+        this.service.setUserDetails(this.userDetail);
         this.router.navigate(['login']);
         this._snackBar.open(
           'Hello ' + this.username + ', You are Successfully Registered !!',
