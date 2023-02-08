@@ -9,10 +9,10 @@ export class AuthServiceService {
 
   checkusernameandpassword(uname: string, pwd: string) {
     if (
-      uname == this.storage.userdetail.name &&
-      pwd == this.storage.userdetail.password
+      uname == this.storage.userDetail.name &&
+      pwd == this.storage.userDetail.password
     ) {
-      localStorage.setItem('username', this.storage.userdetail.name); //will add that key to the given Storage object
+      localStorage.setItem('username', this.storage.userDetail.name); //will add that key to the given Storage object
       return true;
     } else {
       return false;

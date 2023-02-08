@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { StorageService } from '../services/storage.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { userProfile } from '../modules/profile_user';
 
 @Component({
   selector: 'app-profile',
@@ -10,31 +9,28 @@ import { userProfile } from '../modules/profile_user';
   styleUrls: ['./profile.component.css'],
 })
 export class ProfileComponent {
-  public profiledetails!: userProfile;
-
   userdetails: any;
 
   constructor(
     private _snackBar: MatSnackBar,
     private _router: Router,
-    private profile_service: StorageService
+    private profileService: StorageService
   ) {}
 
-  save(username: any, usercontact: any, useremail: any, display: any) {
+  save(username: any, userContact: any, userEmail: any, display: any) {
     if (
       username != '' ||
-      usercontact != '' ||
-      useremail != '' ||
+      userContact != '' ||
+      userEmail != '' ||
       display != ''
     ) {
       this._router.navigate(['landing']);
-      this.profiledetails = {
-        name: username,
-        contact: usercontact,
-        email: useremail,
-        displayname: display,
-      };
-      this.profile_service.getUserProfileDetails(this.profiledetails);
+
+      this.profileService.userDetail.name = username;
+      this.profileService.userDetail.email = userEmail;
+      this.profileService.userDetail.contact = userContact;
+      this.profileService.userDetail.displayname = display;
+
       this._snackBar.open(
         'Hello ' + username + ', Details Updated successfully!!',
         'OK',
@@ -61,6 +57,6 @@ export class ProfileComponent {
   }
 
   ngDoCheck() {
-    this.userdetails = this.profile_service.userdetail;
+    this.userdetails = this.profileService.userDetail;
   }
 }

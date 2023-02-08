@@ -3,7 +3,11 @@
     <mat-card-header>
       <mat-card-title>Register</mat-card-title>
     </mat-card-header>
-    <form class="example-form">
+    <form
+      class="example-form"
+      [formGroup]="formData"
+      (ngSubmit)="onClickSubmit(formData.value)"
+    >
       <mat-card-content>
         <mat-form-field class="example-full-width">
           <input
@@ -11,6 +15,10 @@
             placeholder="Name *"
             class="input"
             type="text"
+            formControlName="username"
+            required
+            autofocus
+            id="username"
             #username
           />
         </mat-form-field>
@@ -20,15 +28,23 @@
             placeholder="Contact *"
             class="input"
             type="tel"
+            formControlName="contact"
+            required
+            autofocus
+            id="contact"
             #usercontact
           />
         </mat-form-field>
         <mat-form-field class="example-full-width">
           <input
             matInput
-            placeholder="Email Address *"
+            placeholder="UserEmail *"
             class="input"
             type="email"
+            formControlName="email"
+            required
+            autofocus
+            id="email"
             #useremail
           />
         </mat-form-field>
@@ -38,7 +54,11 @@
             placeholder="Password *"
             class="input"
             type="password"
-            #userpass
+            formControlName="password"
+            required
+            autofocus
+            id="password"
+            #password
           />
         </mat-form-field>
         <mat-form-field class="example-full-width">
@@ -47,23 +67,13 @@
             placeholder="Confirm Password *"
             class="input"
             type="password"
+            formControlName="confirmPassword"
+            required
+            autofocus
           />
         </mat-form-field>
       </mat-card-content>
-      <button
-        mat-stroked-button
-        class="btn-block"
-        (click)="
-          signup(
-            username.value,
-            usercontact.value,
-            useremail.value,
-            userpass.value
-          )
-        "
-      >
-        Register
-      </button>
+      <button mat-stroked-button class="btn-block">Register</button>
       <br />
       <div class="container">
         <span class="login-wrapper">Already a user? </span>

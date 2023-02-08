@@ -9,13 +9,14 @@ import { StorageService } from '../services/storage.service';
 export class HeaderComponent {
   username: any;
 
-  constructor(private service_header: StorageService) {}
+  constructor(private serviceHeader: StorageService) {}
 
   ngDoCheck() {
-    if (this.service_header.userdetail.name != '') {
-      console.log(this.service_header.userdetail.name);
-      this.username =
-        'Welcome ' + this.service_header.userProfileDetail.displayname;
+    if (
+      this.serviceHeader.userDetail.name != '' &&
+      this.serviceHeader.userDetail.name != null
+    ) {
+      this.username = 'Welcome ' + this.serviceHeader.userDetail.displayname;
     }
   }
 
