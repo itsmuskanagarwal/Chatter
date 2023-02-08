@@ -78,11 +78,12 @@ export class SignUpComponent implements OnInit {
           contact: data.contact,
           email: data.email,
           password: data.password,
+          displayname:data.username
         };
 
         console.log(this.userDetail);
 
-        this.service.getUserDetails(this.userDetail);
+        this.service.setUserDetails(this.userDetail);
         this.router.navigate(['login']);
         this._snackBar.open(
           'Hello ' + this.username + ', You are Successfully Registered !!',

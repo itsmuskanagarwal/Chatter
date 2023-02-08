@@ -13,7 +13,6 @@ import { AuthServiceService } from '../services/authservice.service';
 })
 export class LoginComponent {
 
-  formData: FormGroup | undefined;
 
   validPassword: boolean | undefined;
 
