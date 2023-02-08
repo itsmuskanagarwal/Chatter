@@ -37,10 +37,17 @@
       Log in
     </button>
     <!-- </form> -->
+    <div *ngIf="validPassword == true">
+      <br />
+      <div class="error">
+        <span> {{ msg }} </span>
+      </div>
+    </div>
     <br />
     <div class="container">
       <span class="login-wrapper">New user? </span>
-      <a routerLink="/signup">Register</a>
+      <a [routerLink]="'/signup'">Register</a>
+
     </div>
   </mat-card>
 </div>

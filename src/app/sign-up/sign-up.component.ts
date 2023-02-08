@@ -5,14 +5,15 @@ import { StorageService } from '../services/storage.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { user } from '../modules/user';
 
+
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
   styleUrls: ['./sign-up.component.css'],
 })
 export class SignUpComponent implements OnInit {
-  public userDetail!: user;
 
+  public userDetail!: user;
   constructor(
     private _snackBar: MatSnackBar,
     private router: Router,
@@ -21,20 +22,29 @@ export class SignUpComponent implements OnInit {
 
   ngOnInit(): void {}
 
+  msg = {
+    feilds: 'Please fill all the fields',
+    password: 'Password does not match',
+  };
+
   username: string = '';
   password: string = '';
 
+  validFields: boolean | undefined;
+  validPassword: boolean | undefined;
+  validContact: boolean | undefined;
+
   formData = new FormGroup({
-    username: new FormControl(''),
-    password: new FormControl(''),
-    confirmPassword: new FormControl(''),
-    email: new FormControl(''),
-    contact: new FormControl(''),
+    username: new FormControl('', Validators.required),
+    password: new FormControl('', Validators.required),
+    confirmPassword: new FormControl('', Validators.required),
+    email: new FormControl('', Validators.required),
+    contact: new FormControl('', Validators.required),
   });
 
   onClickSubmit(data: any) {
-    // console.log(data.userame)
-    // console.log(data.password)
+    console.log(data.userame);
+    console.log(data.password);
     // console.log(data.contact)
     // console.log(data.email)
 
@@ -44,32 +54,44 @@ export class SignUpComponent implements OnInit {
     console.log('Login page: ' + this.username);
     console.log('Login page: ' + this.password);
 
-    if (this.username == '' || this.password == '') {
-      console.log('if is working');
-      this._snackBar.open('Invalid Input', 'OK', {
-        duration: 5000,
-      });
+    for (var key in data) {
+      console.log(data[key]);
+      if (data[key] == '' || data[key] == null) {
+        this.validFields = false;
+        break;
+      } else {
+        this.validFields = true;
+      }
+    }
+
+    if (data.password == data.confirmPassword) {
+      this.validPassword = true;
     } else {
-      console.log('else is working');
-      this.userDetail = {
-        name: data.username,
-        contact: data.contact,
-        email: data.email,
-        password: data.password,
-        displayname: data.username,
-      };
+      this.validPassword = false;
+    }
 
-      console.log(this.userDetail);
+    if (this.validFields == true) {
+      if (this.validPassword == true) {
+        console.log('working');
+        this.userDetail = {
+          name: data.username,
+          contact: data.contact,
+          email: data.email,
+          password: data.password,
+        };
 
-      this.service.setUserDetails(this.userDetail);
-      this.router.navigate(['login']);
-      this._snackBar.open(
-        'Hello ' + this.username + ', You are Successfully Registered !!',
-        'OK',
-        {
-          duration: 5000,
-        }
-      );
+        console.log(this.userDetail);
+
+        this.service.getUserDetails(this.userDetail);
+        this.router.navigate(['login']);
+        this._snackBar.open(
+          'Hello ' + this.username + ', You are Successfully Registered !!',
+          'OK',
+          {
+            duration: 5000,
+          }
+        );
+      }
     }
   }
 }

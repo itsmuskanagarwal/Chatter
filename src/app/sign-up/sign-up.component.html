@@ -8,11 +8,26 @@
       [formGroup]="formData"
       (ngSubmit)="onClickSubmit(formData.value)"
     >
+      <div *ngIf="validFields == false">
+        <br />
+        <div class="error">
+          <span> {{ msg.feilds }} </span>
+        </div>
+        <br />
+      </div>
+
+      <div *ngIf="validPassword == false">
+        <div class="error">
+          <span> {{ msg.password }} </span>
+        </div>
+        <br />
+      </div>
+
       <mat-card-content>
         <mat-form-field class="example-full-width">
           <input
             matInput
-            placeholder="Name *"
+            placeholder="Name"
             class="input"
             type="text"
             formControlName="username"
@@ -25,20 +40,22 @@
         <mat-form-field class="example-full-width">
           <input
             matInput
-            placeholder="Contact *"
+            placeholder="Contact"
             class="input"
             type="tel"
             formControlName="contact"
             required
+            minlength="10"
+            maxlength="10"
             autofocus
             id="contact"
-            #usercontact
+            #contact
           />
         </mat-form-field>
         <mat-form-field class="example-full-width">
           <input
             matInput
-            placeholder="UserEmail *"
+            placeholder="UserEmail "
             class="input"
             type="email"
             formControlName="email"
@@ -51,7 +68,7 @@
         <mat-form-field class="example-full-width">
           <input
             matInput
-            placeholder="Password *"
+            placeholder="Password "
             class="input"
             type="password"
             formControlName="password"
@@ -64,7 +81,7 @@
         <mat-form-field class="example-full-width">
           <input
             matInput
-            placeholder="Confirm Password *"
+            placeholder="Confirm Password "
             class="input"
             type="password"
             formControlName="confirmPassword"
@@ -73,6 +90,7 @@
           />
         </mat-form-field>
       </mat-card-content>
+
       <button mat-stroked-button class="btn-block">Register</button>
       <br />
       <div class="container">

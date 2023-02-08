@@ -12,23 +12,23 @@ import { AuthServiceService } from '../services/authservice.service';
   providers: [AuthServiceService],
 })
 export class LoginComponent {
-  // username: any;
-  // password: any;
-  // formData: FormGroup | undefined;
 
-  constructor(public authService: AuthServiceService, private routes: Router) {}
+  formData: FormGroup | undefined;
+
+  validPassword: boolean | undefined;
+
+  constructor(public authservice: AuthServiceService, private routes: Router) {}
 
   msg = '';
   ngOnInit() {}
-
-  check(username: string, pswd: string) {
-    var output = this.authService.checkusernameandpassword(username, pswd);
+  check(username: string, password: string) {
+    var output = this.authservice.checkusernameandpassword(username, password);
     if (output == true) {
       this.routes.navigate(['/home']);
     } else {
+      this.validPassword = true;
       this.msg =
-        'Invalid username or password. If you are a new user, please register  ';
-      alert(this.msg);
+        'Invalid username or password. If you are a new user, please register ';
     }
   }
 }
