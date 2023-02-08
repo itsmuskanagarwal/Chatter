@@ -1,16 +1,16 @@
 <div id="container">
   <aside>
     <header>
-      <input type="text" placeholder="search">
+      <input type="text" placeholder="search" />
     </header>
     <ul>
       <li *ngFor="let contact of Contacts">
-        <img class= "img-size" src={{contact.photo}} alt="">
+        <img class="img-size" src="{{ contact.photo }}" alt="" />
         <div>
-          <h2>{{contact.name}}</h2>
+          <h2>{{ contact.name }}</h2>
           <h3>
             <span class="status orange"></span>
-            {{contact.status}}
+            {{ contact.status }}
           </h3>
         </div>
       </li>
@@ -18,88 +18,85 @@
   </aside>
   <main>
     <header>
-      <img class="img-size" src="assets/p1.avif" alt="">
+      <img class="img-size" src="assets/p1.avif" alt="" />
       <div>
         <h2>Chat with Muskan</h2>
         <h3>already 1902 messages</h3>
       </div>
-      <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/ico_star.png" alt="">
+      <img
+        src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/ico_star.png"
+        alt=""
+      />
     </header>
     <main>
-    <ul id="chat">
-      <li class="you">
-        <div class="entete">
-          <span class="status green"></span>
-          <h2>Muskan</h2>
-          <h3>10:12AM, Today</h3>
-        </div>
-        <div class="triangle"></div>
-        <div class="message">
-          Where have you been since yesterday?
-        </div>
-      </li>
-      <li class="me">
-        <div class="entete">
-          <h3>10:12AM, Today</h3>
-          <h2>You</h2>
-          <span class="status blue"></span>
-        </div>
-        <div class="triangle"></div>
-        <div class="message">
-          I was stuck somewhere.
-        </div>
-      </li>
-      <li class="me">
-        <div class="entete">
-          <h3>10:12AM, Today</h3>
-          <h2>You</h2>
-          <span class="status blue"></span>
-        </div>
-        <div class="triangle"></div>
-        <div class="message">
-          I'm sorry
-        </div>
-      </li>
-      <li class="you">
-        <div class="entete">
-          <span class="status green"></span>
-          <h2>Muskan</h2>
-          <h3>10:12AM, Today</h3>
-        </div>
-        <div class="triangle"></div>
-        <div class="message">
-          It's okay, How are you?
-        </div>
-      </li>
-      <li class="me">
-        <div class="entete">
-          <h3>10:12AM, Today</h3>
-          <h2>You</h2>
-          <span class="status blue"></span>
-        </div>
-        <div class="triangle"></div>
-        <div class="message">
-          I am Fine.
-        </div>
-      </li>
-      <li class="me">
-        <div class="entete">
-          <h3>10:12AM, Today</h3>
-          <h2>You</h2>
-          <span class="status blue"></span>
-        </div>
-        <div class="triangle"></div>
-        <div class="message">
-          OK, ttyl
-        </div>
-      </li>
-    </ul>
-    <footer>
-      <textarea placeholder="Type your message"></textarea>
-      <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/ico_picture.png" alt="">
-      <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/ico_file.png" alt="">
-      <a href="#">Send</a>
-    </footer>
-  </main>
+      <ul id="chat">
+        <li class="you">
+          <div class="entete">
+            <span class="status green"></span>
+            <h2>Muskan</h2>
+            <h3>10:12AM, Today</h3>
+          </div>
+          <div class="triangle"></div>
+          <div class="message">Where have you been since yesterday?</div>
+        </li>
+        <li class="me">
+          <div class="entete">
+            <h3>10:12AM, Today</h3>
+            <h2>You</h2>
+            <span class="status blue"></span>
+          </div>
+          <div class="triangle"></div>
+          <div class="message">I was stuck somewhere.</div>
+        </li>
+        <li class="me">
+          <div class="entete">
+            <h3>10:12AM, Today</h3>
+            <h2>You</h2>
+            <span class="status blue"></span>
+          </div>
+          <div class="triangle"></div>
+          <div class="message">I'm sorry</div>
+        </li>
+        <li class="you">
+          <div class="entete">
+            <span class="status green"></span>
+            <h2>Muskan</h2>
+            <h3>10:12AM, Today</h3>
+          </div>
+          <div class="triangle"></div>
+          <div class="message">It's okay, How are you?</div>
+        </li>
+        <li class="me">
+          <div class="entete">
+            <h3>10:12AM, Today</h3>
+            <h2>You</h2>
+            <span class="status blue"></span>
+          </div>
+          <div class="triangle"></div>
+          <div class="message">I am Fine.</div>
+        </li>
+        <li class="me">
+          <div class="entete">
+            <h3>10:12AM, Today</h3>
+            <h2>You</h2>
+            <span class="status blue"></span>
+          </div>
+          <div class="triangle"></div>
+          <div class="message">OK, ttyl</div>
+        </li>
+      </ul>
+      <footer>
+        <textarea placeholder="Type your message"></textarea>
+        <img
+          src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/ico_picture.png"
+          alt=""
+        />
+        <img
+          src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/ico_file.png"
+          alt=""
+        />
+        <a href="#">Send</a>
+      </footer>
+    </main>
   </main>
 </div>

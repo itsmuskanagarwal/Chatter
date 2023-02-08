@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 // import { User } from '../user';
 // import { USER } from '../user_mockup';
-import { FormGroup, FormControl } from '@angular/forms';
+// import { FormGroup, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthServiceService } from '../authservice.service';
+import { AuthServiceService } from '../services/authservice.service';
 
 @Component({
   selector: 'app-login',
@@ -12,6 +12,7 @@ import { AuthServiceService } from '../authservice.service';
   providers: [AuthServiceService],
 })
 export class LoginComponent {
+
   formData: FormGroup | undefined;
 
   validPassword: boolean | undefined;
