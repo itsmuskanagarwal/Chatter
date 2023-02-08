@@ -10,7 +10,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
   styleUrls: ['./sign-up.component.css'],
 })
 export class SignUpComponent implements OnInit {
-  public userdetail!: {
+  public userDetail!: {
     name: string;
     contact: string;
     email: string;
@@ -76,16 +76,16 @@ export class SignUpComponent implements OnInit {
     if (this.validFields == true) {
       if (this.validPassword == true) {
         console.log('working');
-        this.userdetail = {
+        this.userDetail = {
           name: data.username,
           contact: data.contact,
           email: data.email,
           password: data.password,
         };
 
-        console.log(this.userdetail);
+        console.log(this.userDetail);
 
-        this.service.getUserDetails(this.userdetail);
+        this.service.getUserDetails(this.userDetail);
         this.router.navigate(['login']);
         this._snackBar.open(
           'Hello ' + this.username + ', You are Successfully Registered !!',

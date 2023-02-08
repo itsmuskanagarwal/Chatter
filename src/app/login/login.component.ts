@@ -20,8 +20,8 @@ export class LoginComponent {
 
   msg = '';
   ngOnInit() {}
-  check(uname: string, p: string) {
-    var output = this.authservice.checkusernameandpassword(uname, p);
+  check(username: string, password: string) {
+    var output = this.authservice.checkusernameandpassword(username, password);
     if (output == true) {
       this.routes.navigate(['/home']);
     } else {
