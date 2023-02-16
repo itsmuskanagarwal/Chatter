@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
-import { StorageService } from '../services/storage.service';
+import { Component
+ } from '@angular/core';
+import { StorageService } from '../../../services/storage.service';
 
 @Component({
   selector: 'app-header',
@@ -10,13 +11,14 @@ export class HeaderComponent {
   username: any;
 
   constructor(private serviceHeader: StorageService) {}
+ 
 
   ngDoCheck() {
     if (
-      this.serviceHeader.userDetail.name != '' &&
-      this.serviceHeader.userDetail.name != null
+      this.serviceHeader.User.name != '' &&
+      this.serviceHeader.User.name != null
     ) {
-      this.username = 'Welcome ' + this.serviceHeader.userDetail.displayname;
+      this.username = 'Welcome ' + this.serviceHeader.User.displayname;
     }
   }
 

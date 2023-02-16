@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CONTACT } from '../modules/mockup-contacts';
+import { CONTACT } from '../../../modules/mockup-contacts';
 
 @Component({
   selector: 'app-home',

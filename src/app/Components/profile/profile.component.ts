@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
-import { StorageService } from '../services/storage.service';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
+import { CrudService } from 'src/services/crud.service';
+import { FormGroup, FormBuilder } from "@angular/forms";
 
 @Component({
   selector: 'app-profile',
@@ -9,14 +10,23 @@ import { Router } from '@angular/router';
   styleUrls: ['./profile.component.css'],
 })
 export class ProfileComponent {
+
   userdetails: any;
+  getId: any;
+  updateForm: FormGroup  | any;
 
   constructor(
     private _snackBar: MatSnackBar,
-    private _router: Router,
-    private profileService: StorageService
+    public formBuilder: FormBuilder,
+    private router: Router,
+    private ngZone: NgZone,
+    private activatedRoute: ActivatedRoute,
+    private crudService: CrudService
+    
   ) {}
 
+ 
+  
   save(username: any, userContact: any, userEmail: any, display: any) {
     if (
       username != '' ||
@@ -24,12 +34,22 @@ export class ProfileComponent {
       userEmail != '' ||
       display != ''
     ) {
-      this._router.navigate(['landing']);
+      
+      this.getId = this.activatedRoute.snapshot.paramMap.get('id');
 
-      this.profileService.userDetail.name = username;
-      this.profileService.userDetail.email = userEmail;
-      this.profileService.userDetail.contact = userContact;
-      this.profileService.userDetail.displayname = display;
+      this.crudService.GetUser(this.getId).subscribe(res => {
+        this.updateForm.setValue({
+          name: res['name'],
+          price: res['price'],
+          description: res['description']
+        });
+      });
+   
+      this.updateForm = this.formBuilder.group({
+        name: [''],
+        price: [''],
+        description: ['']
+      })
 
       this._snackBar.open(
         'Hello ' + username + ', Details Updated successfully!!',
@@ -56,7 +76,5 @@ export class ProfileComponent {
     // }
   }
 
-  ngDoCheck() {
-    this.userdetails = this.profileService.userDetail;
-  }
+  
 }

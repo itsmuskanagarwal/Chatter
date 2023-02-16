@@ -7,7 +7,8 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "pretty": "prettier --write \"./**/*.{ts,tsx,json,html,css}\""
+    "pretty": "prettier --write \"./**/*.{ts,tsx,json,html,css}\"",
+    "dev": "nodemon src/BackEnd/server/server.js"
   },
   "private": true,
   "dependencies": {
@@ -24,8 +25,13 @@
     "@angular/router": "^15.1.0",
     "@ng-bootstrap/ng-bootstrap": "^14.0.1",
     "@popperjs/core": "^2.11.6",
+    "body-parser": "^1.20.1",
     "bootstrap": "^5.2.3",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "hbs": "^4.2.0",
     "jquery": "^3.6.3",
+    "mongoose": "^6.9.1",
     "ngx-toastr": "^16.0.2",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
@@ -43,6 +49,7 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.0.0",
+    "nodemon": "^2.0.20",
     "prettier": "^2.8.3",
     "typescript": "~4.9.4"
   }

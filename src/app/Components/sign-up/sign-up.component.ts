@@ -1,10 +1,13 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, NgZone } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
-import { StorageService } from '../services/storage.service';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { user } from '../modules/user';
-
+import {
+  FormGroup,
+  FormControl,
+  Validators,
+  FormBuilder,
+} from '@angular/forms';
+import { CrudService } from 'src/services/crud.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -13,12 +16,23 @@ import { user } from '../modules/user';
 })
 export class SignUpComponent implements OnInit {
 
-  public userDetail!: user;
+  formData: FormGroup | any;
+
   constructor(
     private _snackBar: MatSnackBar,
+    public formBuilder: FormBuilder,
     private router: Router,
-    private service: StorageService
-  ) {}
+    private ngZone: NgZone,
+    private crudService: CrudService
+  ) {
+    this.formData = this.formBuilder.group({
+      username: '',
+      password: '',
+      confirmPassword: '',
+      email: '',
+      contact: '',
+    });
+  }
 
   ngOnInit(): void {}
 
@@ -34,17 +48,9 @@ export class SignUpComponent implements OnInit {
   validPassword: boolean | undefined;
   validContact: boolean | undefined;
 
-  formData = new FormGroup({
-    username: new FormControl('', Validators.required),
-    password: new FormControl('', Validators.required),
-    confirmPassword: new FormControl('', Validators.required),
-    email: new FormControl('', Validators.required),
-    contact: new FormControl('', Validators.required),
-  });
-
   onClickSubmit(data: any) {
-    console.log(data.userame);
-    console.log(data.password);
+    // console.log(data.userame);
+    // console.log(data.password);
     // console.log(data.contact)
     // console.log(data.email)
 
@@ -71,27 +77,22 @@ export class SignUpComponent implements OnInit {
     }
 
     if (this.validFields == true) {
-      if (this.validPassword == true) {
-        console.log('working');
-        this.userDetail = {
-          name: data.username,
-          contact: data.contact,
-          email: data.email,
-          password: data.password,
-          displayname:data.username
-        };
+      if (this.validPassword == true)
+        {
 
-        console.log(this.userDetail);
+          console.log('working');
+          this.crudService.AddUser(this.formData.value).subscribe((res) => {
+            console.log('Data added!!!!',res);
+            this.ngZone.run(() => this.router.navigateByUrl('/login'));
+          });
 
-        this.service.setUserDetails(this.userDetail);
-        this.router.navigate(['login']);
-        this._snackBar.open(
-          'Hello ' + this.username + ', You are Successfully Registered !!',
-          'OK',
-          {
-            duration: 5000,
-          }
-        );
+          this._snackBar.open(
+            'Hello ' + this.username + ', You are Successfully Registered !!',
+            'OK',
+            {
+              duration: 5000,
+            }
+          );
       }
     }
   }
