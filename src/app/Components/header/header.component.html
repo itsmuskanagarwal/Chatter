@@ -56,12 +56,26 @@
         </li>
         &nbsp; &nbsp; &nbsp;
         <li class="nav-item">
-          <a
-            class="- btn btn-primary rounded ml-4"
-            routerLink="signup"
-            (click)="toggleCollapsed()"
-            >Register</a
-          >
+          <div id="login-logout">
+            <button
+              id="register-btn"
+              *ngIf="!isLoggedIn"
+              class="- btn btn-primary rounded ml-4"
+              routerLink="signup"
+              (click)="toggleCollapsed()"
+            >
+              Register
+            </button>
+            <button
+              id="logout-btn"
+              *ngIf="isLoggedIn"
+              class="- btn btn-primary rounded ml-4"
+              routerLink="signup"
+              (click)="toggleCollapsed()"
+            >
+              Logout
+            </button>
+          </div>
         </li>
       </ul>
     </div>

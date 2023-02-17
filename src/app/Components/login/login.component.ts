@@ -13,6 +13,7 @@ export class LoginComponent {
 
   validPassword: boolean | undefined;
   data : any =[];
+  
 
   constructor(
     public authservice: AuthServiceService,
@@ -34,12 +35,16 @@ export class LoginComponent {
     if (output == true)
     {
       this.routes.navigate(['/home']);
+      this.authservice.LoggedIn = true;
     }
+      
     else
     {
+      this.authservice.LoggedIn = false;
       this.validPassword = true;
       this.msg =
         'Invalid username or password. If you are a new user, please register ';
+
     }
   }
 }
