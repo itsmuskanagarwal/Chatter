@@ -10,7 +10,6 @@
           matInput
           placeholder="Username"
           class="input"
-          formControlName="userName"
           required
           autofocus
           id="username"
@@ -23,7 +22,6 @@
           placeholder="Password"
           class="input"
           id="inputPassword"
-          formControlName="password"
           required
           #u2
         />
@@ -32,7 +30,7 @@
     <button
       mat-stroked-button
       class="btn-block"
-      (click)="check()"
+      (click)="check(u1.value,u2.value)"
     >
       Log in
     </button>

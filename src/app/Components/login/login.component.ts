@@ -11,30 +11,31 @@ import { CrudService } from 'src/services/crud.service';
 })
 export class LoginComponent {
 
-
   validPassword: boolean | undefined;
   data : any =[];
 
   constructor(
-    public authservice: AuthServiceService, 
-    private routes: Router, 
+    public authservice: AuthServiceService,
+    private routes: Router,
     private crudService: CrudService) {}
 
   msg = '';
   ngOnInit() {}
-  check() {
+  check(uname:string,pwd:string) {
 
-    this.crudService.GetUsers().subscribe(res => {
-      console.log(res)
-    this.data =res;});
+    console.log(this.data.userame);
 
-    const output = this.authservice.checkusernameandpassword(this.data.username, this.data.password);
+    this.crudService.getUsers().subscribe(res => {
+      console.log(res);
+    });
 
-    if (output == true) 
+    const output = this.authservice.checkusernameandpassword(uname, pwd);
+
+    if (output == true)
     {
       this.routes.navigate(['/home']);
-    } 
-    else 
+    }
+    else
     {
       this.validPassword = true;
       this.msg =

@@ -81,7 +81,7 @@ export class SignUpComponent implements OnInit {
         {
 
           console.log('working');
-          this.crudService.AddUser(this.formData.value).subscribe((res) => {
+          this.crudService.addUser(this.formData.value).subscribe((res) => {
             console.log('Data added!!!!',res);
             this.ngZone.run(() => this.router.navigateByUrl('/login'));
           });

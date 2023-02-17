@@ -1,34 +1,34 @@
 import { Injectable } from '@angular/core';
-import { user } from 'src/modules/user'; 
+import { user } from 'src/modules/user';
 import { catchError, map } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
 import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
- 
+
 @Injectable({
   providedIn: 'root'
 })
- 
+
 export class CrudService {
- 
+
   // Node/Express API
   REST_API = 'http://localhost:3000';
- 
+
   // Http Header
   httpHeaders = new HttpHeaders().set('Content-Type', 'application/json');
- 
+
   constructor(private httpClient: HttpClient) { }
- 
+
   // Add
-  AddUser(data: user): Observable<any> {
-    return this.httpClient.post(this.REST_API+'/add-user', data)
-     
+  addUser(data: user): Observable<any> {
+    return this.httpClient.post(this.REST_API+'/add-user', data, {responseType: 'text'})
+
   }
- 
+
   // Get all users
-  GetUsers() {
-    return this.httpClient.get(`${this.REST_API}`);
+  getUsers() {
+    return this.httpClient.get(this.REST_API+'/login');
   }
- 
+
   // Get single user
   GetUser(id:any): Observable<any> {
     let API_URL = `${this.REST_API}/user/${id}`;
@@ -48,11 +48,11 @@ export class CrudService {
         catchError(this.handleError)
       )
   }
- 
 
- 
- 
-  // Error 
+
+
+
+  // Error
   handleError(error: HttpErrorResponse) {
     let errorMessage = '';
     if (error.error instanceof ErrorEvent) {
@@ -65,5 +65,5 @@ export class CrudService {
     console.log(errorMessage);
     return throwError(errorMessage);
   }
- 
+
 }
