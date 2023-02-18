@@ -5,14 +5,9 @@ import { CrudService } from './crud.service';
   providedIn: 'root',
 })
 export class StorageService {
-  User:any = []
+  data:any = []
 
   constructor(private crudService: CrudService) { }
 
-  ngOnInit(): void {
-    this.crudService.getUsers().subscribe(res => {
-      console.log(res)
-      this.User =res;
-    });
-  }
+  
 }

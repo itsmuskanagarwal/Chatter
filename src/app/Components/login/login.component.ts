@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, NgZone } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthServiceService } from '../../../services/authservice.service';
 import { CrudService } from 'src/services/crud.service';
+import { StorageService } from 'src/services/storage.service';
 
 @Component({
   selector: 'app-login',
@@ -10,36 +11,44 @@ import { CrudService } from 'src/services/crud.service';
   providers: [AuthServiceService],
 })
 export class LoginComponent {
-
   validPassword: boolean | undefined;
-  data : any =[];
+  data: any = [];
 
   constructor(
     public authservice: AuthServiceService,
     private routes: Router,
-    private crudService: CrudService) {}
+    private crudService: CrudService,
+    private storage:StorageService,
+    private ngZone: NgZone,
+  ) {}
 
   msg = '';
+
   ngOnInit() {}
-  check(uname:string,pwd:string) {
+  check(uname: string, pwd: string) {
 
-    console.log(this.data.userame);
-
-    this.crudService.getUsers().subscribe(res => {
+    this.crudService.getUsers(uname,pwd).subscribe((res) => {
+      this.data=res;
       console.log(res);
-    });
-
-    const output = this.authservice.checkusernameandpassword(uname, pwd);
-
-    if (output == true)
-    {
-      this.routes.navigate(['/home']);
-    }
-    else
-    {
+      if(this.data.email==uname){
+        this.ngZone.run(() => this.routes.navigateByUrl('/home'));
+      }else {
+        this.validPassword = true;
+        this.msg =
+        'Invalid username or password. If you are a new user, please register ';
+      }
+    },
+    (error) => {
+      console.log('Error:', error);
       this.validPassword = true;
       this.msg =
         'Invalid username or password. If you are a new user, please register ';
+      // Handle the error here, such as showing an error message to the user
     }
+  );
+
+
+
+
   }
 }
