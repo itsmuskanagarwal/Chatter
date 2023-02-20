@@ -12,7 +12,7 @@ import { StorageService } from 'src/services/storage.service';
 })
 export class LoginComponent {
   validPassword: boolean | undefined;
-
+  hide = true;
   data: any = [];
 
 
@@ -28,12 +28,15 @@ export class LoginComponent {
 
   ngOnInit() {}
   check(uname: string, pwd: string) {
+    console.log(this.storage.data);
 
     this.crudService.verifyUser(uname,pwd).subscribe((res) => {
       this.data=res;
       console.log(res);
 
       if(this.data.email==uname){
+        this.storage.data=this.data;
+        console.log(this.storage.data);
         this.ngZone.run(() => this.routes.navigateByUrl('/home'));
       }else {
         this.validPassword = true;

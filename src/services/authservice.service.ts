@@ -1,9 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CrudService } from './crud.service';
 import { StorageService } from './storage.service';
-import { CrudService } from './crud.service';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',

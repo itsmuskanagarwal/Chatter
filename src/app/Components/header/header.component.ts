@@ -1,6 +1,4 @@
-
-import { Component } from '@angular/core';
-
+import { Component, OnInit } from '@angular/core';
 import { StorageService } from '../../../services/storage.service';
 import { AuthServiceService } from 'src/services/authservice.service';
 
@@ -15,9 +13,9 @@ export class HeaderComponent implements OnInit {
 
 
   constructor(
-    private serviceHeader: StorageService, 
+    private serviceHeader: StorageService,
     private authService: AuthServiceService) {}
- 
+
   ngOnInit(): void {
     this.isLoggedIn = this.authService.isLoggedIn();
   }
@@ -41,11 +39,11 @@ export class HeaderComponent implements OnInit {
   login() {
       this.isLoggedIn = this.authService.LoggedIn;
     };
-  
+
 
   logout() {
-    
+
     this.isLoggedIn = this.authService.LoggedIn;
   };
-  
+
 }
