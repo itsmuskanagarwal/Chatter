@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { CONTACT } from '../../../modules/mockup-contacts';
 
 @Component({
   selector: 'app-home',
@@ -7,5 +6,5 @@ import { CONTACT } from '../../../modules/mockup-contacts';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent {
-  Contacts = CONTACT;
+  
 }

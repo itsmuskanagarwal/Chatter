@@ -31,6 +31,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ToastrModule } from 'ngx-toastr';
 import { HttpClientModule } from '@angular/common/http';
+import { io } from 'socket.io-client';
+
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'landing' },
