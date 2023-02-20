@@ -40,11 +40,6 @@
           >
         </li>
         <li class="nav-item">
-          <a class="nav-link" routerLink="group" (click)="toggleCollapsed()"
-            >Group</a
-          >
-        </li>
-        <li class="nav-item">
           <a class="nav-link" routerLink="contact" (click)="toggleCollapsed()"
             >Contact</a
           >
@@ -58,20 +53,18 @@
         <li class="nav-item">
           <div id="login-logout">
             <button
-              id="register-btn"
               *ngIf="!isLoggedIn"
               class="- btn btn-primary rounded ml-4"
-              routerLink="signup"
+              routerLink = "/signup"
               (click)="toggleCollapsed()"
             >
               Register
             </button>
             <button
-              id="logout-btn"
               *ngIf="isLoggedIn"
               class="- btn btn-primary rounded ml-4"
-              routerLink="signup"
-              (click)="toggleCollapsed()"
+              
+              (click)="toggleCollapsed(); logout()"
             >
               Logout
             </button>
@@ -81,4 +74,4 @@
     </div>
   </div>
 </nav>
-<!-- End of page navibation -->
+

@@ -20,17 +20,17 @@ export class SignUpComponent implements OnInit {
 
   constructor(
     private _snackBar: MatSnackBar,
-    public formBuilder: FormBuilder,
+    private formBuilder: FormBuilder,
     private router: Router,
     private ngZone: NgZone,
     private crudService: CrudService
   ) {
     this.formData = this.formBuilder.group({
-      username: '',
-      password: '',
-      confirmPassword: '',
-      email: '',
-      contact: '',
+      username: ['', Validators.required],
+      password: ['', [Validators.required, Validators.minLength(8)]],
+      confirmPassword: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      contact: ['', Validators.required]
     });
   }
 

@@ -26,7 +26,6 @@ import { MatDividerModule } from '@angular/material/divider';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { AboutComponent } from './Components/about/about.component';
 import { ContactComponent } from './Components/contact/contact.component';
-import { GroupComponent } from './Components/group/group.component';
 import { HeaderComponent } from './Components/header/header.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
@@ -38,7 +37,6 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignUpComponent },
   { path: 'landing', component: LandingComponent },
-  { path: 'group', component: GroupComponent },
   { path: 'contact', component: ContactComponent },
   { path: 'about', component: AboutComponent },
   { path: 'profile', component: ProfileComponent },
@@ -55,7 +53,6 @@ const routes: Routes = [
     ProfileComponent,
     AboutComponent,
     ContactComponent,
-    GroupComponent,
     HeaderComponent
   ],
   imports: [

@@ -4,12 +4,11 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "dev": "nodemon ng serve",
+    "dev": "nodemon src/BackEnd/server/server.js",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "pretty": "prettier --write \"./**/*.{ts,tsx,json,html,css}\"",
-    "dev": "nodemon src/BackEnd/server/server.js"
+    "pretty": "prettier --write \"./**/*.{ts,tsx,json,html,css}\""
   },
   "private": true,
   "dependencies": {
@@ -33,6 +32,7 @@
     "hbs": "^4.2.0",
     "jquery": "^3.6.3",
     "mongoose": "^6.9.1",
+    "ngx-cookie-service": "^15.0.0",
     "ngx-toastr": "^16.0.2",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",

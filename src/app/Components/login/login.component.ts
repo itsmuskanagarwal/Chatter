@@ -1,8 +1,10 @@
-import { Component, NgZone } from '@angular/core';
+import { Component, NgZone, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthServiceService } from '../../../services/authservice.service';
 import { CrudService } from 'src/services/crud.service';
 import { StorageService } from 'src/services/storage.service';
+import { CookieService } from 'ngx-cookie-service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -10,49 +12,53 @@ import { StorageService } from 'src/services/storage.service';
   styleUrls: ['./login.component.css'],
   providers: [AuthServiceService],
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   validPassword: boolean | undefined;
 
   data: any = [];
-
+  // public password : string | any;
+  // public email : string | any;
 
   constructor(
     public authservice: AuthServiceService,
     private routes: Router,
     private crudService: CrudService,
-    private storage:StorageService,
+    private storage: StorageService,
     private ngZone: NgZone,
+    private cookieService: CookieService,
+    private fb: FormBuilder
   ) {}
 
   msg = '';
 
   ngOnInit() {}
   check(uname: string, pwd: string) {
+    this.crudService.verifyUser(uname, pwd).subscribe(
+      (res) => {
+        this.data = res;
+        console.log(res);
 
-    this.crudService.verifyUser(uname,pwd).subscribe((res) => {
-      this.data=res;
-      console.log(res);
-
-      if(this.data.email==uname){
-        this.ngZone.run(() => this.routes.navigateByUrl('/home'));
-      }else {
+        if (this.data.email == uname) {
+          // set isLoggedIn cookie to true for 1 day
+          this.cookieService.set('isLoggedIn', 'true', 1);
+          console.log(this.cookieService.get('isLoggedIn'))
+          this.storage.isLoggedIn = true;
+          console.log(this.storage.isLoggedIn)
+          this.ngZone.run(() => this.routes.navigateByUrl('/home'));
+          this.storage.data=this.data
+        } else {
+          this.validPassword = true;
+          this.msg =
+            'Invalid username or password. If you are a new user, please register ';
+        }
+      },
+      (error) => {
+        console.log('Error:', error);
         this.validPassword = true;
         this.msg =
-        'Invalid username or password. If you are a new user, please register ';
+          'Invalid username or password. If you are a new user, please register ';
+        // Handle the error here, such as showing an error message to the user
       }
-    },
-    (error) => {
-      console.log('Error:', error);
-      this.validPassword = true;
-      this.msg =
-        'Invalid username or password. If you are a new user, please register ';
-      // Handle the error here, such as showing an error message to the user
-
-    }
-  );
-
-
-
-
+    );
   }
 }
