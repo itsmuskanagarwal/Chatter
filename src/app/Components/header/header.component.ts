@@ -1,5 +1,6 @@
-import { Component, OnInit
- } from '@angular/core';
+
+import { Component } from '@angular/core';
+
 import { StorageService } from '../../../services/storage.service';
 import { AuthServiceService } from 'src/services/authservice.service';
 
@@ -12,6 +13,7 @@ export class HeaderComponent implements OnInit {
   username: any;
   isLoggedIn = false;
 
+
   constructor(
     private serviceHeader: StorageService, 
     private authService: AuthServiceService) {}
@@ -20,12 +22,13 @@ export class HeaderComponent implements OnInit {
     this.isLoggedIn = this.authService.isLoggedIn();
   }
 
+
   ngDoCheck() {
     if (
-      this.serviceHeader.User.name != '' &&
-      this.serviceHeader.User.name != null
+      this.serviceHeader.data.name != '' &&
+      this.serviceHeader.data.name != null
     ) {
-      this.username = 'Welcome ' + this.serviceHeader.User.displayname;
+      this.username = 'Welcome ' + this.serviceHeader.data.displayname;
     }
   }
 

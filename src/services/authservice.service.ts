@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { CrudService } from './crud.service';
 import { StorageService } from './storage.service';
 import { CrudService } from './crud.service';
 import { HttpClient } from '@angular/common/http';
@@ -8,6 +9,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class AuthServiceService {
+
   constructor(
     private storage: StorageService,
     private crudService: CrudService,
@@ -34,15 +36,5 @@ export class AuthServiceService {
     return null;
   }
 
-  checkusernameandpassword(uname: string, pwd: string) {
-    if (
-      uname == this.storage.User.name &&
-      pwd == this.storage.User.password
-    ) {
-      localStorage.setItem('username', this.storage.User.name); //will add that key to the given Storage object
-      return true;
-    } else {
-      return false;
-    }
-  }
+
 }
