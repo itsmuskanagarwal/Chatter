@@ -16,9 +16,14 @@
   right: 0;
 }
 .row {
-  display: flex;
-  gap: 16px;
+  padding: 12px 0px;
+  border-style: solid;
+  border-color: #fff;
+  text-align: center;
+  outline: transparent;
+  width: 100%;
 }
+
 /* You can add global styles to this file, and also import other style files */
 
 .form-container {

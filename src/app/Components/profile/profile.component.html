@@ -18,51 +18,43 @@
   </div>
   <input #inputField type="file" (change)="onSelectFile($event)" hidden />
 
-  <form class="margin-top">
-    <mat-form-field class="example-full-width">
+  <form>
+    <mat-card-content>
       <input
-        matInput
         placeholder="Name"
-        class="input"
+        class="row"
         type="text"
         value="{{ userdetails.name }}"
-        disabled
         #profile_name
       />
-    </mat-form-field>
-    <mat-form-field class="example-full-width">
+    <mat-form-field>
       <input
-        matInput
         placeholder="Contact"
-        class="input"
+        class="row"
         type="number"
         value="{{ userdetails.contact }}"
-        disabled
         #profile_contact
       />
     </mat-form-field>
-    <mat-form-field class="example-full-width">
+    <mat-form-field>
       <input
-        matInput
         placeholder="Email Address"
-        class="input"
+        class="row"
         type="email"
         value="{{ userdetails.email }}"
-        disabled
         #profile_email
       />
     </mat-form-field>
-    <mat-form-field class="example-full-width">
+    <mat-form-field>
       <input
-        matInput
         placeholder="Display Name"
-        class="input"
+        class="row"
         type="text"
         value="{{ userdetails.name }}"
-        disabled
         #profile_display
       />
     </mat-form-field>
+  </mat-card-content>
     <button type="submit" class="btn-block" mat-stroked-button>
       Change Password
     </button>

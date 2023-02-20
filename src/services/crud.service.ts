@@ -25,7 +25,7 @@ export class CrudService {
   }
 
   // Get all users
-  getUsers(email: string, password: string): Observable<any> {
+  verifyUser(email: string, password: string): Observable<any> {
     const body = { email, password };
     return this.httpClient.post(this.REST_API+'/login', body).pipe(
       catchError(error => {

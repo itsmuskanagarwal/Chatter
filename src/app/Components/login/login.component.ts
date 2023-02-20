@@ -27,7 +27,7 @@ export class LoginComponent {
   ngOnInit() {}
   check(uname: string, pwd: string) {
 
-    this.crudService.getUsers(uname,pwd).subscribe((res) => {
+    this.crudService.verifyUser(uname,pwd).subscribe((res) => {
       this.data=res;
       console.log(res);
       if(this.data.email==uname){
