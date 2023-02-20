@@ -21,6 +21,13 @@ export class CrudService {
   // Add
   addUser(data: user): Observable<any> {
     return this.httpClient.post(this.REST_API+'/add-user', data, {responseType: 'text'})
+    .pipe(
+      catchError(error => {
+        // Handle the error here, for example:
+        console.error('Error adding user', error);
+        return throwError(() => new Error('Error adding user'));
+      })
+    );
 
   }
 
@@ -48,12 +55,15 @@ export class CrudService {
   }
 
   // Update
-  updateUser(id:any, data:any): Observable<any> {
-    let API_URL = `${this.REST_API}/update-user/${id}`;
-    return this.httpClient.put(API_URL, data, { headers: this.httpHeaders })
-      .pipe(
-        catchError(this.handleError)
-      )
+  updateUser(data:any): Observable<any> {
+    return this.httpClient.put(this.REST_API+'/update-user', data)
+    .pipe(
+      catchError(error => {
+        // Handle the error here, for example:
+        console.error('Error updating user', error);
+        return throwError(() => new Error('Error updating user'));
+      })
+    );
   }
 
 

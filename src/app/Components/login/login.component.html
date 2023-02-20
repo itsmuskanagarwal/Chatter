@@ -25,15 +25,15 @@
         </div> -->
       </mat-form-field>
       <mat-form-field class="example-full-width">
-        <input
-          matInput
-          placeholder="Password"
-          class="input"
-          id="password"
-          required
-          required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
-          #u2
-        />
+
+        <input matInput [type]="hide ? 'password' : 'text'" placeholder="Password" id="password"
+        required
+        required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+        #u2
+        class="input">
+        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+          <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
         <!-- <div *ngIf="password.invalid && (password.dirty || password.touched)">
           <div *ngIf="password.errors.required">
             Password is required.
@@ -56,9 +56,7 @@
     </button>
     <div *ngIf="validPassword == true">
       <br />
-      <div class="error">
-        <span> {{ msg }} </span>
-      </div>
+        <mat-error> {{ msg }} </mat-error>
     </div>
     <br />
     <div class="container">

@@ -18,13 +18,6 @@
   text-align: center;
 }
 
-
-.error {
-  color: #d8000c;
-  background-color: #ffbaba;
-  font-size: small;
-}
-
 .btn-block:hover {
   color: #fff;
   background-color: #ff5c31;

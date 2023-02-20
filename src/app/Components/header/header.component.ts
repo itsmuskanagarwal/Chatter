@@ -1,6 +1,6 @@
-
-import { Component, NgZone } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
+
 import { StorageService } from '../../../services/storage.service';
 import { AuthServiceService } from 'src/services/authservice.service';
 import { Router } from '@angular/router';
@@ -28,6 +28,7 @@ export class HeaderComponent {
     this.cookieService.delete('isLoggedIn');
     this.storage.isLoggedIn = false;
     this.ngZone.run(() => this.router.navigateByUrl('/landing'));
+
   }
 
   isLoggedIn : boolean | any;
@@ -51,7 +52,4 @@ export class HeaderComponent {
   toggleCollapsed(): void {
     this.isCollapsed = !this.isCollapsed;
   }
-
-
-  
 }

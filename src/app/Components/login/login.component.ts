@@ -14,7 +14,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class LoginComponent implements OnInit {
   validPassword: boolean | undefined;
-
+  hide = true;
   data: any = [];
   // public password : string | any;
   // public email : string | any;
@@ -33,6 +33,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {}
   check(uname: string, pwd: string) {
+
     this.crudService.verifyUser(uname, pwd).subscribe(
       (res) => {
         this.data = res;
@@ -54,6 +55,7 @@ export class LoginComponent implements OnInit {
       },
       (error) => {
         console.log('Error:', error);
+
         this.validPassword = true;
         this.msg =
           'Invalid username or password. If you are a new user, please register ';

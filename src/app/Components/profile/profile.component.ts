@@ -3,6 +3,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CrudService } from 'src/services/crud.service';
 import { FormGroup, FormBuilder } from "@angular/forms";
+import { StorageService } from 'src/services/storage.service';
 
 @Component({
   selector: 'app-profile',
@@ -11,7 +12,6 @@ import { FormGroup, FormBuilder } from "@angular/forms";
 })
 export class ProfileComponent {
 
-  userdetails: any;
   getId: any;
   updateForm: FormGroup  | any;
 
@@ -21,38 +21,43 @@ export class ProfileComponent {
     private router: Router,
     private ngZone: NgZone,
     private activatedRoute: ActivatedRoute,
-    private crudService: CrudService
-    
-  ) {}
+    private crudService: CrudService,
+    private storage:StorageService
+  ) {
+    this.updateForm=formBuilder.group({
+      username:'',
+      userContact:'',
+      userEmail:'',
+      display:''
+    });
+  }
 
- 
-  
-  save(username: any, userContact: any, userEmail: any, display: any) {
-    if (
-      username != '' ||
-      userContact != '' ||
-      userEmail != '' ||
-      display != ''
-    ) {
-      
-      this.getId = this.activatedRoute.snapshot.paramMap.get('id');
-
-      this.crudService.GetUser(this.getId).subscribe(res => {
-        this.updateForm.setValue({
-          name: res['name'],
-          price: res['price'],
-          description: res['description']
-        });
+    ngOnInit(){
+      console.log(this.storage.data);
+      this.updateForm.setValue({
+        username: this.storage.data.name,
+        userContact: this.storage.data.contact,
+        userEmail:this.storage.data.email,
+        display:this.storage.data.displayname
       });
-   
-      this.updateForm = this.formBuilder.group({
-        name: [''],
-        price: [''],
-        description: ['']
+    }
+
+  save(data:any) {
+    if (this.updateForm.valid)
+    {
+      this.storage.data.name=data.username;
+      this.storage.data.contact=data.userContact;
+      this.storage.data.email=data.userEmail;
+      this.storage.data.displayname=data.display;
+
+      console.log(this.storage.data);
+      this.crudService.updateUser(this.storage.data).subscribe((res)=>{
+        console.log(res);
       })
 
+
       this._snackBar.open(
-        'Hello ' + username + ', Details Updated successfully!!',
+        'Hello ' + data.display + ', Details Updated successfully!!',
         'OK',
         {
           duration: 5000,
@@ -76,5 +81,5 @@ export class ProfileComponent {
     // }
   }
 
-  
+
 }
