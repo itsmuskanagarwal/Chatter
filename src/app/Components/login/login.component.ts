@@ -12,7 +12,9 @@ import { StorageService } from 'src/services/storage.service';
 })
 export class LoginComponent {
   validPassword: boolean | undefined;
+
   data: any = [];
+
 
   constructor(
     public authservice: AuthServiceService,
@@ -30,6 +32,7 @@ export class LoginComponent {
     this.crudService.verifyUser(uname,pwd).subscribe((res) => {
       this.data=res;
       console.log(res);
+
       if(this.data.email==uname){
         this.ngZone.run(() => this.routes.navigateByUrl('/home'));
       }else {
@@ -44,6 +47,7 @@ export class LoginComponent {
       this.msg =
         'Invalid username or password. If you are a new user, please register ';
       // Handle the error here, such as showing an error message to the user
+
     }
   );
 
