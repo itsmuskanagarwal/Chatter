@@ -32,6 +32,18 @@ export class CrudService {
   }
 
   // Get all users
+  getUsers(): Observable<any> {
+    return this.httpClient.get(this.REST_API+'/find-users').pipe(
+      catchError(error => {
+        // Handle the error here, for example:
+        console.error('Error fetching user', error);
+        return throwError(() => new Error('Error fetching user'));
+      })
+    );
+
+  }
+
+  //verify user
   verifyUser(email: string, password: string): Observable<any> {
     const body = { email, password };
     return this.httpClient.post(this.REST_API+'/login', body).pipe(

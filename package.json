@@ -4,12 +4,11 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "dev": "nodemon ng serve",
+    "dev": "nodemon src/BackEnd/server/server.js",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "pretty": "prettier --write \"./**/*.{ts,tsx,json,html,css}\"",
-    "dev": "nodemon src/BackEnd/server/server.js"
+    "pretty": "prettier --write \"./**/*.{ts,tsx,json,html,css}\""
   },
   "private": true,
   "dependencies": {
@@ -26,6 +25,7 @@
     "@angular/router": "^15.1.0",
     "@ng-bootstrap/ng-bootstrap": "^14.0.1",
     "@popperjs/core": "^2.11.6",
+    "@types/socket.io-client": "^3.0.0",
     "body-parser": "^1.20.1",
     "bootstrap": "^5.2.3",
     "cors": "^2.8.5",
@@ -35,6 +35,7 @@
     "mongoose": "^6.9.1",
     "ngx-toastr": "^16.0.2",
     "rxjs": "~7.8.0",
+    "socket.io-client": "^4.6.1",
     "tslib": "^2.3.0",
     "zone.js": "~0.12.0"
   },
