@@ -4,10 +4,10 @@
       <input type="text" placeholder="search" />
     </header>
     <ul>
-      <li *ngFor="let contact of Contacts" (click)="selectUserHandler(contact.id)">
-        <img class="img-size" src="{{ contact.image }}" alt="" />
+      <li *ngFor="let user of USERS" (click)="selectUserHandler(user.email)">
+          <img class="img-size" src="./assets/p5.webp" alt="" />
         <div>
-          <h2>{{ contact.name }}</h2>
+          <h2>{{ user.name }}</h2>
           <h3>
             <span class="status orange"></span>
           </h3>
@@ -17,7 +17,7 @@
   </aside>
   <main>
     <header>
-      <img class="img-size" src="{{selectedUser.image}}" alt="" />
+      <img class="img-size" src="./assets/p5.webp" alt="" />
       <div>
         <h2>Chat with {{selectedUser.name}}</h2>
         <!-- <h3>already 1902 messages</h3> -->
@@ -29,79 +29,30 @@
     </header>
     <main>
       <div class="chat">
-        <ng-container *ngIf="selectedUser">
-
-          <div class="chat">
-            <div *ngFor="let item of messageArray" [ngClass]="item?.user === currentUser?.name? 'same-user' : null">
-              <p class="message-container">{{item?.message}}</p>
+        <ul id="chat">
+          <!-- [ngClass]="item?.email === currentUser?.email?  'same-user' : 'you'" -->
+          <li class="you" *ngFor="let message of messages">
+            <div class="entete">
+              <span class="status green"></span>
+              <h2>{{selectedUser.name}}</h2>
+              <h3>{{timestamp}}</h3>
             </div>
-          </div>
-      <!-- <ul id="chat">
-        <li class="you">
-          <div class="entete">
-            <span class="status green"></span>
-            <h2>Muskan</h2>
-            <h3>10:12AM, Today</h3>
-          </div>
-          <div class="triangle"></div>
-          <div class="message"></div>
-        </li>
-        <li class="me">
-          <div class="entete">
-            <h3>10:12AM, Today</h3>
-            <h2>You</h2>
-            <span class="status blue"></span>
-          </div>
-          <div class="triangle"></div>
-          <div class="message">I was stuck somewhere.</div>
-        </li>
-        <li class="me">
-          <div class="entete">
-            <h3>10:12AM, Today</h3>
-            <h2>You</h2>
-            <span class="status blue"></span>
-          </div>
-          <div class="triangle"></div>
-          <div class="message">I'm sorry</div>
-        </li>
-        <li class="you">
-          <div class="entete">
-            <span class="status green"></span>
-            <h2>Muskan</h2>
-            <h3>10:12AM, Today</h3>
-          </div>
-          <div class="triangle"></div>
-          <div class="message">It's okay, How are you?</div>
-        </li>
-        <li class="me">
-          <div class="entete">
-            <h3>10:12AM, Today</h3>
-            <h2>You</h2>
-            <span class="status blue"></span>
-          </div>
-          <div class="triangle"></div>
-          <div class="message">I am Fine.</div>
-        </li>
-        <li class="me">
-          <div class="entete">
-            <h3>10:12AM, Today</h3>
-            <h2>You</h2>
-            <span class="status blue"></span>
-          </div>
-          <div class="triangle"></div>
-          <div class="message">OK, ttyl</div>
-        </li>
-      </ul> -->
+            <div class="triangle"></div>
+            <div class="message">{{message}}</div>
+          </li>
+        </ul>
+      </div>
       <footer>
         <div class="footer-btn  text-center">
-          <button class="btn "
-          (click)="sendMessage()">Send
-        </button>
-        <textarea placeholder="Type your message" [(ngModel)]="messageText" (keyup)="$event.keyCode===13 && sendMessage()"></textarea>
+          <form (submit)="sendMessage(message)">
+            <button class="btn ">
+              Send
+            </button>
+            <textarea placeholder="Type your message" id="inputMessage" name="messageInput" [(ngModel)]="message"></textarea>
+          </form>
         </div>
       </footer>
-    </ng-container>
-  </div>
-    </main>
+    <!-- </ng-container> -->
+  </main>
   </main>
 </div>

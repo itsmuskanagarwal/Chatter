@@ -27,16 +27,15 @@ export class LoginComponent {
   msg = '';
 
   ngOnInit() {}
-  check(uname: string, pwd: string) {
-    console.log(this.storage.data);
+  check(email: string, pwd: string) {
 
-    this.crudService.verifyUser(uname,pwd).subscribe((res) => {
+    this.crudService.verifyUser(email,pwd).subscribe((res) => {
       this.data=res;
-      console.log(res);
+      console.log("res"+res);
 
-      if(this.data.email==uname){
+      if(this.data.email==email){
         this.storage.data=this.data;
-        console.log(this.storage.data);
+        console.log("user details saved"+this.storage.data);
         this.ngZone.run(() => this.routes.navigateByUrl('/home'));
       }else {
         this.validPassword = true;

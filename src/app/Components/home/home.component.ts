@@ -1,10 +1,9 @@
-
 import { Component } from '@angular/core';
-import { CONTACT } from '../../../modules/mockup-contacts';
 import { ChatService } from 'src/services/chat.service';
 import { StorageService } from 'src/services/storage.service';
 import { CrudService } from 'src/services/crud.service';
 import { user } from 'src/modules/user';
+import { io } from 'socket.io-client';
 
 @Component({
   selector: 'app-home',
@@ -12,98 +11,90 @@ import { user } from 'src/modules/user';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent {
-  Contacts = CONTACT;
-  user:any;
-  USERS:user[] = [];
-  public roomId: string | any;
-  public messageText: string | any;
-  public messageArray: { user: string, message: string }[] = [];
-  private storageArray: { roomId: string, chats: { user: string, message: string }[] }[] = [];
+  private socket: any;
+  public messages: string[] = [];
+  public message: string = '';
 
-  public phone: string | undefined;
-  public currentUser:any;
-  selectedUser:any;
+  user: any;
+  USERS: user[] = [];
+  emailID: string | any;
+  timestamp=new Date().toLocaleTimeString();
 
+  currentUser: any;
+  selectedUser: any;
 
+  //image array for profile image
+  Img = [
+    'assets/p5.webp',
+    'assets/p1.avif',
+    'assets/p3.png',
+    'assets/p4.avif',
+    'assets/p2.png',
+  ];
 
-  constructor(private chatService:ChatService, private storage:StorageService, private crudService:CrudService){}
+  //function for generating random profile images
+  getRandomImg(): string {
+    const randomImg = this.Img[Math.floor(Math.random() * this.Img.length)];
+    return randomImg;
+  }
+
+  constructor(
+    private chatService: ChatService,
+    private storage: StorageService,
+    private crudService: CrudService,
+    ) {}
 
   ngOnInit(): void {
-    this.currentUser=this.Contacts[0];
-    this.selectedUser=this.currentUser;
-    this.user=this.storage.data;
+    this.user = this.storage.data;
+    this.currentUser = this.user;
+    this.selectedUser = this.currentUser;
 
-    //fetching all registered users
-    this.crudService.getUsers().subscribe((res)=>{
-      this.USERS=res;
-      console.log(this.USERS);
-    })
+    this.socket = io('http://localhost:3000');
 
-    this.chatService.getMessage()
-      .subscribe((data: { user: string, room: string, message: string }) => {
-        if (this.roomId) {
-          setTimeout(() => {
-            this.storageArray = this.chatService.getStorage();
-            const storeIndex = this.storageArray
-            .findIndex((storage) => storage.roomId === this.roomId);
-            this.messageArray = this.storageArray[storeIndex].chats;
-          }, 500);
-        }
-      });
-  }
-
-  selectUserHandler(id: number): void {
-    this.selectedUser = this.Contacts.find((user) => user.id === id);
-    console.log(this.selectedUser)
-   this.roomId = this.selectedUser.roomId[this.selectedUser.id];
-    this.messageArray = [];
-
-    this.storageArray = this.chatService.getStorage();
-    const storeIndex = this.storageArray
-      .findIndex((storage) => storage.roomId === this.roomId);
-
-    if (storeIndex > -1) {
-      this.messageArray = this.storageArray[storeIndex].chats;
-    }
-
-    // this.storageArray = this.chatService.getStorage();
-    this.join(this.currentUser.name,this.roomId);
-  }
-
-  join(username:string, roomId:string):void{
-    // this.chatService.joinRoom({username,roomId});
-  }
-
-  sendMessage(): void {
-    this.chatService.sendMessage({
-      user: this.currentUser.name,
-      room: this.roomId,
-      message: this.messageText
+    // Listen for incoming messages
+    this.socket.on('message', (data: string) => {
+      this.messages.push(data);
     });
 
-    this.storageArray = this.chatService.getStorage();
-    const storeIndex = this.storageArray
-      .findIndex((storage) => storage.roomId === this.roomId);
 
-    if (storeIndex > -1) {
-      this.storageArray[storeIndex].chats.push({
-        user: this.currentUser.name,
-        message: this.messageText
-      });
-    } else {
-      const updateStorage = {
-        roomId: this.roomId,
-        chats: [{
-          user: this.currentUser.name,
-          message: this.messageText
-        }]
-      };
-      this.storageArray.push(updateStorage);
-    }
-    this.chatService.setStorage(this.storageArray);
-    this.messageText = '';
+    //fetching all registered users
+    this.crudService.getUsers().subscribe((res) => {
+      this.USERS = res;
+      for(let user in this.USERS){
+        if(this.USERS[user].email===this.currentUser.email){
+        this.USERS.splice(parseInt(user),1);
+      }else{
+        continue
+        }
+      }
+      console.log(this.USERS);
+    });
+  }
 
+  selectUserHandler(email: string): void {
+    this.selectedUser = this.USERS.find((user) => user.email === email);
+    console.log(this.selectedUser.name);
+    this.emailID = this.selectedUser.email;
+
+    this.crudService.getAllMessages(this.currentUser.name,this.selectedUser.name).subscribe((res)=>{
+      if(res){
+        this.messages.push(res);
+      }
+    });
+    this.crudService.getNewMessages(this.currentUser.name,this.selectedUser.name).subscribe((res)=>{
+      this.messages.push(res);
+    });
 
   }
 
+  public sendMessage(message:string): void {
+    console.log('working');
+    this.socket.emit('message', this.message.trim());
+    this.crudService.sendMessages(this.currentUser.name,this.selectedUser.name,message).subscribe((res)=>{
+      console.log(res);
+    })
+    // if (this.message.trim()) {
+    // }
+    this.message = '';
+  }
 }
