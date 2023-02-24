@@ -9,5 +9,5 @@ export class StorageService {
 
   constructor(private crudService: CrudService) { }
 
-  
+  isLoggedIn: boolean = false;
 }
