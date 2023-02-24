@@ -4,6 +4,15 @@ import { StorageService } from 'src/services/storage.service';
 import { CrudService } from 'src/services/crud.service';
 import { user } from 'src/modules/user';
 import { io } from 'socket.io-client';
+import { right } from '@popperjs/core';
+
+interface Message {
+  message: string;
+  sender: string;
+  receiver: string;
+  _id: string;
+}
+
 
 @Component({
   selector: 'app-home',
@@ -12,7 +21,7 @@ import { io } from 'socket.io-client';
 })
 export class HomeComponent {
   private socket: any;
-  public messages: string[] = [];
+  public messages: any[] = [];
   public message: string = '';
 
   user: any;
@@ -22,6 +31,8 @@ export class HomeComponent {
 
   currentUser: any;
   selectedUser: any;
+
+  
 
 
   //image array for profile image
@@ -48,14 +59,9 @@ export class HomeComponent {
   ngOnInit(): void {
     this.user = this.storage.data;
     this.currentUser = this.user;
-    this.selectedUser = this.currentUser;
+    this.selectedUser = ""
 
     this.socket = io('http://localhost:3000');
-
-    // Listen for incoming messages
-    this.socket.on('message', (data: string) => {
-      this.messages.push(data);
-    });
 
 
     //fetching all registered users
@@ -74,35 +80,61 @@ export class HomeComponent {
   }
 
   selectUserHandler(email: string): void {
+
+    
+    console.log(this.currentUser.name);
+    console.log(this.selectedUser.name);
+    this.messages=[];
+
     this.selectedUser = this.USERS.find((user) => user.email === email);
     console.log(this.selectedUser.name);
     this.emailID = this.selectedUser.email;
 
     this.crudService.getAllMessages(this.currentUser.name,this.selectedUser.name).subscribe((res)=>{
       console.log(res);
+      console.log(JSON.stringify(res))
+      // res=JSON.stringify(res);
+      // console.log(typeof res);
+
+
       if(res){
 
+        // this.messages.push(res)
+        const array = res.map((obj: any) => Object.assign({}, obj));
+
         if (res && res.length > 0) {
-          res.forEach((obj : { message: string }) => {
-            console.log(obj.message);
-            this.messages.push(obj.message);
-          });
-          console.log("All messages: ", this.messages);
+          for (const obj in array) {
+            console.log(array[obj]);
+            this.messages[parseInt(obj)]=array[obj];
+            }
+            console.log("All messages: ", this.messages);
+        }         
         }
 
-      }
+      
+      console.log("All objects: ", this.messages);
+     
     });
-    this.crudService.getNewMessages(this.currentUser.name,this.selectedUser.name).subscribe((res)=>{
-      console.log(res);
-      this.messages.push(res.message);
-      // console.log("new",this.messages)
-    });
+    
+    // this.crudService.getNewMessages(this.currentUser.name,this.selectedUser.name).subscribe((res)=>{
+    //   console.log(res);
+    //   // this.messages.push(res.message);
+    //   // // console.log("new",this.messages)
+    // });
 
   }
 
   public sendMessage(message:string): void {
-    console.log('working');
-    this.socket.emit('message', this.message.trim());
+    // Listen for incoming messages
+    this.socket.emit('message', (data: any) => {
+      // this.messages.push(data);
+      console.log(data.recipient);
+      console.log(data.message);
+    });
+     console.log('working');
+     console.log(this.currentUser.name);
+     console.log(this.selectedUser.name);
+    this.socket.emit('message',[this.selectedUser.email, this.message.trim()]);
     this.crudService.sendMessages(this.currentUser.name,this.selectedUser.name,message).subscribe((res)=>{
       console.log(res);
     })

@@ -31,15 +31,18 @@
       <div class="chat">
         <ul id="chat">
           <!-- [ngClass]="item?.email === currentUser?.email?  'same-user' : 'you'" -->
-          <li class="you" *ngFor="let message of messages">
-            <div class="entete">
-              <span class="status green"></span>
-              <h2>{{selectedUser.name}}</h2>
-              <h3>{{timestamp}}</h3>
-            </div>
-            <div class="triangle"></div>
-            <div class="message">{{message}}</div>
-          </li>
+          <div *ngFor="let msg of messages | keyvalue">
+            <li [ngClass]="{ 'you': msg.value.sender === selectedUser.name, 'me': msg.value.sender === currentUser.name }">
+              <div class="entete">
+                <span class="status green"></span>
+                <h2>{{msg.value.sender}}</h2>
+                <h3>{{timestamp}}</h3>
+              </div>
+              <div class="triangle"></div>
+              <div class="message">{{msg.value.message}}</div>
+            </li>
+          </div>
+          
         </ul>
       </div>
       <footer>
