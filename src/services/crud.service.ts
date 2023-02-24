@@ -57,6 +57,7 @@ export class CrudService {
   // Get all users
   getUsers(): Observable<any> {
     return this.httpClient.get(this.REST_API+'/find-users').pipe(
+
       catchError(error => {
         // Handle the error here, for example:
         console.error('Error fetching user', error);
@@ -98,6 +99,7 @@ export class CrudService {
         // Handle the error here, for example:
         console.error('Error fetching new msgs', error);
         return throwError(() => new Error('Error fetching new msgs'));
+
       })
     );
   }
@@ -111,6 +113,7 @@ export class CrudService {
         // Handle the error here, for example:
         console.error('Enable to save msgs', error);
         return throwError(() => new Error('Enable to save msgs'));
+
       })
     );
   }

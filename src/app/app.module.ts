@@ -26,19 +26,19 @@ import { MatDividerModule } from '@angular/material/divider';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { AboutComponent } from './Components/about/about.component';
 import { ContactComponent } from './Components/contact/contact.component';
-import { GroupComponent } from './Components/group/group.component';
 import { HeaderComponent } from './Components/header/header.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ToastrModule } from 'ngx-toastr';
 import { HttpClientModule } from '@angular/common/http';
+import { io } from 'socket.io-client';
+
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'landing' },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignUpComponent },
   { path: 'landing', component: LandingComponent },
-  { path: 'group', component: GroupComponent },
   { path: 'contact', component: ContactComponent },
   { path: 'about', component: AboutComponent },
   { path: 'profile', component: ProfileComponent },
@@ -55,7 +55,6 @@ const routes: Routes = [
     ProfileComponent,
     AboutComponent,
     ContactComponent,
-    GroupComponent,
     HeaderComponent
   ],
   imports: [

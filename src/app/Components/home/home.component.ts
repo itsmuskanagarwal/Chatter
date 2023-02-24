@@ -23,6 +23,7 @@ export class HomeComponent {
   currentUser: any;
   selectedUser: any;
 
+
   //image array for profile image
   Img = [
     'assets/p5.webp',
@@ -64,6 +65,7 @@ export class HomeComponent {
         if(this.USERS[user].email===this.currentUser.email){
         this.USERS.splice(parseInt(user),1);
       }else{
+
         continue
         }
       }
@@ -96,5 +98,6 @@ export class HomeComponent {
     // if (this.message.trim()) {
     // }
     this.message = '';
+
   }
 }

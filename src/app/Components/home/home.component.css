@@ -8,7 +8,7 @@ body {
 #container {
   max-width: fit-content;
   max-height: 630px;
-  /* max-width: 1440px; */
+   /* max-width: 1440px;  */
   min-height: 200px;
   background: #eff3f7;
   margin-left: auto;
