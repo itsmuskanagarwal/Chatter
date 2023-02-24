@@ -29,79 +29,31 @@
     </header>
     <main>
       <div class="chat">
-        <!-- <ng-container *ngIf="selectedUser"> -->
-
-          <div class="chat">
-            <!-- <div *ngFor="let item of messageArray" [ngClass]="item?.email === currentUser?.email?  'same-user' : 'you'"> -->
-              <p class="message-container">{{message}}</p>
-            <!-- </div> -->
-          </div>
-      <!-- <ul id="chat">
-        <li class="you">
-          <div class="entete">
-            <span class="status green"></span>
-            <h2>Muskan</h2>
-            <h3>10:12AM, Today</h3>
-          </div>
-          <div class="triangle"></div>
-          <div class="message"></div>
-        </li>
-        <li class="me">
-          <div class="entete">
-            <h3>10:12AM, Today</h3>
-            <h2>You</h2>
-            <span class="status blue"></span>
-          </div>
-          <div class="triangle"></div>
-          <div class="message">I was stuck somewhere.</div>
-        </li>
-        <li class="me">
-          <div class="entete">
-            <h3>10:12AM, Today</h3>
-            <h2>You</h2>
-            <span class="status blue"></span>
-          </div>
-          <div class="triangle"></div>
-          <div class="message">I'm sorry</div>
-        </li>
-        <li class="you">
-          <div class="entete">
-            <span class="status green"></span>
-            <h2>Muskan</h2>
-            <h3>10:12AM, Today</h3>
-          </div>
-          <div class="triangle"></div>
-          <div class="message">It's okay, How are you?</div>
-        </li>
-        <li class="me">
-          <div class="entete">
-            <h3>10:12AM, Today</h3>
-            <h2>You</h2>
-            <span class="status blue"></span>
-          </div>
-          <div class="triangle"></div>
-          <div class="message">I am Fine.</div>
-        </li>
-        <li class="me">
-          <div class="entete">
-            <h3>10:12AM, Today</h3>
-            <h2>You</h2>
-            <span class="status blue"></span>
-          </div>
-          <div class="triangle"></div>
-          <div class="message">OK, ttyl</div>
-        </li>
-      </ul> -->
+        <ul id="chat">
+          <!-- [ngClass]="item?.email === currentUser?.email?  'same-user' : 'you'" -->
+          <li class="you" *ngFor="let message of messages">
+            <div class="entete">
+              <span class="status green"></span>
+              <h2>{{selectedUser.name}}</h2>
+              <h3>{{timestamp}}</h3>
+            </div>
+            <div class="triangle"></div>
+            <div class="message">{{message}}</div>
+          </li>
+        </ul>
+      </div>
       <footer>
         <div class="footer-btn  text-center">
-          <button class="btn "
-          (click)="sendMessage()">Send
-        </button>
-        <textarea placeholder="Type your message"></textarea>
+          <form (submit)="sendMessage(message)">
+            <button class="btn ">
+              Send
+            </button>
+            <textarea placeholder="Type your message" id="inputMessage" name="messageInput" [(ngModel)]="message"></textarea>
+          </form>
         </div>
       </footer>
     <!-- </ng-container> -->
-  </div>
-    </main>
+  </main>
+
   </main>
 </div>

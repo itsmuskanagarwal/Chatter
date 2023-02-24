@@ -56,7 +56,8 @@ export class CrudService {
 
   // Get all users
   getUsers(): Observable<any> {
-    return this.httpClient.get(this.REST_API+'/find-user').pipe(
+    return this.httpClient.get(this.REST_API+'/find-users').pipe(
+
       catchError(error => {
         // Handle the error here, for example:
         console.error('Error fetching user', error);
@@ -81,11 +82,11 @@ export class CrudService {
   // // Get previous chats
   getAllMessages(currentUser: string, selectedUser: string): Observable<any> {
     const body = { currentUser, selectedUser };
-    return this.httpClient.post(this.REST_API+'/chat', body).pipe(
+    return this.httpClient.post(this.REST_API+'/chat-all-msgs', body).pipe(
       catchError(error => {
         // Handle the error here, for example:
-        console.error('Error fetching user', error);
-        return throwError(() => new Error('Error fetching user'));
+        console.error('Error fetching all msgs', error);
+        return throwError(() => new Error('Error fetching all msgs'));
       })
     );
   }
@@ -93,23 +94,26 @@ export class CrudService {
   // // Get new messages
   getNewMessages(currentUser: string, selectedUser: string): Observable<any> {
     const body = { currentUser, selectedUser };
-    return this.httpClient.post(this.REST_API+'/chat', body).pipe(
+    return this.httpClient.post(this.REST_API+'/chat-new-msgs', body).pipe(
       catchError(error => {
         // Handle the error here, for example:
-        console.error('Error fetching user', error);
-        return throwError(() => new Error('Error fetching user'));
+        console.error('Error fetching new msgs', error);
+        return throwError(() => new Error('Error fetching new msgs'));
+
       })
     );
   }
 
-  // // Get previous chats
-  SendMessages(currentUser: string, selectedUser: string, message : string): Observable<any> {
+  // Send Msgs
+  sendMessages(currentUser: string, selectedUser: string, message : string): Observable<any> {
     const body = { currentUser, selectedUser, message };
-    return this.httpClient.post(this.REST_API+'/chat', body).pipe(
+    console.log(body);
+    return this.httpClient.post(this.REST_API+'/chat-send', body).pipe(
       catchError(error => {
         // Handle the error here, for example:
-        console.error('Error fetching user', error);
-        return throwError(() => new Error('Error fetching user'));
+        console.error('Enable to save msgs', error);
+        return throwError(() => new Error('Enable to save msgs'));
+
       })
     );
   }

@@ -1,5 +1,8 @@
 export interface Contact {
-  photo: string;
+  id:number;
   name: string;
-  status: string;
+  email:string
+  phone:string;
+  image: string;
+  roomId: {};
 }

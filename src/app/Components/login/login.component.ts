@@ -34,6 +34,7 @@ export class LoginComponent implements OnInit {
   msg = '';
 
   ngOnInit() {}
+
   check(uname: string, pwd: string) {
 
     this.crudService.verifyUser(uname, pwd).subscribe(

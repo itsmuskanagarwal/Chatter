@@ -11,20 +11,19 @@ import { io } from 'socket.io-client';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent {
+  private socket: any;
+  public messages: string[] = [];
+  public message: string = '';
+
   user: any;
   USERS: user[] = [];
   emailID: string | any;
-  messageText: string = "";
-  messageArray: string[] = [];
-
-  currentUser: {} | any;
-  selectedUser: {} | any;
-
-  
-  message: string | any;
-  private socket: any;
   timestamp=new Date().toLocaleTimeString();
-  
+
+  currentUser: any;
+  selectedUser: any;
+
+
   //image array for profile image
   Img = [
     'assets/p5.webp',
@@ -49,52 +48,56 @@ export class HomeComponent {
   ngOnInit(): void {
     this.user = this.storage.data;
     this.currentUser = this.user;
-    
+    this.selectedUser = this.currentUser;
+
     this.socket = io('http://localhost:3000');
 
     // Listen for incoming messages
     this.socket.on('message', (data: string) => {
-      this.messageArray.push(data);
+      this.messages.push(data);
     });
+
 
     //fetching all registered users
     this.crudService.getUsers().subscribe((res) => {
       this.USERS = res;
-      console.log(this.USERS);
-
       for(let user in this.USERS){
-        if(this.USERS[user].email===this.currentUser.email)
-        {
-          console.log(user)
-          console.log(this.currentUser.email)
-          console.log(this.USERS[user].email)
-
+        if(this.USERS[user].email===this.currentUser.email){
         this.USERS.splice(parseInt(user),1);
-        console.log(this.USERS)
-      }
-      else
-      {
+      }else{
+
         continue
         }
       }
       console.log(this.USERS);
     });
   }
-    
- 
 
   selectUserHandler(email: string): void {
     this.selectedUser = this.USERS.find((user) => user.email === email);
     console.log(this.selectedUser.name);
     this.emailID = this.selectedUser.email;
 
+    this.crudService.getAllMessages(this.currentUser.name,this.selectedUser.name).subscribe((res)=>{
+      if(res){
+        this.messages.push(res);
+      }
+    });
+    this.crudService.getNewMessages(this.currentUser.name,this.selectedUser.name).subscribe((res)=>{
+      this.messages.push(res);
+    });
+
   }
 
-  
-
-  sendMessage() {
-    console.log('working')
+  public sendMessage(message:string): void {
+    console.log('working');
     this.socket.emit('message', this.message.trim());
-      this.message = '';
+    this.crudService.sendMessages(this.currentUser.name,this.selectedUser.name,message).subscribe((res)=>{
+      console.log(res);
+    })
+    // if (this.message.trim()) {
+    // }
+    this.message = '';
+
   }
 }
