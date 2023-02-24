@@ -1,6 +1,6 @@
 import { Component, OnInit, NgZone } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
-
+import { ChatService } from 'src/services/chat.service';
 import { StorageService } from '../../../services/storage.service';
 import { AuthServiceService } from 'src/services/authservice.service';
 import { Router } from '@angular/router';
@@ -20,13 +20,17 @@ export class HeaderComponent {
     private cookieService: CookieService,
     private storage: StorageService,
     private router: Router,
-    private ngZone: NgZone) {}
+    private ngZone: NgZone,
+    private chat : ChatService) {}
  
   
   logout() {
     // delete isLoggedIn cookie
     this.cookieService.delete('isLoggedIn');
     this.storage.isLoggedIn = false;
+    localStorage.removeItem("myData");
+    localStorage.clear();
+    this.chat.currentUser = [];
     this.ngZone.run(() => this.router.navigateByUrl('/landing'));
 
   }
@@ -45,6 +49,7 @@ export class HeaderComponent {
     if (this.cookieService.get('isLoggedIn') === 'true') {
       this.storage.isLoggedIn = true;
     }
+    
     this.isLoggedIn = this.storage.isLoggedIn;
   }
 

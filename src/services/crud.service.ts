@@ -31,7 +31,7 @@ export class CrudService {
 
   }
 
-  // Get all users
+  // Verify user
   verifyUser(email: string, password: string): Observable<any> {
     const body = { email, password };
     return this.httpClient.post(this.REST_API+'/login', body).pipe(
@@ -54,6 +54,18 @@ export class CrudService {
       )
   }
 
+  // Get all users
+  getUsers(): Observable<any> {
+    return this.httpClient.get(this.REST_API+'/find-user').pipe(
+      catchError(error => {
+        // Handle the error here, for example:
+        console.error('Error fetching user', error);
+        return throwError(() => new Error('Error fetching user'));
+      })
+    );
+
+  }
+
   // Update
   updateUser(data:any): Observable<any> {
     return this.httpClient.put(this.REST_API+'/update-user', data)
@@ -66,6 +78,41 @@ export class CrudService {
     );
   }
 
+  // // Get previous chats
+  getAllMessages(currentUser: string, selectedUser: string): Observable<any> {
+    const body = { currentUser, selectedUser };
+    return this.httpClient.post(this.REST_API+'/chat', body).pipe(
+      catchError(error => {
+        // Handle the error here, for example:
+        console.error('Error fetching user', error);
+        return throwError(() => new Error('Error fetching user'));
+      })
+    );
+  }
+
+  // // Get new messages
+  getNewMessages(currentUser: string, selectedUser: string): Observable<any> {
+    const body = { currentUser, selectedUser };
+    return this.httpClient.post(this.REST_API+'/chat', body).pipe(
+      catchError(error => {
+        // Handle the error here, for example:
+        console.error('Error fetching user', error);
+        return throwError(() => new Error('Error fetching user'));
+      })
+    );
+  }
+
+  // // Get previous chats
+  SendMessages(currentUser: string, selectedUser: string, message : string): Observable<any> {
+    const body = { currentUser, selectedUser, message };
+    return this.httpClient.post(this.REST_API+'/chat', body).pipe(
+      catchError(error => {
+        // Handle the error here, for example:
+        console.error('Error fetching user', error);
+        return throwError(() => new Error('Error fetching user'));
+      })
+    );
+  }
 
 
 

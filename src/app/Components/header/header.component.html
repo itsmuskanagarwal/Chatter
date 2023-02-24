@@ -29,10 +29,13 @@
     >
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
-          <a class="nav-link" routerLink="landing" (click)="toggleCollapsed()"
-            >Home</a
-          >
-        </li>
+          <a *ngIf="!isLoggedIn" class="nav-link" routerLink="landing" (click)="toggleCollapsed()"
+            >Home</a>
+
+            <a *ngIf="isLoggedIn" class="nav-link" routerLink="Home" (click)="toggleCollapsed()"
+            >Home</a>
+
+          </li>
 
         <li class="nav-item">
           <a class="nav-link" routerLink="about" (click)="toggleCollapsed()"
