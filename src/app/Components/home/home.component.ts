@@ -79,12 +79,23 @@ export class HomeComponent {
     this.emailID = this.selectedUser.email;
 
     this.crudService.getAllMessages(this.currentUser.name,this.selectedUser.name).subscribe((res)=>{
+      console.log(res);
       if(res){
-        this.messages.push(res);
+
+        if (res && res.length > 0) {
+          res.forEach((obj : { message: string }) => {
+            console.log(obj.message);
+            this.messages.push(obj.message);
+          });
+          console.log("All messages: ", this.messages);
+        }
+
       }
     });
     this.crudService.getNewMessages(this.currentUser.name,this.selectedUser.name).subscribe((res)=>{
-      this.messages.push(res);
+      console.log(res);
+      this.messages.push(res.message);
+      // console.log("new",this.messages)
     });
 
   }
