@@ -51,15 +51,15 @@ export class LoginComponent implements OnInit {
           console.log(this.storage.isLoggedIn)
 
           this.ngZone.run(() => this.routes.navigateByUrl('/home'));
-          
+
           localStorage.setItem('myData', JSON.stringify(this.data));
           this.storage.data = JSON.parse(localStorage.getItem('myData')  as string);
 
           console.log(this.data)
           console.log(this.storage.data)
-          
+
           this.chat.currentUser = this.storage.data
-          
+
         } else {
           this.validPassword = true;
           this.msg =

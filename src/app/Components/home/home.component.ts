@@ -4,7 +4,7 @@ import { StorageService } from 'src/services/storage.service';
 import { CrudService } from 'src/services/crud.service';
 import { user } from 'src/modules/user';
 import { io } from 'socket.io-client';
-import { right } from '@popperjs/core';
+
 
 interface Message {
   message: string;
@@ -13,7 +13,6 @@ interface Message {
   _id: string;
 }
 
-
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -21,19 +20,17 @@ interface Message {
 })
 export class HomeComponent {
   private socket: any;
-  public messages: any[] = [];
+  public messages: [{ message: string; timestamp: Date; sender: string; }] | any = [];
   public message: string = '';
+  public chatID: string = '';
 
   user: any;
   USERS: user[] = [];
   emailID: string | any;
-  timestamp=new Date().toLocaleTimeString();
+  timestamp = new Date().toLocaleTimeString();
 
   currentUser: any;
   selectedUser: any;
-
-  
-
 
   //image array for profile image
   Img = [
@@ -43,6 +40,7 @@ export class HomeComponent {
     'assets/p4.avif',
     'assets/p2.png',
   ];
+  newMsg: { message: any; timestamp: Date; sender: any; } | any;
 
   //function for generating random profile images
   getRandomImg(): string {
@@ -53,26 +51,40 @@ export class HomeComponent {
   constructor(
     private chatService: ChatService,
     private storage: StorageService,
-    private crudService: CrudService,
-    ) {}
+    private crudService: CrudService
+  ) {}
+
+  ngDoCheck(){
+
+  }
+
+  ngOnDestroy(){
+    this.socket.disconnect();
+  }
 
   ngOnInit(): void {
     this.user = this.storage.data;
     this.currentUser = this.user;
-    this.selectedUser = ""
+    this.selectedUser = '';
 
     this.socket = io('http://localhost:3000');
 
+    // Listen for incoming messages
+    this.socket.on('message', (data: any) => {
+      this.newMsg={message:data[3],timestamp:Date.now(),sender:data[2]};
+      this.messages.push(this.newMsg);
+      // console.log(data[0]);
+      console.log(data);
+    });
 
     //fetching all registered users
     this.crudService.getUsers().subscribe((res) => {
       this.USERS = res;
-      for(let user in this.USERS){
-        if(this.USERS[user].email===this.currentUser.email){
-        this.USERS.splice(parseInt(user),1);
-      }else{
-
-        continue
+      for (let user in this.USERS) {
+        if (this.USERS[user].email === this.currentUser.email) {
+          this.USERS.splice(parseInt(user), 1);
+        } else {
+          continue;
         }
       }
       console.log(this.USERS);
@@ -80,67 +92,76 @@ export class HomeComponent {
   }
 
   selectUserHandler(email: string): void {
-
-    
-    console.log(this.currentUser.name);
-    console.log(this.selectedUser.name);
-    this.messages=[];
+    this.messages = [];
 
     this.selectedUser = this.USERS.find((user) => user.email === email);
+    console.log(this.currentUser);
     console.log(this.selectedUser.name);
     this.emailID = this.selectedUser.email;
 
-    this.crudService.getAllMessages(this.currentUser.name,this.selectedUser.name).subscribe((res)=>{
-      console.log(res);
-      console.log(JSON.stringify(res))
-      // res=JSON.stringify(res);
-      // console.log(typeof res);
+    if (this.currentUser.length !== 0) {
+      this.crudService
+        .getAllMessages(this.currentUser.email, this.selectedUser.email)
+        .subscribe((res) => {
+          console.log("Response: "+res);
+
+          // if(res>0){
+          // this.messages.push(res)
+          const array = res.map((obj: any) => Object.assign({}, obj));
+          console.log("array: "+array)
+          this.chatID = array[0]._id;
+          console.log("Chat ID: "+this.chatID);
 
 
-      if(res){
+          // if (res && res.length > 0) {
+            // for (let obj in array) {
+            //   const arr=array[obj].messages[obj];
+            //   console.log(obj);
+            //   this.messages.push(array[obj].messages[obj]);
 
-        // this.messages.push(res)
-        const array = res.map((obj: any) => Object.assign({}, obj));
-
-        if (res && res.length > 0) {
-          for (const obj in array) {
-            console.log(array[obj]);
-            this.messages[parseInt(obj)]=array[obj];
+            // }
+            for (let i = 0; i < array.length; i++) {
+              const msgs = array[i].messages;
+              for (let j = 0; j < msgs.length; j++) {
+                this.messages.push(msgs[j]);
+              }
             }
-            console.log("All messages: ", this.messages);
-        }         
-        }
 
-      
-      console.log("All objects: ", this.messages);
-     
-    });
-    
+            console.log('All messages: ', this.messages);
+          // }
+          // }
+        });
+    }
+
     // this.crudService.getNewMessages(this.currentUser.name,this.selectedUser.name).subscribe((res)=>{
     //   console.log(res);
     //   // this.messages.push(res.message);
     //   // // console.log("new",this.messages)
     // });
-
   }
 
-  public sendMessage(message:string): void {
-    // Listen for incoming messages
-    this.socket.emit('message', (data: any) => {
-      // this.messages.push(data);
-      console.log(data.recipient);
-      console.log(data.message);
-    });
-     console.log('working');
-     console.log(this.currentUser.name);
-     console.log(this.selectedUser.name);
-    this.socket.emit('message',[this.selectedUser.email, this.message.trim()]);
-    this.crudService.sendMessages(this.currentUser.name,this.selectedUser.name,message).subscribe((res)=>{
-      console.log(res);
-    })
+  public sendMessage(message: string): void {
+
+    console.log('working');
+    console.log(this.currentUser.name);
+    console.log(this.selectedUser.name);
+
+    //send the message to other socket
+    this.socket.emit('message', [
+      this.chatID,
+      this.selectedUser.email,
+      this.currentUser.email,
+      this.message.trim(),
+    ]);
+
+    //mapping users in a single room
+    this.socket.emit('join-room',this.chatID);
+
+    // this.crudService.sendMessages(this.currentUser.name,this.selectedUser.name,message).subscribe((res)=>{
+    //   console.log(res);
+    // })
     // if (this.message.trim()) {
     // }
     this.message = '';
-
   }
 }

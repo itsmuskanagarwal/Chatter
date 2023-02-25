@@ -1,7 +1,7 @@
 <div id="container">
   <aside>
     <header>
-      <input type="text" placeholder="search" />
+      <input autocomplete="on" placeholder="search" value="" />
     </header>
     <ul>
       <li *ngFor="let user of USERS" (click)="selectUserHandler(user.email)">
@@ -16,33 +16,37 @@
     </ul>
   </aside>
   <main>
-    <header>
-      <img class="img-size" src="./assets/p5.webp" alt="" />
-      <div>
-        <h2>Chat with {{selectedUser.name}}</h2>
-        <!-- <h3>already 1902 messages</h3> -->
+      <ng-container *ngIf="selectedUser">
+      <header>
+        <img class="img-size" src="./assets/p5.webp" alt="" />
+        <div>
+          <h2>Chat with {{selectedUser.name}}</h2>
+          <!-- <h3>already 1902 messages</h3> -->
       </div>
       <img
-        src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/ico_star.png"
+      src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/ico_star.png"
         alt=""
       />
     </header>
     <main>
       <div class="chat">
-        <ul id="chat">
+        <ul id="chat" >
           <!-- [ngClass]="item?.email === currentUser?.email?  'same-user' : 'you'" -->
-          <div *ngFor="let msg of messages | keyvalue">
-            <li [ngClass]="{ 'you': msg.value.sender === selectedUser.name, 'me': msg.value.sender === currentUser.name }">
+          <div *ngFor="let msg of messages" #scrollMe [scrollTop]="scrollMe.scrollHeight - scrollMe.clientHeight">
+            <li [ngClass]="{ 'you': msg.sender === selectedUser.email, 'me': msg.sender === currentUser.email }">
               <div class="entete">
                 <span class="status green"></span>
-                <h2>{{msg.value.sender}}</h2>
-                <h3>{{timestamp}}</h3>
+                <h2 *ngIf="msg.sender === selectedUser.email; else elseblock">{{selectedUser.name}}</h2>
+                <ng-template #elseblock>
+                  <h2>{{currentUser.name}}</h2>
+                </ng-template>
+                <h3>{{msg.timestamp | date:'shortTime' }}</h3>
               </div>
               <div class="triangle"></div>
-              <div class="message">{{msg.value.message}}</div>
+              <div class="message">{{msg.message}}</div>
             </li>
           </div>
-          
+
         </ul>
       </div>
       <footer>
@@ -55,8 +59,9 @@
           </form>
         </div>
       </footer>
-    <!-- </ng-container> -->
-  </main>
+      <!-- </ng-container> -->
+    </main>
 
+  </ng-container>
   </main>
 </div>
