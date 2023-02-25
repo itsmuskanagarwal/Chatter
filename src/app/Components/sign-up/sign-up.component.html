@@ -3,7 +3,9 @@
     <mat-card-header>
       <mat-card-title>Register</mat-card-title>
     </mat-card-header>
-    <form action="/create" method="POST"
+    <form
+      action="/create"
+      method="POST"
       class="example-form"
       [formGroup]="formData"
       (ngSubmit)="onClickSubmit(formData.value)"
@@ -91,7 +93,14 @@
         </mat-form-field>
       </mat-card-content>
 
-      <button mat-stroked-button class="btn-block" type="submit"[disabled]="!formData.valid">Register</button>
+      <button
+        mat-stroked-button
+        class="btn-block"
+        type="submit"
+        [disabled]="!formData.valid"
+      >
+        Register
+      </button>
       <br />
       <div class="container">
         <span class="login-wrapper">Already a user? </span>
@@ -101,12 +110,22 @@
       </div>
     </form>
     <mat-error>
-      <div *ngIf="formData.get('password').hasError('required') && formData.get('password').touched">
+      <div
+        *ngIf="
+          formData.get('password').hasError('required') &&
+          formData.get('password').touched
+        "
+      >
         Password is required.
       </div>
     </mat-error>
     <mat-error>
-      <div *ngIf="formData.get('confirmPassword').hasError('required') && formData.get('confirmPassword').touched">
+      <div
+        *ngIf="
+          formData.get('confirmPassword').hasError('required') &&
+          formData.get('confirmPassword').touched
+        "
+      >
         Confirm Password is required.
       </div>
     </mat-error>

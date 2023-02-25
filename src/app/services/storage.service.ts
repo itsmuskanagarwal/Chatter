@@ -5,9 +5,10 @@ import { CrudService } from './crud.service';
   providedIn: 'root',
 })
 export class StorageService {
-  data:any = []
 
-  constructor(private crudService: CrudService) { }
-
+  data: any = [];
   isLoggedIn: boolean = false;
+
+  constructor(private crudService: CrudService) {}
+
 }

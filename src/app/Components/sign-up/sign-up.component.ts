@@ -7,7 +7,7 @@ import {
   Validators,
   FormBuilder,
 } from '@angular/forms';
-import { CrudService } from 'src/services/crud.service';
+import { CrudService } from 'src/app/services/crud.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -15,7 +15,6 @@ import { CrudService } from 'src/services/crud.service';
   styleUrls: ['./sign-up.component.css'],
 })
 export class SignUpComponent implements OnInit {
-
   formData: FormGroup | any;
 
   constructor(
@@ -30,7 +29,7 @@ export class SignUpComponent implements OnInit {
       password: ['', [Validators.required, Validators.minLength(8)]],
       confirmPassword: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      contact: ['', Validators.required]
+      contact: ['', Validators.required],
     });
   }
 
@@ -77,22 +76,20 @@ export class SignUpComponent implements OnInit {
     }
 
     if (this.validFields == true) {
-      if (this.validPassword == true)
-        {
+      if (this.validPassword == true) {
+        console.log('working');
+        this.crudService.addUser(this.formData.value).subscribe((res) => {
+          console.log('Data added!!!!', res);
+          this.ngZone.run(() => this.router.navigateByUrl('/login'));
+        });
 
-          console.log('working');
-          this.crudService.addUser(this.formData.value).subscribe((res) => {
-            console.log('Data added!!!!',res);
-            this.ngZone.run(() => this.router.navigateByUrl('/login'));
-          });
-
-          this._snackBar.open(
-            'Hello ' + this.username + ', You are Successfully Registered !!',
-            'OK',
-            {
-              duration: 5000,
-            }
-          );
+        this._snackBar.open(
+          'Hello ' + this.username + ', You are Successfully Registered !!',
+          'OK',
+          {
+            duration: 5000,
+          }
+        );
       }
     }
   }

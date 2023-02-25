@@ -33,7 +33,6 @@ import { ToastrModule } from 'ngx-toastr';
 import { HttpClientModule } from '@angular/common/http';
 import { io } from 'socket.io-client';
 
-
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'landing' },
   { path: 'login', component: LoginComponent },
@@ -55,7 +54,7 @@ const routes: Routes = [
     ProfileComponent,
     AboutComponent,
     ContactComponent,
-    HeaderComponent
+    HeaderComponent,
   ],
   imports: [
     BrowserModule,

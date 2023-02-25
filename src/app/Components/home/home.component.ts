@@ -1,17 +1,8 @@
 import { Component } from '@angular/core';
-import { ChatService } from 'src/services/chat.service';
-import { StorageService } from 'src/services/storage.service';
-import { CrudService } from 'src/services/crud.service';
-import { user } from 'src/modules/user';
+import { StorageService } from 'src/app/services/storage.service';
+import { CrudService } from 'src/app/services/crud.service';
+import { user } from 'src/app/models/user';
 import { io } from 'socket.io-client';
-
-
-interface Message {
-  message: string;
-  sender: string;
-  receiver: string;
-  _id: string;
-}
 
 @Component({
   selector: 'app-home',
@@ -20,14 +11,14 @@ interface Message {
 })
 export class HomeComponent {
   private socket: any;
-  public messages: [{ message: string; timestamp: Date; sender: string; }] | any = [];
+  public messages:
+    | [{ message: string; timestamp: Date; sender: string }]
+    | any = [];
   public message: string = '';
   public chatID: string = '';
 
   user: any;
   USERS: user[] = [];
-  emailID: string | any;
-  timestamp = new Date().toLocaleTimeString();
 
   currentUser: any;
   selectedUser: any;
@@ -40,7 +31,7 @@ export class HomeComponent {
     'assets/p4.avif',
     'assets/p2.png',
   ];
-  newMsg: { message: any; timestamp: Date; sender: any; } | any;
+  newMsg: { message: any; timestamp: Date; sender: any } | any;
 
   //function for generating random profile images
   getRandomImg(): string {
@@ -49,16 +40,13 @@ export class HomeComponent {
   }
 
   constructor(
-    private chatService: ChatService,
     private storage: StorageService,
     private crudService: CrudService
   ) {}
 
-  ngDoCheck(){
+  ngDoCheck() {}
 
-  }
-
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.socket.disconnect();
   }
 
@@ -69,11 +57,15 @@ export class HomeComponent {
 
     this.socket = io('http://localhost:3000');
 
-    // Listen for incoming messages
+    // Listen for incoming messages and adding it to the messages array
     this.socket.on('message', (data: any) => {
-      this.newMsg={message:data[3],timestamp:Date.now(),sender:data[2]};
+      //storing the incoming msg in a variable temp
+      this.newMsg = {
+        message: data[3],
+        timestamp: Date.now(),
+        sender: data[2],
+      };
       this.messages.push(this.newMsg);
-      // console.log(data[0]);
       console.log(data);
     });
 
@@ -81,6 +73,7 @@ export class HomeComponent {
     this.crudService.getUsers().subscribe((res) => {
       this.USERS = res;
       for (let user in this.USERS) {
+        //removing the logged in user from the chatting list
         if (this.USERS[user].email === this.currentUser.email) {
           this.USERS.splice(parseInt(user), 1);
         } else {
@@ -91,57 +84,45 @@ export class HomeComponent {
     });
   }
 
+  //when a particular user is selected
   selectUserHandler(email: string): void {
-    this.messages = [];
+    this.messages = []; //empty the msgs array
 
+    //assigning the selectedUser with the complete details
     this.selectedUser = this.USERS.find((user) => user.email === email);
     console.log(this.currentUser);
     console.log(this.selectedUser.name);
-    this.emailID = this.selectedUser.email;
 
+    //checking whether there is someone logged in or not
     if (this.currentUser.length !== 0) {
+
+      //retrieving all the messages of the current user and selected user
       this.crudService
         .getAllMessages(this.currentUser.email, this.selectedUser.email)
         .subscribe((res) => {
-          console.log("Response: "+res);
+          console.log('Response: ' + res);
 
-          // if(res>0){
-          // this.messages.push(res)
+          //mapping the json res object into an array
           const array = res.map((obj: any) => Object.assign({}, obj));
-          console.log("array: "+array)
+          console.log('array: ' + array);
+
+          //providing a unique Chat id for the both the users
           this.chatID = array[0]._id;
-          console.log("Chat ID: "+this.chatID);
+          console.log('Chat ID: ' + this.chatID);
 
-
-          // if (res && res.length > 0) {
-            // for (let obj in array) {
-            //   const arr=array[obj].messages[obj];
-            //   console.log(obj);
-            //   this.messages.push(array[obj].messages[obj]);
-
-            // }
-            for (let i = 0; i < array.length; i++) {
-              const msgs = array[i].messages;
-              for (let j = 0; j < msgs.length; j++) {
-                this.messages.push(msgs[j]);
-              }
+          //pushing all the messages of both the users into the messages array
+          for (let i = 0; i < array.length; i++) {
+            const msgs = array[i].messages;
+            for (let j = 0; j < msgs.length; j++) {
+              this.messages.push(msgs[j]);
             }
-
-            console.log('All messages: ', this.messages);
-          // }
-          // }
+          }
+          console.log('All messages: ', this.messages);
         });
     }
-
-    // this.crudService.getNewMessages(this.currentUser.name,this.selectedUser.name).subscribe((res)=>{
-    //   console.log(res);
-    //   // this.messages.push(res.message);
-    //   // // console.log("new",this.messages)
-    // });
   }
 
   public sendMessage(message: string): void {
-
     console.log('working');
     console.log(this.currentUser.name);
     console.log(this.selectedUser.name);
@@ -155,13 +136,7 @@ export class HomeComponent {
     ]);
 
     //mapping users in a single room
-    this.socket.emit('join-room',this.chatID);
-
-    // this.crudService.sendMessages(this.currentUser.name,this.selectedUser.name,message).subscribe((res)=>{
-    //   console.log(res);
-    // })
-    // if (this.message.trim()) {
-    // }
+    this.socket.emit('join-room', this.chatID);
     this.message = '';
   }
 }

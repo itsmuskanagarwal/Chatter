@@ -1,9 +1,9 @@
 import { Component, OnInit, NgZone } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router, ActivatedRoute } from '@angular/router';
-import { CrudService } from 'src/services/crud.service';
-import { FormGroup, FormBuilder } from "@angular/forms";
-import { StorageService } from 'src/services/storage.service';
+import { CrudService } from 'src/app/services/crud.service';
+import { FormGroup, FormBuilder } from '@angular/forms';
+import { StorageService } from 'src/app/services/storage.service';
 
 @Component({
   selector: 'app-profile',
@@ -11,9 +11,8 @@ import { StorageService } from 'src/services/storage.service';
   styleUrls: ['./profile.component.css'],
 })
 export class ProfileComponent {
-
   getId: any;
-  updateForm: FormGroup  | any;
+  updateForm: FormGroup | any;
 
   constructor(
     private _snackBar: MatSnackBar,
@@ -22,39 +21,37 @@ export class ProfileComponent {
     private ngZone: NgZone,
     private activatedRoute: ActivatedRoute,
     private crudService: CrudService,
-    private storage:StorageService
+    private storage: StorageService
   ) {
-    this.updateForm=formBuilder.group({
-      username:'',
-      userContact:'',
-      userEmail:'',
-      display:''
+    this.updateForm = formBuilder.group({
+      username: '',
+      userContact: '',
+      userEmail: '',
+      display: '',
     });
   }
 
-    ngOnInit(){
-      console.log(this.storage.data);
-      this.updateForm.setValue({
-        username: this.storage.data.name,
-        userContact: this.storage.data.contact,
-        userEmail:this.storage.data.email,
-        display:this.storage.data.displayname
-      });
-    }
+  ngOnInit() {
+    console.log(this.storage.data);
+    this.updateForm.setValue({
+      username: this.storage.data.name,
+      userContact: this.storage.data.contact,
+      userEmail: this.storage.data.email,
+      display: this.storage.data.displayname,
+    });
+  }
 
-  save(data:any) {
-    if (this.updateForm.valid)
-    {
-      this.storage.data.name=data.username;
-      this.storage.data.contact=data.userContact;
-      this.storage.data.email=data.userEmail;
-      this.storage.data.displayname=data.display;
+  save(data: any) {
+    if (this.updateForm.valid) {
+      this.storage.data.name = data.username;
+      this.storage.data.contact = data.userContact;
+      this.storage.data.email = data.userEmail;
+      this.storage.data.displayname = data.display;
 
       console.log(this.storage.data);
-      this.crudService.updateUser(this.storage.data).subscribe((res)=>{
+      this.crudService.updateUser(this.storage.data).subscribe((res) => {
         console.log(res);
-      })
-
+      });
 
       this._snackBar.open(
         'Hello ' + data.display + ', Details Updated successfully!!',
@@ -80,6 +77,4 @@ export class ProfileComponent {
     //   }
     // }
   }
-
-
 }

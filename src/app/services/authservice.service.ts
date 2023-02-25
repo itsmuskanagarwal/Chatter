@@ -7,19 +7,19 @@ import { CrudService } from './crud.service';
   providedIn: 'root',
 })
 export class AuthServiceService {
-
   constructor(
     private storage: StorageService,
     private crudService: CrudService,
-    private http: HttpClient) {}
+    private http: HttpClient
+  ) {}
 
   LoggedIn: boolean | any;
   private baseUrl = this.crudService.REST_API;
 
-  isLoggedIn(){
+  isLoggedIn() {
     const cookieName = 'session_id';
-  const cookieValue = this.getCookie(cookieName);
-  return cookieValue !== null;
+    const cookieValue = this.getCookie(cookieName);
+    return cookieValue !== null;
   }
 
   private getCookie(name: string): string | null {
@@ -33,6 +33,4 @@ export class AuthServiceService {
     }
     return null;
   }
-
-
 }

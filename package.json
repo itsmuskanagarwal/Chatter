@@ -8,7 +8,7 @@
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "pretty": "prettier --write \"./**/*.{ts,tsx,json,html,css}\""
+    "pretty": "prettier --write \"./**/*.{ts,html,css}\""
   },
   "private": true,
   "dependencies": {

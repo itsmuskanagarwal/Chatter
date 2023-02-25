@@ -29,13 +29,22 @@
     >
       <ul class="navbar-nav ml-auto">
         <li class="nav-item">
-          <a *ngIf="!isLoggedIn" class="nav-link" routerLink="landing" (click)="toggleCollapsed()"
-            >Home</a>
+          <a
+            *ngIf="!isLoggedIn"
+            class="nav-link"
+            routerLink="landing"
+            (click)="toggleCollapsed()"
+            >Home</a
+          >
 
-            <a *ngIf="isLoggedIn" class="nav-link" routerLink="Home" (click)="toggleCollapsed()"
-            >Home</a>
-
-          </li>
+          <a
+            *ngIf="isLoggedIn"
+            class="nav-link"
+            routerLink="home"
+            (click)="toggleCollapsed()"
+            >Home</a
+          >
+        </li>
 
         <li class="nav-item">
           <a class="nav-link" routerLink="about" (click)="toggleCollapsed()"
@@ -58,7 +67,7 @@
             <button
               *ngIf="!isLoggedIn"
               class="- btn btn-primary rounded ml-4"
-              routerLink = "/signup"
+              routerLink="signup"
               (click)="toggleCollapsed()"
             >
               Register
@@ -66,7 +75,6 @@
             <button
               *ngIf="isLoggedIn"
               class="- btn btn-primary rounded ml-4"
-              
               (click)="toggleCollapsed(); logout()"
             >
               Logout
@@ -77,4 +85,3 @@
     </div>
   </div>
 </nav>
-
