@@ -90,6 +90,19 @@ export class CrudService {
     );
   }
 
+   // Add query
+   addQuery(data: user): Observable<any> {
+    return this.httpClient
+      .post(this.REST_API + '/add-query', data, { responseType: 'text' })
+      .pipe(
+        catchError((error) => {
+          // Handle the error
+          console.error('Error adding user', error);
+          return throwError(() => new Error('Error adding user'));
+        })
+      );
+  }
+
   // Error
   handleError(error: HttpErrorResponse) {
     let errorMessage = '';

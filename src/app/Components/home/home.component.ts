@@ -23,6 +23,8 @@ export class HomeComponent {
   currentUser: any;
   selectedUser: any;
 
+  // isclicked : boolean = false
+
   //image array for profile image
   Img = [
     'assets/p5.webp',
@@ -44,29 +46,49 @@ export class HomeComponent {
     private crudService: CrudService
   ) {}
 
-  ngDoCheck() {}
+  ngDoCheck() {
+    // console.log(localStorage.getItem('isClicked'));
+    // if (localStorage.getItem('isClicked')) {
+    //   console.log('inside if code');
+    //   this.socket.on("message", (data: any) => {
+    //     console.log(data);
+    //     this.messages.push({
+    //       message: data[3],
+    //       timestamp: Date.now(),
+    //       sender: data[2],
+    //     });
+    //     console.log(this.messages);
+    //   });
+    //   localStorage.removeItem('isClicked');
+    // }
+    // console.log(localStorage.getItem('isClicked'));
+
+  }
 
   ngOnDestroy() {
     this.socket.disconnect();
   }
 
   ngOnInit(): void {
-    this.user = this.storage.data;
+    this.user = JSON.parse(localStorage.getItem('myData') as string);
     this.currentUser = this.user;
     this.selectedUser = '';
 
     this.socket = io('http://localhost:3000');
 
-    // Listen for incoming messages and adding it to the messages array
+    //listening to the one-on-one online conversations
     this.socket.on('message', (data: any) => {
-      //storing the incoming msg in a variable temp
-      this.newMsg = {
-        message: data[3],
-        timestamp: Date.now(),
-        sender: data[2],
-      };
-      this.messages.push(this.newMsg);
       console.log(data);
+
+      
+        this.messages.push({
+          message: data[3],
+          timestamp: Date.now(),
+          sender: data[2],
+        });
+        
+
+      console.log(this.messages);
     });
 
     //fetching all registered users
@@ -94,8 +116,7 @@ export class HomeComponent {
     console.log(this.selectedUser.name);
 
     //checking whether there is someone logged in or not
-    if (this.currentUser.length !== 0) {
-
+    if (localStorage.getItem('myData')) {
       //retrieving all the messages of the current user and selected user
       this.crudService
         .getAllMessages(this.currentUser.email, this.selectedUser.email)
@@ -110,6 +131,9 @@ export class HomeComponent {
           this.chatID = array[0]._id;
           console.log('Chat ID: ' + this.chatID);
 
+          //mapping users in a single room
+          this.socket.emit('join-room', this.chatID);
+          
           //pushing all the messages of both the users into the messages array
           for (let i = 0; i < array.length; i++) {
             const msgs = array[i].messages;
@@ -120,9 +144,12 @@ export class HomeComponent {
           console.log('All messages: ', this.messages);
         });
     }
+
+    // return this.selectedUser;
   }
 
   public sendMessage(message: string): void {
+
     console.log('working');
     console.log(this.currentUser.name);
     console.log(this.selectedUser.name);
@@ -135,8 +162,8 @@ export class HomeComponent {
       this.message.trim(),
     ]);
 
-    //mapping users in a single room
-    this.socket.emit('join-room', this.chatID);
     this.message = '';
+   
+    // this.selectUserHandler(this.selectedUser.email)
   }
 }

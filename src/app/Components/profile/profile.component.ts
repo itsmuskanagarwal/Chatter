@@ -2,7 +2,12 @@ import { Component, OnInit, NgZone } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CrudService } from 'src/app/services/crud.service';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import {
+  FormGroup,
+  FormControl,
+  Validators,
+  FormBuilder,
+} from '@angular/forms';
 import { StorageService } from 'src/app/services/storage.service';
 
 @Component({

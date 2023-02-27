@@ -7,7 +7,17 @@ import { CrudService } from './crud.service';
 export class StorageService {
 
   data: any = [];
-  isLoggedIn: boolean = false;
+
+  ngDoCheck(){
+
+    if(localStorage.getItem("isLoggedIn") == "true")
+    {
+      this.data = JSON.parse(
+        localStorage.getItem('myData') as string
+        );
+    }
+
+  }
 
   constructor(private crudService: CrudService) {}
 

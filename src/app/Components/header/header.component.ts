@@ -19,33 +19,50 @@ export class HeaderComponent {
     private storage: StorageService,
     private router: Router,
     private ngZone: NgZone
-    ) {}
+  ) {
 
-  logout() {
-    // delete isLoggedIn cookie
-    this.cookieService.delete('isLoggedIn');
-    this.storage.isLoggedIn = false;
-    this.storage.data=[];
-    localStorage.removeItem('myData');
-    localStorage.clear();
-    this.ngZone.run(() => this.router.navigateByUrl('/landing'));
-  }
+    console.log(localStorage.getItem('isLoggedIn'))
+            
+    }
+    
+    logout() {
+      
+      // remove user's data from localStorage and navigate to landing page
+      localStorage.removeItem('myData');
+      localStorage.removeItem('isLoggedIn');
+
+      this.ngZone.run(() => this.router.navigateByUrl('/landing'));
+    }
+
+    handleBeforeUnload = (event: BeforeUnloadEvent) => {
+      const target = event.currentTarget as Window;
+      if (target && target.performance && target.performance.navigation.type === PerformanceNavigation.TYPE_RELOAD) {
+        this.logout();
+      }
+    }
+    
 
   isLoggedIn: boolean | any;
 
+  ngOnInit(){
+
+    window.addEventListener('beforeunload', this.handleBeforeUnload);
+  }
+
   ngDoCheck() {
-    if (this.isLoggedIn) {
-      this.username = 'Welcome ' + this.storage.data.name;
+
+    if (localStorage.getItem('isLoggedIn')) {
+      const data = JSON.parse(localStorage.getItem('myData') as string);
+      console.log(data.name);
+      this.username = 'Welcome ' + data.name;
+      this.isLoggedIn = true;
     } else {
       this.username = '';
-    }
+      this.isLoggedIn = false;
 
-    // check if user is already logged in
-    if (this.cookieService.get('isLoggedIn') === 'true') {
-      this.storage.isLoggedIn = true;
+      // console.log(localStorage.getItem('myData'))
+      // console.log(localStorage.getItem('isLoggedIn'))
     }
-
-    this.isLoggedIn = this.storage.isLoggedIn;
   }
 
   isCollapsed = true;

@@ -3,6 +3,7 @@
     <mat-card-header>
       <mat-card-title>Log in</mat-card-title>
     </mat-card-header>
+    <form #loginForm = "ngForm">
     <mat-card-content>
       <mat-form-field class="example-full-width">
         <input
@@ -63,6 +64,7 @@
       mat-stroked-button
       class="btn-block"
       (click)="check(u1.value, u2.value)"
+      [disabled] ="!loginForm.valid"
     >
       Log in
     </button>
@@ -75,5 +77,6 @@
       <span class="login-wrapper">New user? </span>
       <a [routerLink]="'/signup'">Register</a>
     </div>
+  </form>
   </mat-card>
 </div>

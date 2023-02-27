@@ -6,13 +6,14 @@ body {
   font-family: Arial;
 }
 #container {
-  max-width: fit-content;
-  max-height: 630px;
+  max-width: 1520px;
+  max-height: 601px;
   /* max-width: 1440px;  */
-  min-height: 200px;
+  min-height: 601px;
+  min-width: 10px;
   background: #eff3f7;
-  margin-left: auto;
-  margin-right: auto;
+  margin-left: 10px;
+  margin-right: 10px;
   margin-top: 100px;
   margin-bottom: 20px;
   font-size: 0;
@@ -20,11 +21,12 @@ body {
   border: 2px #000000;
   overflow: hidden;
 }
+
 aside {
   max-width: 300px;
-  max-height: 700px;
-  min-width: auto;
-  min-height: 700px;
+  max-height: 601px;
+  min-width: 100px;
+  min-height: 601px;
   background-color: #3b3e49;
   display: inline-block;
   font-size: 15px;
@@ -34,7 +36,7 @@ aside {
 main {
   max-width: auto;
   max-height: 700px;
-  min-width: 1180px;
+  min-width: 600px;
   min-height: 700px;
   display: inline-block;
   font-size: 15px;
@@ -42,7 +44,18 @@ main {
 }
 
 aside header {
+  min-width: 350px;
   padding: 30px 20px;
+  font-size: 28px;
+  font-weight: 500;
+  color: #ffffff;
+}
+
+.icon_bubble.msg {
+    width: 30px;
+    height: 30px;
+    background: linear-gradient( 90deg, #d13eea, #53d9ea);
+    border-radius: 50%;
 }
 aside input {
   width: auto;
@@ -268,3 +281,5 @@ main footer button {
   max-width: 70%;
   border-radius: 10px;
 }
+
+

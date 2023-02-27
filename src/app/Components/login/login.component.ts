@@ -13,9 +13,12 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   providers: [AuthServiceService],
 })
 export class LoginComponent implements OnInit {
+
   validPassword: boolean | undefined;
   hide = true;
   data: any = [];
+
+
   // public password : string | any;
   // public email : string | any;
 
@@ -33,6 +36,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {}
 
+
   check(uname: string, pwd: string) {
     this.crudService.verifyUser(uname, pwd).subscribe(
       (res) => {
@@ -40,24 +44,35 @@ export class LoginComponent implements OnInit {
         console.log(res);
 
         if (this.data.email == uname) {
+          
           // set isLoggedIn cookie to true for 1 day
-          this.cookieService.set('isLoggedIn', 'true', 1);
-          console.log(this.cookieService.get('isLoggedIn'));
+          // this.cookieService.set('isLoggedIn', 'true', 1);
+          // console.log(this.cookieService.get('isLoggedIn'));
 
-          this.storage.isLoggedIn = true;
-          console.log(this.storage.isLoggedIn);
+          // localStorage.setItem('isLoggedIn',"true")
 
-          this.ngZone.run(() => this.routes.navigateByUrl('/home'));
+          // this.storage.isLoggedIn = true; 
+          // console.log(this.storage.isLoggedIn);
 
+          localStorage.setItem('isLoggedIn', 'true');
+          
           localStorage.setItem('myData', JSON.stringify(this.data));
           this.storage.data = JSON.parse(
             localStorage.getItem('myData') as string
-          );
+            );
+            
+            console.log(this.data);
+            console.log(this.storage.data);
 
-          console.log(this.data);
-          console.log(this.storage.data);
+            console.log("login", localStorage.getItem('myData'))
+            console.log("login", localStorage.getItem('isLoggedIn'))
+            
+            this.ngZone.run(() => this.routes.navigateByUrl('/home'));
 
-        } else {
+        } 
+        
+        else 
+        {
           this.validPassword = true;
           this.msg =
             'Invalid username or password. If you are a new user, please register ';
