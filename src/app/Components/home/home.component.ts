@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { StorageService } from 'src/app/services/storage.service';
 import { CrudService } from 'src/app/services/crud.service';
 import { user } from 'src/app/models/user';
@@ -9,7 +9,7 @@ import { io } from 'socket.io-client';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
 })
-export class HomeComponent {
+export class HomeComponent implements OnDestroy, OnInit {
   private socket: any;
   public messages:
     | [{ message: string; timestamp: Date; sender: string }]
@@ -101,6 +101,9 @@ export class HomeComponent {
         .getAllMessages(this.currentUser.email, this.selectedUser.email)
         .subscribe((res) => {
           console.log('Response: ' + res);
+          console.log("OBJID", this.chatID);
+
+
 
           //mapping the json res object into an array
           const array = res.map((obj: any) => Object.assign({}, obj));
@@ -109,6 +112,9 @@ export class HomeComponent {
           //providing a unique Chat id for the both the users
           this.chatID = array[0]._id;
           console.log('Chat ID: ' + this.chatID);
+
+          
+          this.socket.emit('join-room', this.chatID);
 
           //pushing all the messages of both the users into the messages array
           for (let i = 0; i < array.length; i++) {
@@ -136,7 +142,14 @@ export class HomeComponent {
     ]);
 
     //mapping users in a single room
-    this.socket.emit('join-room', this.chatID);
+
+    // this.newMsg = {
+    //   message: message,
+    //   timestamp: Date.now(),
+    //   sender: this.currentUser.email,
+    // };
+    // this.messages.push(this.newMsg);
+
     this.message = '';
   }
 }
