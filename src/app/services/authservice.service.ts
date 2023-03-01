@@ -33,4 +33,11 @@ export class AuthServiceService {
     }
     return null;
   }
+
+  // private authenticatedUser(email : string, userID : string, token : any, expriesIn : any){
+
+  //   const expirationDate = new Date(new Date().getTime()+ expriesIn*1000);
+  //   const user = new User(email, userId, token, expirationDate);
+  //   this.crudService.next(user);
+  // }
 }
