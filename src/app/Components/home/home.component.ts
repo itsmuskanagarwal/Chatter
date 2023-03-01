@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component , ElementRef, ViewChild } from '@angular/core';
 import { StorageService } from 'src/app/services/storage.service';
 import { CrudService } from 'src/app/services/crud.service';
 import { user } from 'src/app/models/user';
 import { io } from 'socket.io-client';
+
 
 @Component({
   selector: 'app-home',
@@ -10,6 +11,9 @@ import { io } from 'socket.io-client';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent {
+
+  @ViewChild('messageList') private messageListRef : ElementRef<HTMLDivElement> | any;
+
   private socket: any;
   public messages:
     | [{ message: string; timestamp: Date; sender: string }]
@@ -23,7 +27,7 @@ export class HomeComponent {
   currentUser: any;
   selectedUser: any;
 
-  // isclicked : boolean = false
+  count:number=0;
 
   //image array for profile image
   Img = [
@@ -47,22 +51,7 @@ export class HomeComponent {
   ) {}
 
   ngDoCheck() {
-    // console.log(localStorage.getItem('isClicked'));
-    // if (localStorage.getItem('isClicked')) {
-    //   console.log('inside if code');
-    //   this.socket.on("message", (data: any) => {
-    //     console.log(data);
-    //     this.messages.push({
-    //       message: data[3],
-    //       timestamp: Date.now(),
-    //       sender: data[2],
-    //     });
-    //     console.log(this.messages);
-    //   });
-    //   localStorage.removeItem('isClicked');
-    // }
-    // console.log(localStorage.getItem('isClicked'));
-
+    // this.scrollMessageListToBottom();
   }
 
   ngOnDestroy() {
@@ -128,7 +117,8 @@ export class HomeComponent {
           console.log('array: ' + array);
 
           //providing a unique Chat id for the both the users
-          this.chatID = array[0]._id;
+          // this.chatID = array[0]._id;
+          this.chatID = res[0]._id;
           console.log('Chat ID: ' + this.chatID);
 
           //mapping users in a single room
@@ -137,12 +127,17 @@ export class HomeComponent {
           //pushing all the messages of both the users into the messages array
           for (let i = 0; i < array.length; i++) {
             const msgs = array[i].messages;
+            this.count=msgs.length;
+
             for (let j = 0; j < msgs.length; j++) {
+
               this.messages.push(msgs[j]);
             }
           }
           console.log('All messages: ', this.messages);
         });
+
+        this.scrollMessageListToBottom();
     }
 
     // return this.selectedUser;
@@ -163,7 +158,13 @@ export class HomeComponent {
     ]);
 
     this.message = '';
+    this.scrollMessageListToBottom();
    
     // this.selectUserHandler(this.selectedUser.email)
+  }
+
+  private scrollMessageListToBottom() {
+    const messageList = this.messageListRef.nativeElement;
+    messageList.scrollTop = messageList.scrollHeight;
   }
 }

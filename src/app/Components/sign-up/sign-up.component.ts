@@ -27,7 +27,7 @@ export class SignUpComponent implements OnInit {
     this.formData = this.formBuilder.group({
       username: ['', Validators.required],
       password: ['', [Validators.required, Validators.minLength(8)]],
-      confirmPassword: ['', Validators.required],
+      confirmPassword: ['',  [Validators.required, Validators.minLength(8)]],
       email: ['', [Validators.required, Validators.email]],
       contact: ['', Validators.required],
     });
@@ -80,16 +80,31 @@ export class SignUpComponent implements OnInit {
         console.log('working');
         this.crudService.addUser(this.formData.value).subscribe((res) => {
           console.log('Data added!!!!', res);
+
+          // console.log(typeof res)
+          // console.log(res["Success"])
+
+          if(res.hasOwnProperty('success')){
           this.ngZone.run(() => this.router.navigateByUrl('/login'));
+          this._snackBar.open(
+            'Hello ' + this.username + ', You are Successfully Registered !!',
+            'OK',
+            {
+              duration: 5000,
+            }
+          );
+        }
+        else{
+          this.ngZone.run(() => this.router.navigateByUrl('/signup'));
+          this._snackBar.open(
+            'Hello! There was an error while registering. Please try again later',
+            'OK',
+            {
+              duration: 5000,
+            });
+        }
         });
 
-        this._snackBar.open(
-          'Hello ' + this.username + ', You are Successfully Registered !!',
-          'OK',
-          {
-            duration: 5000,
-          }
-        );
       }
     }
   }

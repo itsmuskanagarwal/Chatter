@@ -1,16 +1,45 @@
 * {
   box-sizing: border-box;
 }
+
 body {
   background-color: #abd9e9;
   font-family: Arial;
+  
 }
+
 #container {
-  max-width: 1520px;
-  max-height: 601px;
-  /* max-width: 1440px;  */
-  min-height: 601px;
-  min-width: 10px;
+  display: flex;
+}
+
+aside {
+  width: 100%;
+}
+
+main {
+  width: 100%;
+}
+
+
+@media (max-width: 100px) {
+  #container {
+    flex-direction: column;
+  }
+
+  aside {
+    width: 20%;
+  }
+
+  main {
+    width: 80%;
+  }
+}
+
+#container {
+  scrollbar-width: none;
+  width: 100%;
+  height: 100%;
+  min-width: 300px;
   background: #eff3f7;
   margin-left: 10px;
   margin-right: 10px;
@@ -23,21 +52,21 @@ body {
 }
 
 aside {
-  max-width: 300px;
-  max-height: 601px;
-  min-width: 100px;
-  min-height: 601px;
+  scrollbar-width: none;
+  width: 30%;
+  height: 100%;
+  min-width: 170px;
   background-color: #3b3e49;
   display: inline-block;
   font-size: 15px;
-  overflow: hidden;
+  overflow-y: scroll;
+  scroll-behavior: smooth;
+  overflow-x: hidden;
 }
 
 main {
-  max-width: auto;
-  max-height: 700px;
-  min-width: 600px;
-  min-height: 700px;
+  width: 100%;
+  height: 100%;
   display: inline-block;
   font-size: 15px;
   vertical-align: top;
@@ -52,28 +81,12 @@ aside header {
 }
 
 .icon_bubble.msg {
-    width: 30px;
-    height: 30px;
-    background: linear-gradient( 90deg, #d13eea, #53d9ea);
-    border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  background: linear-gradient( 90deg, #d13eea, #53d9ea);
+  border-radius: 50%;
 }
-aside input {
-  width: auto;
-  height: 50px;
-  line-height: 50px;
-  padding: 0 50px 0 20px;
-  background-color: #5e616a;
-  border: none;
-  border-radius: 3px;
-  color: #fff;
-  background-image: url(/assets/ico_search.png);
-  background-repeat: no-repeat;
-  background-position: 170px;
-  background-size: 40px;
-}
-aside input::placeholder {
-  color: #fff;
-}
+
 aside ul {
   scrollbar-width: none;
   padding-left: 0;
@@ -82,7 +95,8 @@ aside ul {
   background-origin: padding-box;
   box-sizing: border-box;
   list-style-type: none;
-  overflow-y: scroll;
+  overflow-y: none;
+  
 }
 aside li {
   padding: 10px 0;
@@ -155,27 +169,24 @@ main header img:last-child {
 }
 
 main header div {
-  margin-left: 10px;
+  margin-left: 15px;
   margin-right: 145px;
 }
 main header h2 {
-  font-size: 16px;
-  margin-bottom: 5px;
-}
-main header h3 {
-  font-size: 14px;
-  font-weight: normal;
-  color: #7e818a;
+  font-size: 20px;
+  margin-top: 12px;
 }
 
 #chat {
+  width: auto;
   scrollbar-width: none;
   padding-left: 0;
-  margin: 0;
   top: 0;
   list-style-type: none;
   overflow-y: scroll;
-  height: 390px;
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+  height: 370px;
   border-top: 2px solid #fff;
   border-bottom: 2px solid #fff;
 }
@@ -223,23 +234,28 @@ main header h3 {
   margin-left: 15px;
 }
 #chat .me .triangle {
+  position: sticky;
+  left: 100%;
+  margin-right: 10px;
   border-color: transparent transparent #aeaeae transparent;
-  margin-left: 1080px;
+
 }
 
 main footer {
-  position: absolute;
-  bottom: 0;
-  margin-bottom: 100px;
+  position: relative;
+  margin-bottom: auto;
   height: 50px;
-  width: max-content;
-  padding: 20px 30px 10px 20px;
+  width: auto;
+  padding: 10px 40px 20px 20px;
 }
 main footer textarea {
+  padding: 10px; 
   background-color: #fff;
+  margin-bottom: auto;
   resize: none;
   display: inline-flex;
-  width: 1130px;
+  width: 100%;
+  min-width: 470px;
   height: auto;
   border: none;
   border-radius: 15px;
@@ -265,7 +281,8 @@ main footer img {
 main footer button {
   position: absolute;
   background-color: #ff7a57;
-  margin-top: 50px;
+  margin-top: 25px;
+  margin-bottom: auto;
   right: 10px;
   width: 120px;
 }

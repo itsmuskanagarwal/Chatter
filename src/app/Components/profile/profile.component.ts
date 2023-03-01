@@ -34,6 +34,13 @@ export class ProfileComponent {
       userEmail: '',
       display: '',
     });
+
+    if(localStorage.getItem("isLoggedIn") == "true")
+    {
+      this.storage.data = JSON.parse(
+        localStorage.getItem('myData') as string
+        );
+    }
   }
 
   ngOnInit() {

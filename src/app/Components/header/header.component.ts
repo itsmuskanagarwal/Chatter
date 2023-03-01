@@ -34,19 +34,19 @@ export class HeaderComponent {
       this.ngZone.run(() => this.router.navigateByUrl('/landing'));
     }
 
-    handleBeforeUnload = (event: BeforeUnloadEvent) => {
-      const target = event.currentTarget as Window;
-      if (target && target.performance && target.performance.navigation.type === PerformanceNavigation.TYPE_RELOAD) {
-        this.logout();
-      }
-    }
+    // handleBeforeUnload = (event: BeforeUnloadEvent) => {
+    //   const target = event.currentTarget as Window;
+    //   if (target && target.performance && target.performance.navigation.type === PerformanceNavigation.TYPE_RELOAD) {
+    //     this.logout();
+    //   }
+    // }
     
 
   isLoggedIn: boolean | any;
 
   ngOnInit(){
 
-    window.addEventListener('beforeunload', this.handleBeforeUnload);
+    // window.addEventListener('beforeunload', this.handleBeforeUnload);
   }
 
   ngDoCheck() {
@@ -54,7 +54,7 @@ export class HeaderComponent {
     if (localStorage.getItem('isLoggedIn')) {
       const data = JSON.parse(localStorage.getItem('myData') as string);
       console.log(data.name);
-      this.username = 'Welcome ' + data.name;
+      this.username = 'Welcome ' + data.name.toUpperCase();
       this.isLoggedIn = true;
     } else {
       this.username = '';

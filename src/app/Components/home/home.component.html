@@ -4,8 +4,8 @@
     <header>
       <div class="title"> My Chats </div>
     </header>
-    <ul>
-      <li *ngFor="let user of USERS" (click)="selectUserHandler(user.email)">
+      <ul>
+      <li *ngFor="let user of USERS" (click)="selectUserHandler(user.email)" #item>
         <img class="img-size" src="./assets/p5.webp" alt="" />
         <div>
           <h2>{{ user.name }}</h2>
@@ -15,6 +15,7 @@
         </div>
       </li>
     </ul>
+
   </aside>
   <main>
     <ng-container *ngIf="selectedUser">
@@ -23,6 +24,8 @@
         <div>
           <h2>Chat with {{ selectedUser.name }}</h2>
           <!-- <h3>already 1902 messages</h3> -->
+          <!-- <h3>already {{count}} messages</h3> -->
+
         </div>
         <img
           src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/ico_star.png"
@@ -30,14 +33,10 @@
         />
       </header>
       <main>
-        <div class="chat">
+        <div class="chat" #messageListRef class="message-list" [scrollTop]="messageListRef.scrollHeight">         
           <ul id="chat">
             <!-- [ngClass]="item?.email === currentUser?.email?  'same-user' : 'you'" -->
-            <div
-              *ngFor="let msg of messages"
-              #scrollMe
-              [scrollTop]="scrollMe.scrollHeight - scrollMe.clientHeight"
-            >
+            <div *ngFor="let msg of messages">
               <li
                 [ngClass]="{
                   you: msg.sender === selectedUser.email,
@@ -69,6 +68,7 @@
                 id="inputMessage"
                 name="messageInput"
                 [(ngModel)]="message"
+                (keyup.enter)="sendMessage(message)"
               ></textarea>
             </form>
           </div>

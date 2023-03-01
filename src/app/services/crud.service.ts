@@ -23,7 +23,7 @@ export class CrudService {
   // Add
   addUser(data: user): Observable<any> {
     return this.httpClient
-      .post(this.REST_API + '/add-user', data, { responseType: 'text' })
+      .post(this.REST_API + '/add-user', data, { responseType: 'json' })
       .pipe(
         catchError((error) => {
           // Handle the error
