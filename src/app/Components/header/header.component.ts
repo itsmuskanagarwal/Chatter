@@ -22,11 +22,11 @@ export class HeaderComponent {
   ) {
 
     console.log(localStorage.getItem('isLoggedIn'))
-            
+
     }
-    
+
     logout() {
-      
+
       // remove user's data from localStorage and navigate to landing page
       localStorage.removeItem('myData');
       localStorage.removeItem('isLoggedIn');
@@ -40,20 +40,19 @@ export class HeaderComponent {
         this.logout();
       }
     }
-    
+
 
   isLoggedIn: boolean | any;
 
   ngOnInit(){
 
-    window.addEventListener('beforeunload', this.handleBeforeUnload);
+    // window.addEventListener('beforeunload', this.handleBeforeUnload);
   }
 
   ngDoCheck() {
 
     if (localStorage.getItem('isLoggedIn')) {
       const data = JSON.parse(localStorage.getItem('myData') as string);
-      console.log(data.name);
       this.username = 'Welcome ' + data.name;
       this.isLoggedIn = true;
     } else {

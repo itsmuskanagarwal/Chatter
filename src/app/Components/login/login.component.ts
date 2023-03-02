@@ -38,40 +38,42 @@ export class LoginComponent implements OnInit {
 
 
   check(uname: string, pwd: string) {
+    // console.log(uname,pwd);
+
     this.crudService.verifyUser(uname, pwd).subscribe(
       (res) => {
         this.data = res;
         console.log(res);
 
         if (this.data.email == uname) {
-          
+
           // set isLoggedIn cookie to true for 1 day
           // this.cookieService.set('isLoggedIn', 'true', 1);
           // console.log(this.cookieService.get('isLoggedIn'));
 
           // localStorage.setItem('isLoggedIn',"true")
 
-          // this.storage.isLoggedIn = true; 
+          // this.storage.isLoggedIn = true;
           // console.log(this.storage.isLoggedIn);
 
           localStorage.setItem('isLoggedIn', 'true');
-          
+
           localStorage.setItem('myData', JSON.stringify(this.data));
           this.storage.data = JSON.parse(
             localStorage.getItem('myData') as string
             );
-            
+
             console.log(this.data);
             console.log(this.storage.data);
 
             console.log("login", localStorage.getItem('myData'))
             console.log("login", localStorage.getItem('isLoggedIn'))
-            
+
             this.ngZone.run(() => this.routes.navigateByUrl('/home'));
 
-        } 
-        
-        else 
+        }
+
+        else
         {
           this.validPassword = true;
           this.msg =

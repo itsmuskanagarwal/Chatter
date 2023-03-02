@@ -79,17 +79,21 @@ export class SignUpComponent implements OnInit {
       if (this.validPassword == true) {
         console.log('working');
         this.crudService.addUser(this.formData.value).subscribe((res) => {
-          console.log('Data added!!!!', res);
-          this.ngZone.run(() => this.router.navigateByUrl('/login'));
+          if(res["Success"]){
+            console.log('Data added!!!!', res);
+            this.ngZone.run(() => this.router.navigateByUrl('/login'));
+            this._snackBar.open(
+              'Hello ' + this.username + ', You are Successfully Registered !!',
+              'OK',
+              {
+                duration: 5000,
+              }
+              );
+            }else{
+            console.log('Error', res);
+          }
         });
 
-        this._snackBar.open(
-          'Hello ' + this.username + ', You are Successfully Registered !!',
-          'OK',
-          {
-            duration: 5000,
-          }
-        );
       }
     }
   }
