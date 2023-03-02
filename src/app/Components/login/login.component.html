@@ -15,7 +15,7 @@
           pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)"
           autofocus
           id="username"
-          #u1
+          #username
         />
         <!-- <div *ngIf="email.invalid && (email.dirty || email.touched)">
           <div *ngIf="email.errors.required">
@@ -33,9 +33,8 @@
           placeholder="Password"
           id="password"
           required
-          required
           pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
-          #u2
+          #password
           class="input"
         />
         <button
@@ -63,7 +62,7 @@
     <button
       mat-stroked-button
       class="btn-block"
-      (click)="check(u1.value, u2.value)"
+      (click)="check(username.value, password.value)"
       [disabled] ="!loginForm.valid"
     >
       Log in

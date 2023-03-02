@@ -4,14 +4,20 @@
     <header>
       <div class="title"> My Chats </div>
     </header>
-      <ul>
-      <li *ngFor="let user of USERS" (click)="selectUserHandler(user.email)" #item>
+    <ul>
+      <li *ngFor="let user of USERS" (click)="selectUserHandler(user.email)" [ngClass]="user.email==selected? 'li_selected' : ''">
+
         <img class="img-size" src="./assets/p5.webp" alt="" />
         <div>
-          <h2>{{ user.name }}</h2>
-          <h3>
-            <span class="status orange"></span>
-          </h3>
+          <h2>{{ user.name }}
+          <div *ngFor="let onlineuser of onlineUsers">
+            <div *ngIf="onlineuser.email==user.email">
+              <h3>
+                <span class="dot"></span>
+              </h3>
+            </div>
+          </div>
+        </h2>
         </div>
       </li>
     </ul>
@@ -22,21 +28,16 @@
       <header>
         <img class="img-size" src="./assets/p5.webp" alt="" />
         <div>
-          <h2>{{ selectedUser.name }}</h2>
-          <!-- <h3>already 1902 messages</h3> -->
-          <!-- <h3>already {{count}} messages</h3> -->
-
+          <h2>Chat with {{ selectedUser.name }}</h2>
         </div>
-        <!-- <img
-          src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/ico_star.png"
-          alt=""
-        /> -->
       </header>
       <main>
-        <div class="chat" #messageListRef class="message-list" [scrollTop]="messageListRef.scrollHeight">         
-          <ul id="chat">
+        <div>
+          <ul id="chat" #chat_messages>
             <!-- [ngClass]="item?.email === currentUser?.email?  'same-user' : 'you'" -->
-            <div *ngFor="let msg of messages">
+            <div
+              *ngFor="let msg of messages"
+            >
               <li
                 [ngClass]="{
                   you: msg.sender === selectedUser.email,
@@ -46,10 +47,10 @@
                 <div class="entete">
                   <span class="status green"></span>
                   <h2 *ngIf="msg.sender === selectedUser.email; else elseblock">
-                    {{ selectedUser.name }}
+                    {{ selectedUser.name }}&nbsp;
                   </h2>
                   <ng-template #elseblock>
-                    <h2>{{ currentUser.name }}</h2>
+                    <h2>{{ currentUser.name }} &nbsp;</h2>
                   </ng-template>
                   <h3>{{ msg.timestamp | date : "shortTime" }}</h3>
                 </div>
@@ -64,6 +65,8 @@
             <form (submit)="sendMessage(message)">
               <button class="btn">Send</button>
               <textarea
+              autofocus #textareaRef
+              maxlength="1000"
                 placeholder="Type your message"
                 id="inputMessage"
                 name="messageInput"

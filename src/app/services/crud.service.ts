@@ -36,6 +36,7 @@ export class CrudService {
   // Verify user
   verifyUser(email: string, password: string): Observable<any> {
     const body = { email, password };
+    console.log(body);
     return this.httpClient.post(this.REST_API + '/login', body).pipe(
       catchError((error) => {
         // Handle the error

@@ -482,25 +482,25 @@ pre code {
 
 @media (min-width: 576px) {
   .container {
-    max-width: 540px;
+    max-width: 98%;
   }
 }
 
 @media (min-width: 768px) {
   .container {
-    max-width: 720px;
+    max-width: 98%;
   }
 }
 
 @media (min-width: 992px) {
   .container {
-    max-width: 960px;
+    max-width: 98%;
   }
 }
 
 @media (min-width: 1200px) {
   .container {
-    max-width: 1140px;
+    max-width: 98%;
   }
 }
 
@@ -4763,8 +4763,8 @@ input[type="button"].btn-block {
   display: inline-block;
   padding-top: 0.3125rem;
   padding-bottom: 0.3125rem;
-  margin-top: 10px;
-  margin-right: 1rem;
+  margin-left: 0%;
+
   font-size: 1.25rem;
   line-height: inherit;
   white-space: nowrap;
@@ -4778,6 +4778,7 @@ input[type="button"].btn-block {
 
 .navbar-nav {
   display: -webkit-box;
+  align-items:  center;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;

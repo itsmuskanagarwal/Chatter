@@ -1,4 +1,5 @@
-import { Component , ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
+
 import { StorageService } from 'src/app/services/storage.service';
 import { CrudService } from 'src/app/services/crud.service';
 import { user } from 'src/app/models/user';
@@ -10,16 +11,20 @@ import { io } from 'socket.io-client';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
 })
-export class HomeComponent {
+export class HomeComponent{
 
-  @ViewChild('messageList') private messageListRef : ElementRef<HTMLDivElement> | any;
+  @ViewChild('chat_messages', {static: false}) messagesRef: ElementRef | any;
+  @ViewChild('textareaRef') textareaRef: ElementRef | any;
+
 
   private socket: any;
   public messages:
-    | [{ message: string; timestamp: Date; sender: string }]
-    | any = [];
+  | [{ message: string; timestamp: Date; sender: string }]
+  | any = [];
   public message: string = '';
   public chatID: string = '';
+  selected:any;
+
 
   user: any;
   USERS: user[] = [];
@@ -27,7 +32,10 @@ export class HomeComponent {
   currentUser: any;
   selectedUser: any;
 
-  count:number=0;
+  onlineUsers: [] | any;
+
+  // isclicked : boolean = false
+
 
   //image array for profile image
   Img = [
@@ -48,15 +56,16 @@ export class HomeComponent {
   constructor(
     private storage: StorageService,
     private crudService: CrudService
-  ) {}
+    ) {}
 
-  ngDoCheck() {
-    // this.scrollMessageListToBottom();
-  }
+    ngOnDestroy() {
+      this.socket.disconnect();
+    }
 
-  ngOnDestroy() {
-    this.socket.disconnect();
-  }
+
+    ngAfterViewInit(): void {
+
+    }
 
   ngOnInit(): void {
     this.user = JSON.parse(localStorage.getItem('myData') as string);
@@ -69,15 +78,23 @@ export class HomeComponent {
     this.socket.on('message', (data: any) => {
       console.log(data);
 
-      
+      setTimeout(()=>{
         this.messages.push({
           message: data[3],
           timestamp: Date.now(),
           sender: data[2],
         });
-        
+      },100);
+
+      this.scrollToBottom();
 
       console.log(this.messages);
+    });
+
+    this.socket.on('onlineSockets', (data: any) => {
+      console.log("socket res: ",data);
+      this.onlineUsers=data;
+      console.log("Online Users: ",this.onlineUsers);
     });
 
     //fetching all registered users
@@ -95,8 +112,17 @@ export class HomeComponent {
     });
   }
 
+  scrollToBottom(): void {
+      setTimeout(()=>{
+        this.textareaRef.nativeElement.focus();
+        this.messagesRef.nativeElement.scrollTop = this.messagesRef.nativeElement.scrollHeight;
+      },100)
+
+  }
+
   //when a particular user is selected
   selectUserHandler(email: string): void {
+    this.selected=email;
     this.messages = []; //empty the msgs array
 
     //assigning the selectedUser with the complete details
@@ -109,64 +135,67 @@ export class HomeComponent {
 
       //retrieving all the messages of the current user and selected user
       this.crudService
-        .getAllMessages(this.currentUser.email, this.selectedUser.email)
-        .subscribe((res) => {
-          console.log('Response: ' + res);
-          console.log('Response Id: ' + res[0]);
+      .getAllMessages(this.currentUser.email, this.selectedUser.email)
+      .subscribe((res) => {
+        console.log(res);
 
+
+        if(res._id){
+          this.chatID = res._id;
+          console.log('Chat ID: ' + this.chatID);
+        }else{
           //mapping the json res object into an array
           const array = res.map((obj: any) => Object.assign({}, obj));
-          console.log('array: ' + array);
+          console.log(array);
 
           //providing a unique Chat id for the both the users
-          // this.chatID = array[0]._id;
-          this.chatID = res[0]._id;
-          console.log('Chat ID: ' + this.chatID);
+            this.chatID = array[0]._id;
+            console.log('Chat ID: ' + this.chatID);
+        }
+
 
           //mapping users in a single room
           this.socket.emit('join-room', this.chatID);
-          
-          //pushing all the messages of both the users into the messages array
-          for (let i = 0; i < array.length; i++) {
-            const msgs = array[i].messages;
-            this.count=msgs.length;
 
+          //pushing all the messages of both the users into the messages array
+          for (let i = 0; i < res.length; i++) {
+            const msgs = res[i].messages;
             for (let j = 0; j < msgs.length; j++) {
 
               this.messages.push(msgs[j]);
             }
           }
-          console.log('All messages: ', this.messages);
-        });
+          this.scrollToBottom();
+        console.log('All messages: ', this.messages);
+      });
 
-        this.scrollMessageListToBottom();
     }
 
-    // return this.selectedUser;
+      // this.scrollToBottom();
+        // return this.selectedUser;
   }
 
   public sendMessage(message: string): void {
 
-    console.log('working');
-    console.log(this.currentUser.name);
-    console.log(this.selectedUser.name);
+    if(message!==''){
+      if(message.match(/([\<])([^\>]{1,})*([\>])/i)){
+        alert("only text message can be sent");
+      }else{
+        console.log('working');
+        console.log(this.currentUser.name);
+        console.log(this.selectedUser.name);
 
-    //send the message to other socket
-    this.socket.emit('message', [
-      this.chatID,
-      this.selectedUser.email,
-      this.currentUser.email,
-      this.message.trim(),
-    ]);
+        //send the message to other socket
+        this.socket.emit('message', [
+          this.chatID,
+          this.selectedUser.email,
+          this.currentUser.email,
+          this.message.trim(),
+        ]);
 
-    this.message = '';
-    this.scrollMessageListToBottom();
-   
-    // this.selectUserHandler(this.selectedUser.email)
+        this.message = '';
+      }
+    }
   }
 
-  private scrollMessageListToBottom() {
-    const messageList = this.messageListRef.nativeElement;
-    messageList.scrollTop = messageList.scrollHeight;
-  }
 }

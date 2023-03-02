@@ -111,30 +111,26 @@ export class SignUpComponent implements OnInit {
         data.username =  data.username.charAt(0).toUpperCase() +  data.username.slice(1);
 
         this.crudService.addUser(this.formData.value).subscribe((res) => {
-          console.log('Data added!!!!', res);
-
-          // console.log(typeof res)
-          // console.log(res["Success"])
-
-          if(res.hasOwnProperty('success')){
-          this.ngZone.run(() => this.router.navigateByUrl('/login'));
-          this._snackBar.open(
-            'Hello ' + this.username + ', You are Successfully Registered !!',
-            'OK',
-            {
-              duration: 5000,
-            }
-          );
-        }
-        else{
-          this.ngZone.run(() => this.router.navigateByUrl('/signup'));
-          this._snackBar.open(
+          if(res["Success"]){
+            console.log('Data added!!!!', res);
+            this.ngZone.run(() => this.router.navigateByUrl('/login'));
+            this._snackBar.open(
+              'Hello ' + this.username + ', You are Successfully Registered !!',
+              'OK',
+              {
+                duration: 5000,
+              }
+              );
+            }else{
+            console.log('Error', res);
+            this._snackBar.open(
             'Hello! There was an error while registering. Please try again later',
             'OK',
             {
               duration: 5000,
             });
-        }
+          }
+
         });
 
       }
