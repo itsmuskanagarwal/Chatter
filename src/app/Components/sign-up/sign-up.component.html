@@ -10,23 +10,6 @@
       [formGroup]="formData"
       (ngSubmit)="onClickSubmit(formData.value)"
     >
-    <mat-error>
-      <div *ngIf="validFields == false">
-        <br />
-        <div class="error">
-          <span> {{ msg.feilds }} </span>
-        </div>
-        <br />
-      </div>
-    </mat-error>
-    <mat-error>
-      <div *ngIf="validPassword == false">
-        <div class="error">
-          <span> {{ msg.password }} </span>
-        </div>
-        <br />
-      </div>
-    </mat-error>
       <mat-card-content>
         <mat-form-field class="example-full-width">
           <input
@@ -60,6 +43,7 @@
             maxlength="10"
             autofocus
             id="contact"
+            pattern="[0-9]{10}"
             #contact
           />
         </mat-form-field>
@@ -68,6 +52,22 @@
             <div *ngIf="formData.get('contact').hasError('required')">
               Contact is required.
             </div>
+            <div *ngIf="formData.get('contact').hasError('minlength') || formData.get('contact').hasError('maxlength') ">
+              Contact must be 10 digits.
+            </div>
+            <div *ngIf="formData.get('contact').hasError('pattern')" >
+              Contact number must be digits only.
+            </div>
+          </div>
+        </mat-error>
+        <br>
+        <mat-error>
+          <div *ngIf="validContact == false">
+        
+            <div class="error">
+              <span> {{ msg.contact }} </span>
+            </div>
+      
           </div>
         </mat-error>
         <mat-form-field class="example-full-width">
@@ -93,6 +93,16 @@
             </div>
           </div>
         </mat-error>
+        <br>
+        <mat-error>
+          <div *ngIf="validEmail == false">
+        
+            <div class="error">
+              <span> {{ msg.email }} </span>
+            </div>
+      
+          </div>
+        </mat-error>
         <mat-form-field class="example-full-width">
           <input
             matInput
@@ -116,6 +126,14 @@
               Password must be at least 8 characters long.
             </div>
           </div>
+        </mat-error><br>
+        <mat-error>
+          <div *ngIf="validPassword == false">
+            <div class="error">
+              <span> {{ msg.password }} </span>
+            </div>
+            <br />
+          </div>
         </mat-error>
         <mat-form-field class="example-full-width">
           <input
@@ -136,6 +154,16 @@
             <div *ngIf="formData.get('confirmPassword').hasError('minlength')">
               Password must be at least 8 characters long.
             </div>
+          </div>
+        </mat-error>
+        <br>
+        <mat-error>
+          <div *ngIf="validFields == false">
+            <br />
+            <div class="error">
+              <span> {{ msg.feilds }} </span>
+            </div>
+            <br />
           </div>
         </mat-error>
       </mat-card-content>

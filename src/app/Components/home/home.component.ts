@@ -106,11 +106,13 @@ export class HomeComponent {
 
     //checking whether there is someone logged in or not
     if (localStorage.getItem('myData')) {
+
       //retrieving all the messages of the current user and selected user
       this.crudService
         .getAllMessages(this.currentUser.email, this.selectedUser.email)
         .subscribe((res) => {
           console.log('Response: ' + res);
+          console.log('Response Id: ' + res[0]);
 
           //mapping the json res object into an array
           const array = res.map((obj: any) => Object.assign({}, obj));
