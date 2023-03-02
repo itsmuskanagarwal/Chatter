@@ -6,6 +6,7 @@
     </header>
     <ul>
       <li *ngFor="let user of USERS" (click)="selectUserHandler(user.email)" [ngClass]="user.email==selected? 'li_selected' : ''">
+
         <img class="img-size" src="./assets/p5.webp" alt="" />
         <div>
           <h2>{{ user.name }}
@@ -20,6 +21,7 @@
         </div>
       </li>
     </ul>
+
   </aside>
   <main>
     <ng-container *ngIf="selectedUser">

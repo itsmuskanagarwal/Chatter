@@ -1,49 +1,4 @@
-/*!
-=========================================================
-* Steller Landing page
-=========================================================
 
-* Copyright: 2019 DevCRUD (https://devcrud.com)
-* Licensed: (https://devcrud.com/licenses)
-* Coded by www.devcrud.com
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-*/
-:root {
-  --blue: #79a9f5;
-  --indigo: #c45f90;
-  --purple: #a16ae8;
-  --pink: #fc8bc0;
-  --red: #f85c70;
-  --orange: #ff8882;
-  --yellow: #fad02c;
-  --green: #a3c14a;
-  --teal: #20c997;
-  --cyan: #47d8e0;
-  --white: #fff;
-  --gray: #6c757d;
-  --gray-dark: #343a40;
-  --primary: #ff7a57;
-  --secondary: #6c757d;
-  --success: #a3c14a;
-  --info: #47d8e0;
-  --warning: #fad02c;
-  --danger: #f85c70;
-  --light: #f8f9fa;
-  --dark: #343a40;
-  --breakpoint-xs: 0;
-  --breakpoint-sm: 576px;
-  --breakpoint-md: 768px;
-  --breakpoint-lg: 992px;
-  --breakpoint-xl: 1200px;
-  --font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI",
-    Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif,
-    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas,
-    "Liberation Mono", "Courier New", monospace;
-}
 
 *,
 *::before,
@@ -84,9 +39,7 @@ body {
   background-color: #fff;
 }
 
-[tabindex="-1"]:focus {
-  outline: 0 !important;
-}
+
 
 hr {
   box-sizing: content-box;
@@ -104,79 +57,6 @@ h6 {
   margin-bottom: 0.5rem;
 }
 
-p {
-  margin-top: 0;
-  margin-bottom: 1rem;
-}
-
-abbr[title],
-abbr[data-original-title] {
-  text-decoration: underline;
-  -webkit-text-decoration: underline dotted;
-  text-decoration: underline dotted;
-  cursor: help;
-  border-bottom: 0;
-  -webkit-text-decoration-skip-ink: none;
-  text-decoration-skip-ink: none;
-}
-
-address {
-  margin-bottom: 1rem;
-  font-style: normal;
-  line-height: inherit;
-}
-
-ol,
-ul,
-dl {
-  margin-top: 0;
-  margin-bottom: 1rem;
-}
-
-ol ol,
-ul ul,
-ol ul,
-ul ol {
-  margin-bottom: 0;
-}
-
-dt {
-  font-weight: 700;
-}
-
-dd {
-  margin-bottom: 0.5rem;
-  margin-left: 0;
-}
-
-blockquote {
-  margin: 0 0 1rem;
-}
-
-b,
-strong {
-  font-weight: bolder;
-}
-
-small {
-  font-size: 80%;
-}
-
-sub,
-sup {
-  position: relative;
-  font-size: 75%;
-  line-height: 0;
-  vertical-align: baseline;
-}
-
-sub {
-  bottom: -0.25em;
-}
-
-sup {
-  top: -0.5em;
-}
 
 a {
   color: #ff7a57;
@@ -226,6 +106,9 @@ figure {
 img {
   vertical-align: middle;
   border-style: none;
+  width: 10px;
+  object-fit: cover;
+  
 }
 
 svg {
@@ -521,7 +404,7 @@ mark,
 }
 
 .img-fluid {
-  max-width: 100%;
+  max-width: 70%;
   height: auto;
 }
 
@@ -530,7 +413,7 @@ mark,
   background-color: #fff;
   border: 1px solid #dee2e6;
   border-radius: 0.25rem;
-  max-width: 100%;
+  max-width: 70%;
   height: auto;
 }
 
@@ -591,10 +474,10 @@ pre code {
 
 .container {
   width: 100%;
-  padding-right: 15px;
+  /* padding-right: 15px;
   padding-left: 15px;
   margin-right: auto;
-  margin-left: auto;
+  margin-left: auto; */
 }
 
 @media (min-width: 576px) {
@@ -623,10 +506,10 @@ pre code {
 
 .container-fluid {
   width: 100%;
-  padding-right: 15px;
+  /* padding-right: 15px;
   padding-left: 15px;
   margin-right: auto;
-  margin-left: auto;
+  margin-left: auto; */
 }
 
 .row {
@@ -4881,9 +4764,11 @@ input[type="button"].btn-block {
   padding-top: 0.3125rem;
   padding-bottom: 0.3125rem;
   margin-left: 0%;
+
   font-size: 1.25rem;
   line-height: inherit;
   white-space: nowrap;
+  
 }
 
 .navbar-brand:hover,

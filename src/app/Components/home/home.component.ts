@@ -1,8 +1,10 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
+
 import { StorageService } from 'src/app/services/storage.service';
 import { CrudService } from 'src/app/services/crud.service';
 import { user } from 'src/app/models/user';
 import { io } from 'socket.io-client';
+
 
 @Component({
   selector: 'app-home',
@@ -13,6 +15,7 @@ export class HomeComponent{
 
   @ViewChild('chat_messages', {static: false}) messagesRef: ElementRef | any;
   @ViewChild('textareaRef') textareaRef: ElementRef | any;
+
 
   private socket: any;
   public messages:
@@ -32,6 +35,7 @@ export class HomeComponent{
   onlineUsers: [] | any;
 
   // isclicked : boolean = false
+
 
   //image array for profile image
   Img = [
@@ -57,6 +61,7 @@ export class HomeComponent{
     ngOnDestroy() {
       this.socket.disconnect();
     }
+
 
     ngAfterViewInit(): void {
 
@@ -127,11 +132,13 @@ export class HomeComponent{
 
     //checking whether there is someone logged in or not
     if (localStorage.getItem('myData')) {
+
       //retrieving all the messages of the current user and selected user
       this.crudService
       .getAllMessages(this.currentUser.email, this.selectedUser.email)
       .subscribe((res) => {
         console.log(res);
+
 
         if(res._id){
           this.chatID = res._id;
@@ -146,6 +153,7 @@ export class HomeComponent{
             console.log('Chat ID: ' + this.chatID);
         }
 
+
           //mapping users in a single room
           this.socket.emit('join-room', this.chatID);
 
@@ -153,12 +161,14 @@ export class HomeComponent{
           for (let i = 0; i < res.length; i++) {
             const msgs = res[i].messages;
             for (let j = 0; j < msgs.length; j++) {
+
               this.messages.push(msgs[j]);
             }
           }
           this.scrollToBottom();
         console.log('All messages: ', this.messages);
       });
+
     }
 
       // this.scrollToBottom();
@@ -185,7 +195,7 @@ export class HomeComponent{
 
         this.message = '';
       }
-
     }
   }
+
 }

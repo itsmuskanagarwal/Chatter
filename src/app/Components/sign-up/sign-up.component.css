@@ -25,7 +25,12 @@
 }
 
 .error {
-  color: #d8000c;
-  background-color: #ffbaba;
+  
+}
+
+mat-error{
+  margin-top: -40px;
+  /* color: #d8000c;
+  background-color: #ffbaba; */
   font-size: small;
 }

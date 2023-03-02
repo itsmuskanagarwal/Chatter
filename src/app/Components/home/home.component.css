@@ -5,11 +5,13 @@
 body {
   background-color: #abd9e9;
   font-family: Arial;
+  
 }
 
 #container {
   display: inline-flex;
   width: 100%;
+
 }
 
 aside {
@@ -27,6 +29,7 @@ main {
   }
   main{
     display: none;
+
   }
 }
 
@@ -50,6 +53,7 @@ aside {
   width: fit-content;
   height: 100%;
   min-width: fit-content;
+
   background-color: #3b3e49;
   display: inline-block;
   font-size: 15px;
@@ -173,6 +177,7 @@ main header h3 {
   font-size: 14px;
   font-weight: normal;
   color: #7e818a;
+
 }
 
 #chat {
@@ -252,6 +257,7 @@ main footer textarea {
   overflow-y: scroll;
   word-wrap: break-word;
   padding: 10px;
+
   background-color: #fff;
   margin-bottom: auto;
   resize: none;

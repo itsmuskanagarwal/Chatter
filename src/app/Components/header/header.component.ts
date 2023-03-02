@@ -34,13 +34,6 @@ export class HeaderComponent {
       this.ngZone.run(() => this.router.navigateByUrl('/landing'));
     }
 
-    handleBeforeUnload = (event: BeforeUnloadEvent) => {
-      const target = event.currentTarget as Window;
-      if (target && target.performance && target.performance.navigation.type === PerformanceNavigation.TYPE_RELOAD) {
-        this.logout();
-      }
-    }
-
 
   isLoggedIn: boolean | any;
 
@@ -54,6 +47,7 @@ export class HeaderComponent {
     if (localStorage.getItem('isLoggedIn')) {
       const data = JSON.parse(localStorage.getItem('myData') as string);
       this.username = 'Welcome ' + data.name;
+
       this.isLoggedIn = true;
     } else {
       this.username = '';

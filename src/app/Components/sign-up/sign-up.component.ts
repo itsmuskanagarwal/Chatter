@@ -8,6 +8,7 @@ import {
   FormBuilder,
 } from '@angular/forms';
 import { CrudService } from 'src/app/services/crud.service';
+import { user } from 'src/app/models/user';
 
 @Component({
   selector: 'app-sign-up',
@@ -27,9 +28,9 @@ export class SignUpComponent implements OnInit {
     this.formData = this.formBuilder.group({
       username: ['', Validators.required],
       password: ['', [Validators.required, Validators.minLength(8)]],
-      confirmPassword: ['', Validators.required],
+      confirmPassword: ['',  [Validators.required, Validators.minLength(8)]],
       email: ['', [Validators.required, Validators.email]],
-      contact: ['', Validators.required],
+      contact: ['', [Validators.required, Validators.minLength(10),Validators.maxLength(10),Validators.pattern('^[0-9]*$')]],
     });
   }
 
@@ -38,14 +39,20 @@ export class SignUpComponent implements OnInit {
   msg = {
     feilds: 'Please fill all the fields',
     password: 'Password does not match',
+    contact: "Contact number already exists",
+    email: "Email address already exists"
+
   };
 
   username: string = '';
   password: string = '';
 
+  USERS: user[] = [];
+
   validFields: boolean | undefined;
   validPassword: boolean | undefined;
   validContact: boolean | undefined;
+  validEmail: boolean | undefined;
 
   onClickSubmit(data: any) {
     // console.log(data.userame);
@@ -55,6 +62,7 @@ export class SignUpComponent implements OnInit {
 
     this.username = data.username;
     this.password = data.password;
+
 
     console.log('Login page: ' + this.username);
     console.log('Login page: ' + this.password);
@@ -75,9 +83,33 @@ export class SignUpComponent implements OnInit {
       this.validPassword = false;
     }
 
-    if (this.validFields == true) {
-      if (this.validPassword == true) {
+    //fetching all registered users
+    this.crudService.getUsers().subscribe((res) => {
+
+      this.USERS = res;
+      for (let user in this.USERS) {
+
+        //removing the logged in user from the chatting list
+        if (this.USERS[user].email == data.email) 
+      {
+          this.validEmail =  false;
+      }
+
+      if(this.USERS[user].contact == data.contact)
+      {
+        this.validContact = false;   
+      }
+      
+    }
+    });
+
+    if(this.validEmail && this.validContact){
+
+    if (this.validFields && this.validPassword) {
+
         console.log('working');
+        data.username =  data.username.charAt(0).toUpperCase() +  data.username.slice(1);
+
         this.crudService.addUser(this.formData.value).subscribe((res) => {
           if(res["Success"]){
             console.log('Data added!!!!', res);
@@ -91,10 +123,18 @@ export class SignUpComponent implements OnInit {
               );
             }else{
             console.log('Error', res);
+            this._snackBar.open(
+            'Hello! There was an error while registering. Please try again later',
+            'OK',
+            {
+              duration: 5000,
+            });
           }
+
         });
 
       }
     }
   }
-}
+  }
+

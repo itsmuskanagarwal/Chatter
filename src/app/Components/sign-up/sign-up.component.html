@@ -10,21 +10,6 @@
       [formGroup]="formData"
       (ngSubmit)="onClickSubmit(formData.value)"
     >
-      <!-- <div *ngIf="validFields == false">
-        <br />
-        <div class="error">
-          <span> {{ msg.feilds }} </span>
-        </div>
-        <br />
-      </div>
-
-      <div *ngIf="validPassword == false">
-        <div class="error">
-          <span> {{ msg.password }} </span>
-        </div>
-        <br />
-      </div> -->
-
       <mat-card-content>
         <mat-form-field class="example-full-width">
           <input
@@ -38,7 +23,14 @@
             id="username"
             #username
           />
-        </mat-form-field>
+</mat-form-field>
+      <mat-error>
+            <div *ngIf="formData.get('username').invalid && (formData.get('username').dirty || formData.get('username').touched)">
+              <div *ngIf="formData.get('username').hasError('required')">
+                Name is required.
+              </div>
+            </div>
+        </mat-error>
         <mat-form-field class="example-full-width">
           <input
             matInput
@@ -51,9 +43,33 @@
             maxlength="10"
             autofocus
             id="contact"
+            pattern="[0-9]{10}"
             #contact
           />
         </mat-form-field>
+        <mat-error>
+          <div *ngIf="formData.get('contact').invalid && (formData.get('contact').dirty || formData.get('contact').touched)">
+            <div *ngIf="formData.get('contact').hasError('required')">
+              Contact is required.
+            </div>
+            <div *ngIf="formData.get('contact').hasError('minlength') || formData.get('contact').hasError('maxlength') ">
+              Contact must be 10 digits.
+            </div>
+            <div *ngIf="formData.get('contact').hasError('pattern')" >
+              Contact number must be digits only.
+            </div>
+          </div>
+        </mat-error>
+        <br>
+        <mat-error>
+          <div *ngIf="validContact == false">
+        
+            <div class="error">
+              <span> {{ msg.contact }} </span>
+            </div>
+      
+          </div>
+        </mat-error>
         <mat-form-field class="example-full-width">
           <input
             matInput
@@ -67,6 +83,26 @@
             #useremail
           />
         </mat-form-field>
+        <mat-error>
+          <div *ngIf="formData.get('email').invalid && (formData.get('email').dirty || formData.get('email').touched)">
+            <div *ngIf="formData.get('email').hasError('required')">
+              Email is required.
+            </div>
+            <div *ngIf="formData.get('email').hasError('email')">
+              Please enter a valid email address.
+            </div>
+          </div>
+        </mat-error>
+        <br>
+        <mat-error>
+          <div *ngIf="validEmail == false">
+        
+            <div class="error">
+              <span> {{ msg.email }} </span>
+            </div>
+      
+          </div>
+        </mat-error>
         <mat-form-field class="example-full-width">
           <input
             matInput
@@ -79,7 +115,26 @@
             id="password"
             #password
           />
+
         </mat-form-field>
+        <mat-error>
+          <div *ngIf="formData.get('password').invalid && (formData.get('password').dirty || formData.get('password').touched)">
+            <div *ngIf="formData.get('password').hasError('required')">
+              Password is required.
+            </div>
+            <div *ngIf="formData.get('password').hasError('minlength')">
+              Password must be at least 8 characters long.
+            </div>
+          </div>
+        </mat-error><br>
+        <mat-error>
+          <div *ngIf="validPassword == false">
+            <div class="error">
+              <span> {{ msg.password }} </span>
+            </div>
+            <br />
+          </div>
+        </mat-error>
         <mat-form-field class="example-full-width">
           <input
             matInput
@@ -91,13 +146,32 @@
             autofocus
           />
         </mat-form-field>
+        <mat-error>
+          <div *ngIf="formData.get('confirmPassword').invalid && (formData.get('confirmPassword').dirty || formData.get('confirmPassword').touched)">
+            <div *ngIf="formData.get('confirmPassword').hasError('required')">
+              Confirm password is required.
+            </div>
+            <div *ngIf="formData.get('confirmPassword').hasError('minlength')">
+              Password must be at least 8 characters long.
+            </div>
+          </div>
+        </mat-error>
+        <br>
+        <mat-error>
+          <div *ngIf="validFields == false">
+            <br />
+            <div class="error">
+              <span> {{ msg.feilds }} </span>
+            </div>
+            <br />
+          </div>
+        </mat-error>
       </mat-card-content>
 
       <button
         mat-stroked-button
         class="btn-block"
         type="submit"
-        [disabled]="!formData.valid"
       >
         Register
       </button>
@@ -109,7 +183,7 @@
         >
       </div>
     </form>
-    <mat-error>
+    <!-- <mat-error>
       <div
         *ngIf="
           formData.get('password').hasError('required') &&
@@ -128,6 +202,7 @@
       >
         Confirm Password is required.
       </div>
-    </mat-error>
+    </mat-error> -->
+
   </mat-card>
 </div>
