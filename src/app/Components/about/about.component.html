@@ -20,10 +20,17 @@
           real-time transmission of text, audio, or video messages. Every online
           chatting software offers many different functions and features..
         </p>
-        <button class="btn btn-primary rounded mt-3" [routerLink]="'/landing'">
-          Get Started
-        </button>
+        <div *ngIf = "isLoggedIn">
+          <button class="btn btn-primary rounded mt-3" [routerLink]="'/home'">
+            Get Started
+          </button>
+          </div>
+        <div *ngIf = "!isLoggedIn">
+          <button class="btn btn-primary rounded mt-3" [routerLink]="'/landing'">
+            Get Started
+          </button>
       </div>
     </div>
+  </div>
   </div>
 </section>

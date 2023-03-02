@@ -32,13 +32,14 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { ToastrModule } from 'ngx-toastr';
 import { HttpClientModule } from '@angular/common/http';
 import { io } from 'socket.io-client';
-import { AuthGuard } from 'src/auth.guard';
+import { AuthGuard} from 'src/auth.guard';
+import { NewAuthGuard } from './new-auth.guard'; 
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'landing' },
-  { path: 'login', component: LoginComponent },
-  { path: 'signup', component: SignUpComponent },
-  { path: 'landing', component: LandingComponent },
+  { path: 'login', component: LoginComponent,canActivate: [NewAuthGuard] },
+  { path: 'signup', component: SignUpComponent,canActivate: [NewAuthGuard] },
+  { path: 'landing', component: LandingComponent,canActivate: [NewAuthGuard] },
   { path: 'contact', component: ContactComponent },
   { path: 'about', component: AboutComponent },
   { path: 'profile', component: ProfileComponent },
