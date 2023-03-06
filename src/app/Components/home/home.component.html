@@ -17,6 +17,9 @@
               </h3>
             </div>
           </div>
+          <div *ngIf="user.count!='' || user.count!=null" #badge>
+            <span class="badge">{{user.count}}</span>
+          </div>
         </h2>
         </div>
       </li>

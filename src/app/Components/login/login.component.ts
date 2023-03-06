@@ -5,6 +5,8 @@ import { CrudService } from 'src/app/services/crud.service';
 import { StorageService } from 'src/app/services/storage.service';
 import { CookieService } from 'ngx-cookie-service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { io } from 'socket.io-client';
+
 
 @Component({
   selector: 'app-login',
@@ -17,6 +19,8 @@ export class LoginComponent implements OnInit {
   validPassword: boolean | undefined;
   hide = true;
   data: any = [];
+  private socket: any;
+  onlineUsers: [] | any;
 
 
   // public password : string | any;
@@ -34,7 +38,11 @@ export class LoginComponent implements OnInit {
 
   msg = '';
 
-  ngOnInit() {}
+  ngOnInit() {
+
+    this.socket = io('http://localhost:3000');
+
+  }
 
 
   check(uname: string, pwd: string) {
@@ -68,6 +76,9 @@ export class LoginComponent implements OnInit {
 
             console.log("login", localStorage.getItem('myData'))
             console.log("login", localStorage.getItem('isLoggedIn'))
+
+            this.socket.emit('onlineSockets', uname);
+
 
             this.ngZone.run(() => this.routes.navigateByUrl('/home'));
 

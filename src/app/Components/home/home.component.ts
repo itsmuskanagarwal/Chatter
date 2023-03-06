@@ -1,20 +1,19 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-
 import { StorageService } from 'src/app/services/storage.service';
 import { CrudService } from 'src/app/services/crud.service';
-import { user } from 'src/app/models/user';
 import { io } from 'socket.io-client';
-
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
 })
+
 export class HomeComponent{
 
   @ViewChild('chat_messages', {static: false}) messagesRef: ElementRef | any;
   @ViewChild('textareaRef') textareaRef: ElementRef | any;
+  @ViewChild('badge') badge: ElementRef | any;
 
 
   private socket: any;
@@ -24,10 +23,26 @@ export class HomeComponent{
   public message: string = '';
   public chatID: string = '';
   selected:any;
+  chatCount:any;
 
 
   user: any;
-  USERS: user[] = [];
+  // USERS:user[]=[];
+  USERS: [{
+    name: string | null;
+    contact: string;
+    email: string;
+    password: string;
+    displayname: string;
+    count: string;
+  }]=[{
+    name: '',
+    contact: '',
+    email: '',
+    password: '',
+    displayname: '',
+    count: ''
+  }];
 
   currentUser: any;
   selectedUser: any;
@@ -62,11 +77,6 @@ export class HomeComponent{
       this.socket.disconnect();
     }
 
-
-    ngAfterViewInit(): void {
-
-    }
-
   ngOnInit(): void {
     this.user = JSON.parse(localStorage.getItem('myData') as string);
     this.currentUser = this.user;
@@ -91,23 +101,35 @@ export class HomeComponent{
       console.log(this.messages);
     });
 
-    this.socket.on('onlineSockets', (data: any) => {
-      console.log("socket res: ",data);
-      this.onlineUsers=data;
-      console.log("Online Users: ",this.onlineUsers);
-    });
+    setTimeout(()=>{
+      this.socket.on('onlineSockets', (data: any) => {
+        console.log("socket res: ",data);
+        this.onlineUsers=data;
+        console.log("Online Users: ",this.onlineUsers);
+      });
+    },1000)
 
     //fetching all registered users
     this.crudService.getUsers().subscribe((res) => {
       this.USERS = res;
+      setTimeout(()=>{
       for (let user in this.USERS) {
-        //removing the logged in user from the chatting list
-        if (this.USERS[user].email === this.currentUser.email) {
-          this.USERS.splice(parseInt(user), 1);
-        } else {
-          continue;
+        // setTimeout(()=>{
+          this.crudService.getChatCount(this.currentUser.email,this.USERS[user].email).subscribe((res)=>{
+            this.USERS[user].count=res;
+            console.log(this.USERS[user].count);
+          })
+          // this.USERS[user].count=this.findChatCount(this.USERS[user].email);
+        // },2000)
+          //removing the logged in user from the chatting list
+          if (this.USERS[user].email === this.currentUser.email) {
+            this.USERS.splice(parseInt(user), 1);
+          } else {
+            continue;
+          }
         }
-      }
+      },1000)
+
       console.log(this.USERS);
     });
   }
@@ -198,4 +220,10 @@ export class HomeComponent{
     }
   }
 
+  findChatCount(email:string): string {
+    this.crudService.getChatCount(this.currentUser.email,email).subscribe((res)=>{
+      this.chatCount=res;
+    })
+    return this.chatCount;
+  }
 }
