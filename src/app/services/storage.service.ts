@@ -6,6 +6,7 @@ import { CrudService } from './crud.service';
 })
 export class StorageService {
 
+  onlineUsers: [] | any;
   data: any = [];
 
   ngDoCheck(){
@@ -17,7 +18,7 @@ export class StorageService {
         );
     }
 
-    
+
 
   }
 

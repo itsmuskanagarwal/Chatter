@@ -90,16 +90,16 @@ export class SignUpComponent implements OnInit {
       for (let user in this.USERS) {
 
         //removing the logged in user from the chatting list
-        if (this.USERS[user].email == data.email) 
+        if (this.USERS[user].email == data.email)
       {
           this.validEmail =  false;
       }
 
       if(this.USERS[user].contact == data.contact)
       {
-        this.validContact = false;   
+        this.validContact = false;
       }
-      
+
     }
     });
 

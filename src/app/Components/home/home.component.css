@@ -5,7 +5,7 @@
 body {
   background-color: #abd9e9;
   font-family: Arial;
-  
+
 }
 
 #container {
@@ -102,6 +102,7 @@ aside li {
   padding-top: 10px;
   padding-right: 20px;
   padding-bottom: 10px;
+  margin-right: 20px;
 }
 aside li:hover {
   background-color: #5e616a;
@@ -307,3 +308,14 @@ main footer button {
   border-radius: 50%;
   display: inline-block;
 }
+aside li h2 .badge {
+  position: absolute;
+  /* top: -10px;
+  right: -10px;*/
+  display: inline;
+  margin-left: 10px;
+  border-radius: 50%;
+  background: orange;
+  color: black;
+}
+

@@ -47,17 +47,6 @@ export class CrudService {
     );
   }
 
-  // Get single user
-  // GetUser(id: any): Observable<any> {
-  //   let API_URL = `${this.REST_API}/user/${id}`;
-  //   return this.httpClient.get(API_URL, { headers: this.httpHeaders }).pipe(
-  //     map((res: any) => {
-  //       return res || {};
-  //     }),
-  //     catchError(this.handleError)
-  //   );
-  // }
-
   // Get all users
   getUsers(): Observable<any> {
     return this.httpClient.get(this.REST_API + '/find-users').pipe(
@@ -94,6 +83,14 @@ export class CrudService {
     );
   }
 
+  // Get previous chats
+  getChatCount(currentUser: string, selectedUser: string): Observable<any> {
+    const body = { currentUser, selectedUser };
+    return this.httpClient.post(this.REST_API + '/chat-count', body).pipe(
+      catchError((error) => {
+        // Handle the error,
+        console.error('Error fetching chat count', error);
+        return throwError(() => new Error('Error fetching chat count'));
   // Update Profile Avatar
   updateAvatar(email: string, url : string): Observable<any> {
     
@@ -106,6 +103,7 @@ export class CrudService {
       })
     );
   }
+
 
   // // Get previous chats
   getAllMessages(currentUser: string, selectedUser: string): Observable<any> {
