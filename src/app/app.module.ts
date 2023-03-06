@@ -34,6 +34,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { io } from 'socket.io-client';
 import { AuthGuard} from 'src/auth.guard';
 import { NewAuthGuard } from './new-auth.guard'; 
+import { FileUploadModule } from 'ng2-file-upload';
+import { FileUploader } from 'ng2-file-upload';
+// import { Ng2FileInputModule } from 'ng2-file-input';
+
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'landing' },
@@ -56,7 +60,7 @@ const routes: Routes = [
     ProfileComponent,
     AboutComponent,
     ContactComponent,
-    HeaderComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
@@ -82,6 +86,7 @@ const routes: Routes = [
     FlexLayoutModule,
     MatCardModule,
     NgbModule,
+    // Ng2FileInputModule
   ],
   exports: [RouterModule],
   providers: [],

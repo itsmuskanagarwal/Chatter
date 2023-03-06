@@ -12022,19 +12022,4 @@ pre {
   background: #ffcbbd;
 }
 
-.section {
-  position: relative;
-  padding: 5rem 0;
-}
 
-.section:nth-child(even) {
-  background: white;
-}
-
-.section.bg-white {
-  background-color: #fff;
-}
-
-.section.bg-gray {
-  background: white;
-}

@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { user } from 'src/app/models/user';
 import { catchError, map } from 'rxjs/operators';
-import { Observable, throwError } from 'rxjs';
+import { HttpParams } from '@angular/common/http';
+import { Observable, throwError,tap } from 'rxjs';
 import {
   HttpClient,
   HttpHeaders,
@@ -57,9 +58,23 @@ export class CrudService {
     );
   }
 
-  // Update
+  // Get all users
+  getAvatar(email : string): Observable<any> {
+    const params = new HttpParams().set('email', email);
+    console.log(params)
+    return this.httpClient.get(this.REST_API + '/find-user-avatar', {params} ).pipe(
+      catchError((error) => {
+        // Handle the error
+        console.error('Error fetching user', error);
+        return throwError(() => new Error('Error fetching user'));
+      })
+    );
+  }
+
+  // Update user details
   updateUser(data: any): Observable<any> {
     return this.httpClient.put(this.REST_API + '/update-user', data).pipe(
+      
       catchError((error) => {
         // Handle the error
         console.error('Error updating user', error);
@@ -76,11 +91,21 @@ export class CrudService {
         // Handle the error,
         console.error('Error fetching chat count', error);
         return throwError(() => new Error('Error fetching chat count'));
+  // Update Profile Avatar
+  updateAvatar(email: string, url : string): Observable<any> {
+    
+    const body = { email, url };
+    return this.httpClient.put(this.REST_API + '/update-avatar',body).pipe(
+      tap((body) => console.log('Request body:', body)),
+      catchError((error) => {
+        console.error('Error updating user avatar', error);
+        return throwError(() => new Error('Error updating user avatar'));
       })
     );
   }
 
-  // Get previous chats
+
+  // // Get previous chats
   getAllMessages(currentUser: string, selectedUser: string): Observable<any> {
     const body = { currentUser, selectedUser };
     return this.httpClient.post(this.REST_API + '/chat-all-msgs', body).pipe(

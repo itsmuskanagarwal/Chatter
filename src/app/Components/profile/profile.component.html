@@ -1,15 +1,33 @@
 <div class="form-container mat-elevation-z5 text-center">
   <h1>User Profile</h1>
 
-  <div class="profile-image">
-    <img width="120" height="120" src="/assets/profile-img.jpg" />
-    <button mat-mini-fab (click)="inputField.click()">
+  <div  *ngIf="!isClicked" class="profile-image">
+    <img
+      *ngIf="imageUrl == ''"
+      width="120"
+      height="120"
+      src="/assets/profile-img.jpg"
+    />
+
+    <img *ngIf="imageUrl !== ''" [src]="imageUrl" width="120" height="120" />
+
+    <button mat-mini-fab name="profile_picture" (click)="upload()">
       <mat-icon>edit</mat-icon>
     </button>
   </div>
-  <input #inputField type="file" (change)="onSelectFile($event)" hidden />
 
-  <form [formGroup]="updateForm" (ngSubmit)="save(updateForm.value)">
+  <div *ngIf="isClicked" class="avatar-container">
+    <div *ngFor="let imgUrl of img">
+      <div (click)="selectedAvatar(imgUrl)">
+        <img [src]="imgUrl"  class="avatar-container-item" />
+      </div>
+    </div>
+  </div>
+
+  <form
+    [formGroup]="updateForm"
+    (ngSubmit)="save(updateForm.value)"
+  >
     <mat-form-field>
       <input matInput formControlName="username" placeholder="Username" />
     </mat-form-field>
