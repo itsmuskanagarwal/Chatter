@@ -1,7 +1,55 @@
+
+.avatar-container {
+  width: 80px;
+  margin: 30px auto;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.avatar-container-item {
+  background: #999999;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 3px solid #ffffff;
+  margin-left: -10px;
+  transition : .7s all ease-in-out;
+  transform: scale(1);
+}
+
+  .avatar-container-item:hover {
+      background: lighten(#3d3d3d, 50%);
+      cursor: pointer;
+      transform: scale(1.5);
+      z-index: 2;
+  }
+
+
+  .avatar-container-item {
+  font-size: 20px;
+  padding: 0 10px;
+  color: #3d3d3d;
+  content: "+",
+}
+.avatar-container-item:hover {
+    color: lighten(#3d3d3d, 20%);
+    cursor: pointer
+  }
+
+
+.avatar-container__expanded 
+  .avatar-container-item {
+    margin-left: 10px;
+    transition: .7s all ease-in-out;
+  }
+
 .profile-image img {
   border-radius: 100%;
   object-fit: cover;
   object-position: center;
+  border: 3px solid  #d0c8c8;
 }
 
 .profile-image {
