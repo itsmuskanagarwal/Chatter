@@ -111,10 +111,11 @@ export class HomeComponent {
     this.selectedUser = '';
 
     window.addEventListener('load', () => {
-      // this.socket.emit("onlineUsers",this.currentUser.email)
-      // this.socket.emit("reconnection",this.currentUser.email)
+      this.socketService.connect();
       this.socketService.reconnect(this.currentUser.email);
-      console.log('reconnected to server');
+    // // this.socket.emit("onlineUsers",this.currentUser.email)
+    // // this.socket.emit("reconnection",this.currentUser.email)
+    // console.log('reconnected to server');
     });
 
     //listening to the one-on-one online conversations
@@ -148,7 +149,7 @@ export class HomeComponent {
     //   console.log(this.messages);
     // });
 
-    setTimeout(() => {
+    // setTimeout(() => {
       this.socketService.getonlineUsers().subscribe((data)=>{
         console.log('socket res: ', data);
         this.onlineUsers = data;
@@ -159,7 +160,7 @@ export class HomeComponent {
       //   this.onlineUsers = data;
       //   console.log('Online Users: ', this.onlineUsers);
       // });
-    }, 1000);
+    // }, 1000);
 
     //fetching all registered users
     this.crudService.getUsers().subscribe((res) => {
