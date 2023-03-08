@@ -91,7 +91,24 @@ export class CrudService {
         // Handle the error,
         console.error('Error fetching chat count', error);
         return throwError(() => new Error('Error fetching chat count'));
-  // Update Profile Avatar
+      })
+    );
+  }
+
+
+   // update delivery status
+   updateStatus(currentUser: string, selectedUser: string): Observable<any> {
+    const body = { currentUser, selectedUser };
+    return this.httpClient.post(this.REST_API + '/update-status', body).pipe(
+      catchError((error) => {
+        // Handle the error,
+        console.error('Error fetching chat count', error);
+        return throwError(() => new Error('Error fetching chat count'));
+      })
+    );
+  }
+  
+        // Update Profile Avatar
   updateAvatar(email: string, url : string): Observable<any> {
     
     const body = { email, url };
@@ -143,4 +160,5 @@ export class CrudService {
     console.log(errorMessage);
     return throwError(errorMessage);
   }
+
 }
