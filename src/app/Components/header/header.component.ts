@@ -22,9 +22,7 @@ export class HeaderComponent {
     private router: Router,
     private ngZone: NgZone
   ) {
-
     console.log(localStorage.getItem('isLoggedIn'))
-
     }
 
     logout() {
