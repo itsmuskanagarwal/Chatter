@@ -148,7 +148,7 @@ export class HomeComponent {
     //   console.log(this.messages);
     // });
 
-    setTimeout(() => {
+    
       this.socketService.getonlineUsers().subscribe((data)=>{
         console.log('socket res: ', data);
         this.onlineUsers = data;
@@ -159,7 +159,7 @@ export class HomeComponent {
       //   this.onlineUsers = data;
       //   console.log('Online Users: ', this.onlineUsers);
       // });
-    }, 1000);
+ 
 
     //fetching all registered users
     this.crudService.getUsers().subscribe((res) => {
