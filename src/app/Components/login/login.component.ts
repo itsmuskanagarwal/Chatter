@@ -5,7 +5,7 @@ import { CrudService } from 'src/app/services/crud.service';
 import { StorageService } from 'src/app/services/storage.service';
 import { CookieService } from 'ngx-cookie-service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { io } from 'socket.io-client';
+import { SocketService } from 'src/app/services/socket.service';
 
 
 @Component({
@@ -34,13 +34,12 @@ export class LoginComponent implements OnInit {
     private ngZone: NgZone,
     private cookieService: CookieService,
     private fb: FormBuilder,
+    private socketService:SocketService
   ) {}
 
   msg = '';
 
   ngOnInit() {
-
-    this.socket = io('http://localhost:3000');
 
   }
 
@@ -65,7 +64,6 @@ export class LoginComponent implements OnInit {
           // console.log(this.storage.isLoggedIn);
 
           localStorage.setItem('isLoggedIn', 'true');
-          
 
           localStorage.setItem('myData', JSON.stringify(this.data));
           this.storage.data = JSON.parse(
@@ -78,8 +76,10 @@ export class LoginComponent implements OnInit {
             console.log("login", localStorage.getItem('myData'))
             console.log("login", localStorage.getItem('isLoggedIn'))
 
-            this.socket.emit('onlineSockets', uname);
-            localStorage.setItem("socketID", this.socket.id)
+            this.socketService.connect();
+
+            this.socketService.addonlineUser(uname);
+
 
             this.ngZone.run(() => this.routes.navigateByUrl('/home'));
 

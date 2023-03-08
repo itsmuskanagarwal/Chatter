@@ -3,7 +3,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { StorageService } from '../../services/storage.service';
 import { AuthServiceService } from 'src/app/services/authservice.service';
 import { Router } from '@angular/router';
-import { io } from 'socket.io-client';
+import { SocketService } from 'src/app/services/socket.service';
 
 @Component({
   selector: 'app-header',
@@ -12,7 +12,6 @@ import { io } from 'socket.io-client';
 })
 export class HeaderComponent {
   username: any;
-  private socket: any;
 
   constructor(
     private serviceHeader: StorageService,
@@ -20,7 +19,8 @@ export class HeaderComponent {
     private cookieService: CookieService,
     private storage: StorageService,
     private router: Router,
-    private ngZone: NgZone
+    private ngZone: NgZone,
+    private socketService:SocketService,
   ) {
     console.log(localStorage.getItem('isLoggedIn'))
     }
@@ -29,9 +29,10 @@ export class HeaderComponent {
       // remove user's data from localStorage and navigate to landing page
       localStorage.removeItem('myData');
       localStorage.removeItem('isLoggedIn');
-      localStorage.removeItem("socketID")
-      this.socket.disconnect();
-
+      localStorage.removeItem("socketID");
+      setTimeout(()=>{
+        this.socketService.disconnect();
+      })
       this.ngZone.run(() => this.router.navigateByUrl('/landing'));
     }
 
@@ -39,7 +40,6 @@ export class HeaderComponent {
   isLoggedIn: boolean | any;
 
   ngOnInit(){
-    this.socket = io('http://localhost:3000');
     // window.addEventListener('beforeunload', this.handleBeforeUnload);
   }
 

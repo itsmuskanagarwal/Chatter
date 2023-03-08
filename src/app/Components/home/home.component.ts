@@ -2,6 +2,7 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { StorageService } from 'src/app/services/storage.service';
 import { CrudService } from 'src/app/services/crud.service';
 import { io } from 'socket.io-client';
+import { SocketService } from 'src/app/services/socket.service';
 
 @Component({
   selector: 'app-home',
@@ -92,7 +93,8 @@ export class HomeComponent {
 
   constructor(
     private storage: StorageService,
-    private crudService: CrudService
+    private crudService: CrudService,
+    private socketService:SocketService,
   ) {}
 
   ngOnDestroy() {
@@ -100,33 +102,24 @@ export class HomeComponent {
   }
 
   ngOnInit(): void {
-    this.socket = io('http://localhost:3000',{reconnection: true});
+    // this.socketService.connect();
+    // this.socket = io('http://localhost:3000',{reconnection: true});
 
 
     this.user = JSON.parse(localStorage.getItem('myData') as string);
     this.currentUser = this.user;
     this.selectedUser = '';
 
-
-    const socketID = localStorage.getItem('socketID');
-    console.log(socketID);
-    let socketFlag=false;
-    for(let onUser in this.onlineUsers){
-      if(socketID==this.onlineUsers[onUser].sktID){
-        socketFlag=true;
-      }
-    }
-
     window.addEventListener('load', () => {
       // this.socket.emit("onlineUsers",this.currentUser.email)
-      this.socket.emit("reconnection",this.currentUser.email)
+      // this.socket.emit("reconnection",this.currentUser.email)
+      this.socketService.reconnect(this.currentUser.email);
       console.log('reconnected to server');
     });
 
     //listening to the one-on-one online conversations
-    this.socket.on('message', (data: any) => {
+    this.socketService.getMessage().subscribe((data)=>{
       console.log(data);
-
       setTimeout(() => {
         this.messages.push({
           message: data[3],
@@ -139,13 +132,33 @@ export class HomeComponent {
 
       console.log(this.messages);
     });
+    // this.socket.on('message', (data: any) => {
+    // console.log(data);
+
+    //   setTimeout(() => {
+    //     this.messages.push({
+    //       message: data[3],
+    //       timestamp: Date.now(),
+    //       sender: data[2],
+    //     });
+    //   }, 100);
+
+    //   this.scrollToBottom();
+
+    //   console.log(this.messages);
+    // });
 
     setTimeout(() => {
-      this.socket.on('onlineSockets', (data: any) => {
+      this.socketService.getonlineUsers().subscribe((data)=>{
         console.log('socket res: ', data);
         this.onlineUsers = data;
         console.log('Online Users: ', this.onlineUsers);
-      });
+      })
+      // this.socket.on('onlineSockets', (data: any) => {
+      //   console.log('socket res: ', data);
+      //   this.onlineUsers = data;
+      //   console.log('Online Users: ', this.onlineUsers);
+      // });
     }, 1000);
 
     //fetching all registered users
@@ -228,7 +241,8 @@ export class HomeComponent {
           }
 
           //mapping users in a single room
-          this.socket.emit('join-room', this.chatID);
+          this.socketService.joinRoom(this.chatID);
+          // this.socket.emit('join-room', this.chatID);
 
           //pushing all the messages of both the users into the messages array
           for (let i = 0; i < res.length; i++) {
@@ -256,24 +270,30 @@ export class HomeComponent {
         console.log(this.selectedUser.name);
 
         //send the message to other socket
-        this.socket.emit('message', [
+        this.socketService.sendMessage([
           this.chatID,
           this.selectedUser.email,
           this.currentUser.email,
           this.message.trim(),
-        ]);
+        ])
+        // this.socket.emit('message', [
+        //   this.chatID,
+        //   this.selectedUser.email,
+        //   this.currentUser.email,
+        //   this.message.trim(),
+        // ]);
 
         this.message = '';
       }
     }
   }
 
-  findChatCount(email: string): string {
-    this.crudService
-      .getChatCount(this.currentUser.email, email)
-      .subscribe((res) => {
-        this.chatCount = res;
-      });
-    return this.chatCount;
-  }
+  // findChatCount(email: string): string {
+  //   this.crudService
+  //     .getChatCount(this.currentUser.email, email)
+  //     .subscribe((res) => {
+  //       this.chatCount = res;
+  //     });
+  //   return this.chatCount;
+  // }
 }
