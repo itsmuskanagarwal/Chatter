@@ -54,14 +54,8 @@ export class LoginComponent implements OnInit {
 
         if (this.data.email == uname) {
 
-          // set isLoggedIn cookie to true for 1 day
-          // this.cookieService.set('isLoggedIn', 'true', 1);
-          // console.log(this.cookieService.get('isLoggedIn'));
-
-          // localStorage.setItem('isLoggedIn',"true")
-
-          // this.storage.isLoggedIn = true;
-          // console.log(this.storage.isLoggedIn);
+          this.socketService.connect();
+          this.socketService.addonlineUser(uname);
 
           localStorage.setItem('isLoggedIn', 'true');
 
@@ -76,9 +70,6 @@ export class LoginComponent implements OnInit {
             console.log("login", localStorage.getItem('myData'))
             console.log("login", localStorage.getItem('isLoggedIn'))
 
-            this.socketService.connect();
-
-            this.socketService.addonlineUser(uname);
 
 
             this.ngZone.run(() => this.routes.navigateByUrl('/home'));

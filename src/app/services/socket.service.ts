@@ -14,6 +14,11 @@ export class SocketService {
     this.socket = io('http://localhost:3000');
   }
 
+  public reconnect(): void {
+    this.socket = io('http://localhost:3000');
+    this.socket.connect();
+  }
+
   public sendMessage(data: any): void {
     this.socket.emit("message", data);
   }
@@ -26,7 +31,7 @@ export class SocketService {
     this.socket.emit("onlineSockets", email);
   }
 
-  public reconnect(email: string): void {
+  public reconnection(email: string): void {
     this.socket.emit("reconnection", email);
   }
 

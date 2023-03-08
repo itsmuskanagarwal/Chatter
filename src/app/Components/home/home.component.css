@@ -134,23 +134,22 @@ aside li h3 {
   color: #7e818a;
 }
 
-.status {
+.status_green {
   width: 8px;
   height: 8px;
   border-radius: 50%;
   display: inline-block;
   margin-right: 7px;
-}
-.green {
   background-color: #58b666;
+
 }
-.orange {
+.status_orange {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 7px;
   background-color: #ff725d;
-}
-.blue {
-  background-color: #6fbced;
-  margin-right: 0;
-  margin-left: 7px;
 }
 
 main header {

@@ -48,7 +48,12 @@
                 }"
               >
                 <div class="entete">
-                  <span class="status green"></span>
+                  <div >
+                    <span *ngFor="let onlineuser of onlineUsers" [ngClass]="{
+                      status_orange: msg.sender !== onlineuser.email,
+                      status_green: msg.sender === onlineuser.email
+                    }"></span>
+                  </div>
                   <h2 *ngIf="msg.sender === selectedUser.email; else elseblock">
                     {{ selectedUser.name }}&nbsp;
                   </h2>
