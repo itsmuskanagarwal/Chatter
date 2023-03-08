@@ -30,6 +30,7 @@ export class HeaderComponent {
       // remove user's data from localStorage and navigate to landing page
       localStorage.removeItem('myData');
       localStorage.removeItem('isLoggedIn');
+      localStorage.removeItem("socketID")
 
       this.ngZone.run(() => this.router.navigateByUrl('/landing'));
     }

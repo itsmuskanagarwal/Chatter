@@ -96,13 +96,15 @@ export class HomeComponent {
   ) {}
 
   ngOnDestroy() {
-    this.socket.disconnect();
+    // this.socket.disconnect();
   }
 
   ngOnInit(): void {
     this.user = JSON.parse(localStorage.getItem('myData') as string);
     this.currentUser = this.user;
     this.selectedUser = '';
+
+    
 
     this.socket = io('http://localhost:3000');
 

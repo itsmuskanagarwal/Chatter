@@ -65,6 +65,7 @@ export class LoginComponent implements OnInit {
           // console.log(this.storage.isLoggedIn);
 
           localStorage.setItem('isLoggedIn', 'true');
+          
 
           localStorage.setItem('myData', JSON.stringify(this.data));
           this.storage.data = JSON.parse(
@@ -78,7 +79,7 @@ export class LoginComponent implements OnInit {
             console.log("login", localStorage.getItem('isLoggedIn'))
 
             this.socket.emit('onlineSockets', uname);
-
+            localStorage.setItem("socketID", this.socket.id)
 
             this.ngZone.run(() => this.routes.navigateByUrl('/home'));
 
