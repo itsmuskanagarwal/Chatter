@@ -64,7 +64,7 @@ export class HomeComponent {
     },
   ];
 
-  
+
 
   currentUser: any;
   selectedUser: any;
@@ -96,17 +96,32 @@ export class HomeComponent {
   ) {}
 
   ngOnDestroy() {
-    // this.socket.disconnect();
+    // this.socket.connect();
   }
 
   ngOnInit(): void {
+    this.socket = io('http://localhost:3000',{reconnection: true});
+
+
     this.user = JSON.parse(localStorage.getItem('myData') as string);
     this.currentUser = this.user;
     this.selectedUser = '';
 
-    
 
-    this.socket = io('http://localhost:3000');
+    const socketID = localStorage.getItem('socketID');
+    console.log(socketID);
+    let socketFlag=false;
+    for(let onUser in this.onlineUsers){
+      if(socketID==this.onlineUsers[onUser].sktID){
+        socketFlag=true;
+      }
+    }
+
+    window.addEventListener('load', () => {
+      // this.socket.emit("onlineUsers",this.currentUser.email)
+      this.socket.emit("reconnection",this.currentUser.email)
+      console.log('reconnected to server');
+    });
 
     //listening to the one-on-one online conversations
     this.socket.on('message', (data: any) => {
@@ -153,7 +168,7 @@ export class HomeComponent {
             .subscribe((res) => {
               console.log(res);
               this.USERS[user].count = res;
-              console.log(typeof this.USERS[user].count);
+              // console.log(typeof this.USERS[user].count);
             });
         }
       }, 1000);

@@ -3,6 +3,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { StorageService } from '../../services/storage.service';
 import { AuthServiceService } from 'src/app/services/authservice.service';
 import { Router } from '@angular/router';
+import { io } from 'socket.io-client';
 
 @Component({
   selector: 'app-header',
@@ -11,6 +12,7 @@ import { Router } from '@angular/router';
 })
 export class HeaderComponent {
   username: any;
+  private socket: any;
 
   constructor(
     private serviceHeader: StorageService,
@@ -26,7 +28,9 @@ export class HeaderComponent {
     }
 
     logout() {
-
+      this.socket.disconnect(()=>{
+        console.log("disconnected");
+      });
       // remove user's data from localStorage and navigate to landing page
       localStorage.removeItem('myData');
       localStorage.removeItem('isLoggedIn');
@@ -39,7 +43,7 @@ export class HeaderComponent {
   isLoggedIn: boolean | any;
 
   ngOnInit(){
-
+    this.socket = io('http://localhost:3000');
     // window.addEventListener('beforeunload', this.handleBeforeUnload);
   }
 
