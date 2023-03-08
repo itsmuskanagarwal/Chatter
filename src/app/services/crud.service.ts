@@ -74,7 +74,7 @@ export class CrudService {
   // Update user details
   updateUser(data: any): Observable<any> {
     return this.httpClient.put(this.REST_API + '/update-user', data).pipe(
-      
+
       catchError((error) => {
         // Handle the error
         console.error('Error updating user', error);
@@ -91,9 +91,13 @@ export class CrudService {
         // Handle the error,
         console.error('Error fetching chat count', error);
         return throwError(() => new Error('Error fetching chat count'));
+      })
+    );
+  }
+
   // Update Profile Avatar
   updateAvatar(email: string, url : string): Observable<any> {
-    
+
     const body = { email, url };
     return this.httpClient.put(this.REST_API + '/update-avatar',body).pipe(
       tap((body) => console.log('Request body:', body)),

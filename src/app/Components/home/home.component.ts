@@ -34,14 +34,14 @@ export class HomeComponent{
     email: string;
     password: string;
     displayname: string;
-    count: string;
+    count: number;
   }]=[{
     name: '',
     contact: '',
     email: '',
     password: '',
     displayname: '',
-    count: ''
+    count: 0
   }];
 
   currentUser: any;
@@ -73,16 +73,15 @@ export class HomeComponent{
     private crudService: CrudService
     ) {}
 
-    ngOnDestroy() {
-      this.socket.disconnect();
-    }
-
   ngOnInit(): void {
     this.user = JSON.parse(localStorage.getItem('myData') as string);
     this.currentUser = this.user;
     this.selectedUser = '';
 
     this.socket = io('http://localhost:3000');
+
+    // this.socket.emit('onlineSockets', this.currentUser.email);
+
 
     //listening to the one-on-one online conversations
     this.socket.on('message', (data: any) => {
@@ -114,13 +113,14 @@ export class HomeComponent{
       this.USERS = res;
       setTimeout(()=>{
       for (let user in this.USERS) {
+        console.log(this.USERS[user].email)
         // setTimeout(()=>{
           this.crudService.getChatCount(this.currentUser.email,this.USERS[user].email).subscribe((res)=>{
-            this.USERS[user].count=res;
-            console.log(this.USERS[user].count);
+          this.USERS[user].count=res;
+          console.log(this.USERS[user].count);
           })
           // this.USERS[user].count=this.findChatCount(this.USERS[user].email);
-        // },2000)
+          // },2000)
           //removing the logged in user from the chatting list
           if (this.USERS[user].email === this.currentUser.email) {
             this.USERS.splice(parseInt(user), 1);
@@ -132,6 +132,13 @@ export class HomeComponent{
 
       console.log(this.USERS);
     });
+    for (let user in this.USERS) {
+      // setTimeout(()=>{
+        this.crudService.getChatCount(this.currentUser.email,this.USERS[user].email).subscribe((res)=>{
+        this.USERS[user].count=res;
+        console.log(this.USERS[user].count);
+        })
+      }
   }
 
   scrollToBottom(): void {
