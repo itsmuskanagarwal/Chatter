@@ -28,13 +28,11 @@ export class HeaderComponent {
     }
 
     logout() {
-      this.socket.disconnect(()=>{
-        console.log("disconnected");
-      });
       // remove user's data from localStorage and navigate to landing page
       localStorage.removeItem('myData');
       localStorage.removeItem('isLoggedIn');
       localStorage.removeItem("socketID")
+      this.socket.disconnect();
 
       this.ngZone.run(() => this.router.navigateByUrl('/landing'));
     }
