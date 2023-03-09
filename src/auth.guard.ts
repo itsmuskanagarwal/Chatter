@@ -3,7 +3,7 @@ import {
   CanActivate,
   ActivatedRouteSnapshot,
   RouterStateSnapshot,
-  Router
+  Router,
 } from '@angular/router';
 import { Observable } from 'rxjs';
 
@@ -11,27 +11,18 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class AuthGuard implements CanActivate {
-
   constructor(private router: Router) {}
 
   canActivate(
-
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean> | Promise<boolean> | boolean {
-    
-    const isLoggedIn = localStorage.getItem('isLoggedIn') == 'true'
-    if (isLoggedIn) 
-    {   
+    const isLoggedIn = localStorage.getItem('isLoggedIn') == 'true';
+    if (isLoggedIn) {
       return true;
-    } 
-    else 
-    {
+    } else {
       this.router.navigate(['/landing']);
       return false;
     }
-  
   }
-
 }
-
