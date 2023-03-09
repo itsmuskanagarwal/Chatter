@@ -61,7 +61,7 @@ textarea:valid ~ label {
   max-width: 100%;
 }
 
-.heighttext{
+.heighttext {
   padding: 20px 10px;
   line-height: 28px;
 }
@@ -115,7 +115,6 @@ textarea {
   padding: 0.65rem 0.9rem;
   font-size: 1rem;
   line-height: 1.5;
-  
 }
 
 .btn-primary {
@@ -123,8 +122,6 @@ textarea {
   background-color: #ff7a57;
   border-color: #ff7a57;
 }
-
-
 
 @media (max-width: 768px) {
   .submit-btn {

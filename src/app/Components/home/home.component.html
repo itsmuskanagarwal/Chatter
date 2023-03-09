@@ -1,30 +1,33 @@
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
 <div id="container">
   <aside>
     <header>
-      <div class="title"> My Chats </div>
+      <div class="title">My Chats</div>
     </header>
     <ul>
-      <li *ngFor="let user of USERS" (click)="selectUserHandler(user.email)" [ngClass]="user.email==selected? 'li_selected' : ''">
-
+      <li
+        *ngFor="let user of USERS"
+        (click)="selectUserHandler(user.email)"
+        [ngClass]="user.email == selected ? 'li_selected' : ''"
+      >
         <img class="img-size" src="./assets/p5.webp" alt="" />
         <div>
-          <h2>{{ user.name }}
-          <div *ngFor="let onlineuser of onlineUsers">
-            <div *ngIf="onlineuser.email==user.email">
-              <h3>
-                <span class="dot"></span>
-              </h3>
+          <h2>
+            {{ user.name }}
+            <div *ngFor="let onlineuser of onlineUsers">
+              <div *ngIf="onlineuser.email == user.email">
+                <h3>
+                  <span class="dot"></span>
+                </h3>
+              </div>
             </div>
-          </div>
-          <div *ngIf="user.count && user.count !== 0" #badge>
-            <span class="badge">{{user.count}}</span>
-          </div>
-        </h2>
+            <div *ngIf="user.count && user.count !== 0" #badge>
+              <span class="badge">{{ user.count }}</span>
+            </div>
+          </h2>
         </div>
       </li>
     </ul>
-
   </aside>
   <main>
     <ng-container *ngIf="selectedUser">
@@ -38,9 +41,7 @@
         <div>
           <ul id="chat" #chat_messages>
             <!-- [ngClass]="item?.email === currentUser?.email?  'same-user' : 'you'" -->
-            <div
-              *ngFor="let msg of messages"
-            >
+            <div *ngFor="let msg of messages">
               <li
                 [ngClass]="{
                   you: msg.sender === selectedUser.email,
@@ -48,7 +49,12 @@
                 }"
               >
                 <div class="entete">
-                  <span class="status green"></span>
+                  <!-- <div >
+                    <span *ngFor="let onlineuser of onlineUsers" [ngClass]="{
+                      status_orange: msg.sender !== onlineuser.email,
+                      status_green: msg.sender === onlineuser.email
+                    }"></span>
+                  </div> -->
                   <h2 *ngIf="msg.sender === selectedUser.email; else elseblock">
                     {{ selectedUser.name }}&nbsp;
                   </h2>
@@ -68,8 +74,9 @@
             <form (submit)="sendMessage(message)">
               <button class="btn">Send</button>
               <textarea
-              autofocus #textareaRef
-              maxlength="1000"
+                autofocus
+                #textareaRef
+                maxlength="1000"
                 placeholder="Type your message"
                 id="inputMessage"
                 name="messageInput"

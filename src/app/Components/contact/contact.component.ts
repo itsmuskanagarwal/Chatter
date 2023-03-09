@@ -15,26 +15,23 @@ import { CrudService } from 'src/app/services/crud.service';
   styleUrls: ['./contact.component.css'],
 })
 export class ContactComponent {
-
   constructor(
     private _snackBar: MatSnackBar,
     private formBuilder: FormBuilder,
     private router: Router,
     private ngZone: NgZone,
     private crudService: CrudService
-  ){
-
+  ) {
     this.formData = this.formBuilder.group({
-      username: "",
-      email: "",
-      contact: "",
-      message : ""
+      username: '',
+      email: '',
+      contact: '',
+      message: '',
     });
+  }
+  formData: FormGroup | any;
 
-  }  formData: FormGroup | any;
-
-  onClickSubmit(data: any){
-
+  onClickSubmit(data: any) {
     this.crudService.addQuery(this.formData.value).subscribe((res) => {
       console.log('Query added', res);
       this.ngZone.run(() => this.router.navigateByUrl('/login'));
@@ -47,6 +44,5 @@ export class ContactComponent {
         duration: 5000,
       }
     );
-
   }
 }

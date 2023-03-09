@@ -1,7 +1,7 @@
 <div class="form-container mat-elevation-z5 text-center">
   <h1>User Profile</h1>
 
-  <div  *ngIf="!isClicked" class="profile-image">
+  <div *ngIf="!isClicked" class="profile-image">
     <img
       *ngIf="imageUrl == ''"
       width="120"
@@ -19,15 +19,12 @@
   <div *ngIf="isClicked" class="avatar-container">
     <div *ngFor="let imgUrl of img">
       <div (click)="selectedAvatar(imgUrl)">
-        <img [src]="imgUrl"  class="avatar-container-item" />
+        <img [src]="imgUrl" class="avatar-container-item" />
       </div>
     </div>
   </div>
 
-  <form
-    [formGroup]="updateForm"
-    (ngSubmit)="save(updateForm.value)"
-  >
+  <form [formGroup]="updateForm" (ngSubmit)="save(updateForm.value)">
     <mat-form-field>
       <input matInput formControlName="username" placeholder="Username" />
     </mat-form-field>

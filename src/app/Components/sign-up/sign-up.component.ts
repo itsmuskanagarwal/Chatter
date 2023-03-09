@@ -28,9 +28,17 @@ export class SignUpComponent implements OnInit {
     this.formData = this.formBuilder.group({
       username: ['', Validators.required],
       password: ['', [Validators.required, Validators.minLength(8)]],
-      confirmPassword: ['',  [Validators.required, Validators.minLength(8)]],
+      confirmPassword: ['', [Validators.required, Validators.minLength(8)]],
       email: ['', [Validators.required, Validators.email]],
-      contact: ['', [Validators.required, Validators.minLength(10),Validators.maxLength(10),Validators.pattern('^[0-9]*$')]],
+      contact: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(10),
+          Validators.maxLength(10),
+          Validators.pattern('^[0-9]*$'),
+        ],
+      ],
     });
   }
 
@@ -39,9 +47,8 @@ export class SignUpComponent implements OnInit {
   msg = {
     feilds: 'Please fill all the fields',
     password: 'Password does not match',
-    contact: "Contact number already exists",
-    email: "Email address already exists"
-
+    contact: 'Contact number already exists',
+    email: 'Email address already exists',
   };
 
   username: string = '';
@@ -62,7 +69,6 @@ export class SignUpComponent implements OnInit {
 
     this.username = data.username;
     this.password = data.password;
-
 
     console.log('Login page: ' + this.username);
     console.log('Login page: ' + this.password);
@@ -85,33 +91,27 @@ export class SignUpComponent implements OnInit {
 
     //fetching all registered users
     this.crudService.getUsers().subscribe((res) => {
-
       this.USERS = res;
       for (let user in this.USERS) {
-
         //removing the logged in user from the chatting list
-        if (this.USERS[user].email == data.email)
-      {
-          this.validEmail =  false;
-      }
+        if (this.USERS[user].email == data.email) {
+          this.validEmail = false;
+        }
 
-      if(this.USERS[user].contact == data.contact)
-      {
-        this.validContact = false;
+        if (this.USERS[user].contact == data.contact) {
+          this.validContact = false;
+        }
       }
-
-    }
     });
 
-    if(this.validEmail && this.validContact){
-
-    if (this.validFields && this.validPassword) {
-
+    if (this.validEmail && this.validContact) {
+      if (this.validFields && this.validPassword) {
         console.log('working');
-        data.username =  data.username.charAt(0).toUpperCase() +  data.username.slice(1);
+        data.username =
+          data.username.charAt(0).toUpperCase() + data.username.slice(1);
 
         this.crudService.addUser(this.formData.value).subscribe((res) => {
-          if(res["Success"]){
+          if (res['Success']) {
             console.log('Data added!!!!', res);
             this.ngZone.run(() => this.router.navigateByUrl('/login'));
             this._snackBar.open(
@@ -120,21 +120,19 @@ export class SignUpComponent implements OnInit {
               {
                 duration: 5000,
               }
-              );
-            }else{
+            );
+          } else {
             console.log('Error', res);
             this._snackBar.open(
-            'Hello! There was an error while registering. Please try again later',
-            'OK',
-            {
-              duration: 5000,
-            });
+              'Hello! There was an error while registering. Please try again later',
+              'OK',
+              {
+                duration: 5000,
+              }
+            );
           }
-
         });
-
       }
     }
   }
-  }
-
+}
