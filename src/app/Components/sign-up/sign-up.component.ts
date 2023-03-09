@@ -56,10 +56,10 @@ export class SignUpComponent implements OnInit {
 
   USERS: user[] = [];
 
-  validFields: boolean | undefined;
-  validPassword: boolean | undefined;
-  validContact: boolean | undefined;
-  validEmail: boolean | undefined;
+  validFields: boolean = true;
+  validPassword: boolean = true;
+  validContact: boolean = true;
+  validEmail: boolean = true;
 
   onClickSubmit(data: any) {
     // console.log(data.userame);
@@ -92,18 +92,30 @@ export class SignUpComponent implements OnInit {
     //fetching all registered users
     this.crudService.getUsers().subscribe((res) => {
       this.USERS = res;
+      console.log(this.USERS)
       for (let user in this.USERS) {
         //removing the logged in user from the chatting list
         if (this.USERS[user].email == data.email) {
           this.validEmail = false;
+          console.log(this.validEmail)
+        }
+        else{
+          this.validEmail = true;
         }
 
         if (this.USERS[user].contact == data.contact) {
           this.validContact = false;
+          console.log(this.validContact)
+        }
+        else{
+      this.validContact = true;
         }
       }
     });
 
+    console.log(this.validContact)
+    console.log(this.validEmail)
+    
     if (this.validEmail && this.validContact) {
       if (this.validFields && this.validPassword) {
         console.log('working');

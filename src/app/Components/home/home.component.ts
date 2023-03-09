@@ -30,7 +30,7 @@ export class HomeComponent {
       email: string;
       password: string;
       displayname: string;
-      profilePicture:string;
+      profilePicture: string;
       count: number;
     }
   ] = [
@@ -79,21 +79,21 @@ export class HomeComponent {
       });
     });
 
-    //listening to the one-on-one online conversations
-    this.socketService.getMessage().subscribe((data) => {
-      console.log(data);
-      setTimeout(() => {
-        this.messages.push({
-          message: data[3],
-          timestamp: Date.now(),
-          sender: data[2],
-        });
-      }, 100);
+    // //listening to the one-on-one online conversations
+    // this.socketService.getMessage().subscribe((data) => {
+    //   console.log(data);
+    //   setTimeout(() => {
+    //     this.messages.push({
+    //       message: data[3],
+    //       timestamp: Date.now(),
+    //       sender: data[2],
+    //     });
+    //   }, 100);
 
-      this.scrollToBottom();
+    //   this.scrollToBottom();
 
-      console.log(this.messages);
-    });
+    //   console.log(this.messages);
+    // });
 
     //fetching all the online users in the socket
     this.socketService.getonlineUsers().subscribe((data) => {
@@ -215,6 +215,22 @@ export class HomeComponent {
         ]);
 
         this.message = '';
+
+        //listening to the one-on-one online conversations
+        this.socketService.getMessage().subscribe((data) => {
+          console.log(data);
+          setTimeout(() => {
+            this.messages.push({
+              message: data[3],
+              timestamp: Date.now(),
+              sender: data[2],
+            });
+          }, 100);
+
+          this.scrollToBottom();
+
+          console.log(this.messages);
+        });
       }
     }
   }
