@@ -20,31 +20,29 @@ export class HeaderComponent {
     private storage: StorageService,
     private router: Router,
     private ngZone: NgZone,
-    private socketService:SocketService,
+    private socketService: SocketService
   ) {
-    console.log(localStorage.getItem('isLoggedIn'))
-    }
+    console.log(localStorage.getItem('isLoggedIn'));
+  }
 
-    logout() {
-      // remove user's data from localStorage and navigate to landing page
-      localStorage.removeItem('myData');
-      localStorage.removeItem('isLoggedIn');
-      localStorage.removeItem("socketID");
-      setTimeout(()=>{
-        this.socketService.disconnect();
-      })
-      this.ngZone.run(() => this.router.navigateByUrl('/landing'));
-    }
-
+  logout() {
+    // remove user's data from localStorage and navigate to landing page
+    localStorage.removeItem('myData');
+    localStorage.removeItem('isLoggedIn');
+    localStorage.removeItem('socketID');
+    setTimeout(() => {
+      this.socketService.disconnect();
+    });
+    this.ngZone.run(() => this.router.navigateByUrl('/landing'));
+  }
 
   isLoggedIn: boolean | any;
 
-  ngOnInit(){
+  ngOnInit() {
     // window.addEventListener('beforeunload', this.handleBeforeUnload);
   }
 
   ngDoCheck() {
-
     if (localStorage.getItem('isLoggedIn')) {
       const data = JSON.parse(localStorage.getItem('myData') as string);
       this.username = 'Welcome ' + data.name;

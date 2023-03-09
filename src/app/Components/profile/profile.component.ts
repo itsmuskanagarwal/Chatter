@@ -23,12 +23,12 @@ export class ProfileComponent {
   isClicked: boolean = false;
 
   img = [
-    "../assets/img1.jpg",
-    "../assets/img2.jpg",
-    "../assets/img3.jpg",
-    "../assets/img4.jpg",
-    "../assets/img5.jpg",
-  ]
+    '../assets/img1.jpg',
+    '../assets/img2.jpg',
+    '../assets/img3.jpg',
+    '../assets/img4.jpg',
+    '../assets/img5.jpg',
+  ];
 
   constructor(
     private _snackBar: MatSnackBar,
@@ -51,19 +51,18 @@ export class ProfileComponent {
       this.storage.data = JSON.parse(localStorage.getItem('myData') as string);
       this.crudService.getAvatar(this.storage.data.email).subscribe((res) => {
         this.imageUrl = res.profilePicture;
-        console.log(this.imageUrl)
+        console.log(this.imageUrl);
       });
     }
   }
 
   ngOnInit() {
-
     console.log(this.storage.data);
     this.updateForm.setValue({
       username: this.storage.data.name,
       userContact: this.storage.data.contact,
       userEmail: this.storage.data.email,
-      display: this.storage.data.displayname
+      display: this.storage.data.displayname,
     });
 
     const avatorContainer = document.querySelector(
@@ -77,42 +76,37 @@ export class ProfileComponent {
     avatarMorebtn.addEventListener('click', () => {
       avatorContainer.classList.toggle('avatar-container__expanded');
     });
-
   }
-
 
   upload() {
     this.isClicked = true;
-    console.log(this.isClicked)
+    console.log(this.isClicked);
   }
 
   selectedAvatar(imageUrl: string) {
-    console.log("selectAvatar body entered")
-    this.imageUrl =  imageUrl;
+    console.log('selectAvatar body entered');
+    this.imageUrl = imageUrl;
     this.isClicked = false;
-    console.log(this.isClicked)
-    this.crudService.updateAvatar(this.storage.data.email,this.imageUrl).subscribe((res) => {
-      console.log(res);
-
-    });
-
+    console.log(this.isClicked);
+    this.crudService
+      .updateAvatar(this.storage.data.email, this.imageUrl)
+      .subscribe((res) => {
+        console.log(res);
+      });
   }
 
   save(data: any) {
     if (this.updateForm.valid) {
-
       this.storage.data.name = data.username;
       this.storage.data.contact = data.userContact;
       this.storage.data.email = data.userEmail;
       this.storage.data.displayname = data.display;
-      
 
       console.log(this.storage.data);
 
       this.crudService.updateUser(this.storage.data).subscribe((res) => {
         console.log(res);
       });
-
 
       this._snackBar.open(
         'Hello ' + data.display + ', Details Updated successfully!!',

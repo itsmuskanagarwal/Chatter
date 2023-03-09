@@ -1,42 +1,58 @@
-<form
-[formGroup]="formData"
-(ngSubmit)="onClickSubmit(formData.value)"
->
-<div class="container">
-  <div class="row">
-    <h1>Contact Us</h1>
+<form [formGroup]="formData" (ngSubmit)="onClickSubmit(formData.value)">
+  <div class="container">
+    <div class="row">
+      <h1>Contact Us</h1>
+    </div>
+    <div class="row">
+      <h4 style="text-align: center">We'd love to hear from you!</h4>
+    </div>
+    <div class="row input-container">
+      <div class="col-xs-12">
+        <div class="styled-input wide">
+          <input
+            type="text"
+            required
+            formControlName="username"
+            class="heighttext"
+          />
+          <label>Name</label>
+        </div>
+      </div>
+      <div class="col-md-6 col-sm-12">
+        <div class="styled-input">
+          <input
+            type="text"
+            formControlName="email"
+            required
+            class="heighttext"
+          />
+          <label>Email</label>
+        </div>
+      </div>
+      <div class="col-md-6 col-sm-12">
+        <div class="styled-input" style="float: right">
+          <input
+            type="text"
+            required
+            formControlName="contact"
+            class="heighttext"
+          />
+          <label>Phone Number</label>
+        </div>
+      </div>
+      <div class="col-xs-12">
+        <div class="styled-input wide">
+          <textarea required formControlName="message"></textarea>
+          <label>Message</label>
+        </div>
+      </div>
+      <div class="col-xs-12">
+        <div>
+          <button class="- btn btn-primary rounded ml-4" type="submit">
+            Send Message
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="row">
-    <h4 style="text-align: center">We'd love to hear from you!</h4>
-  </div>
-  <div class="row input-container">
-    <div class="col-xs-12">
-      <div class="styled-input wide">
-        <input type="text" required formControlName="username" class="heighttext"/>
-        <label>Name</label>
-      </div>
-    </div>
-    <div class="col-md-6 col-sm-12">
-      <div class="styled-input">
-        <input type="text" formControlName="email" required class="heighttext"/>
-        <label>Email</label>
-      </div>
-    </div>
-    <div class="col-md-6 col-sm-12">
-      <div class="styled-input" style="float: right">
-        <input type="text" required  formControlName="contact" class="heighttext"/>
-        <label>Phone Number</label>
-      </div>
-    </div>
-    <div class="col-xs-12">
-      <div class="styled-input wide">
-        <textarea required formControlName="message"></textarea>
-        <label>Message</label>
-      </div>
-    </div>
-    <div class="col-xs-12">
-      <div ><button  class="- btn btn-primary rounded ml-4" type="submit">Send Message</button> </div>
-    </div>
-  </div>
-</div>
 </form>

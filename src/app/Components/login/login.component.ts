@@ -7,7 +7,6 @@ import { CookieService } from 'ngx-cookie-service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { SocketService } from 'src/app/services/socket.service';
 
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -15,13 +14,11 @@ import { SocketService } from 'src/app/services/socket.service';
   providers: [AuthServiceService],
 })
 export class LoginComponent implements OnInit {
-
   validPassword: boolean | undefined;
   hide = true;
   data: any = [];
   private socket: any;
   onlineUsers: [] | any;
-
 
   // public password : string | any;
   // public email : string | any;
@@ -34,15 +31,12 @@ export class LoginComponent implements OnInit {
     private ngZone: NgZone,
     private cookieService: CookieService,
     private fb: FormBuilder,
-    private socketService:SocketService
+    private socketService: SocketService
   ) {}
 
   msg = '';
 
-  ngOnInit() {
-
-  }
-
+  ngOnInit() {}
 
   check(uname: string, pwd: string) {
     // console.log(uname,pwd);
@@ -53,7 +47,6 @@ export class LoginComponent implements OnInit {
         console.log(res);
 
         if (this.data.email == uname) {
-
           this.socketService.connect();
           this.socketService.addonlineUser(uname);
 
@@ -62,22 +55,16 @@ export class LoginComponent implements OnInit {
           localStorage.setItem('myData', JSON.stringify(this.data));
           this.storage.data = JSON.parse(
             localStorage.getItem('myData') as string
-            );
+          );
 
-            console.log(this.data);
-            console.log(this.storage.data);
+          console.log(this.data);
+          console.log(this.storage.data);
 
-            console.log("login", localStorage.getItem('myData'))
-            console.log("login", localStorage.getItem('isLoggedIn'))
+          console.log('login', localStorage.getItem('myData'));
+          console.log('login', localStorage.getItem('isLoggedIn'));
 
-
-
-            this.ngZone.run(() => this.routes.navigateByUrl('/home'));
-
-        }
-
-        else
-        {
+          this.ngZone.run(() => this.routes.navigateByUrl('/home'));
+        } else {
           this.validPassword = true;
           this.msg =
             'Invalid username or password. If you are a new user, please register ';

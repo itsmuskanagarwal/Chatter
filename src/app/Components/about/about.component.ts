@@ -6,12 +6,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./about.component.css'],
 })
 export class AboutComponent {
+  isLoggedIn: boolean | any;
 
-  isLoggedIn : boolean | any;
-
-  ngDoCheck(){
-
-    this.isLoggedIn = localStorage.getItem("isLoggedIn")
+  ngDoCheck() {
+    this.isLoggedIn = localStorage.getItem('isLoggedIn');
   }
-
 }

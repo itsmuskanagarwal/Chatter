@@ -1,7 +1,6 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { StorageService } from 'src/app/services/storage.service';
 import { CrudService } from 'src/app/services/crud.service';
-import { io } from 'socket.io-client';
 import { SocketService } from 'src/app/services/socket.service';
 
 @Component({
@@ -24,7 +23,6 @@ export class HomeComponent {
   chatCount: any;
 
   user: any;
-  // USERS:user[]=[];
   USERS: [
     {
       name: string | null;
@@ -45,79 +43,42 @@ export class HomeComponent {
     },
   ];
 
-  tempUSERS: [
-    {
-      name: string | null;
-      contact: string;
-      email: string;
-      password: string;
-      displayname: string;
-      count: number;
-    }
-  ] = [
-    {
-      name: '',
-      contact: '',
-      email: '',
-      password: '',
-      displayname: '',
-      count: 0,
-    },
-  ];
-
-
-
   currentUser: any;
   selectedUser: any;
 
   onlineUsers: [] | any;
   messageCounts: { sender: string; count: number }[] = [];
 
-  // isclicked : boolean = false
-
-  //image array for profile image
-  Img = [
-    'assets/p5.webp',
-    'assets/p1.avif',
-    'assets/p3.png',
-    'assets/p4.avif',
-    'assets/p2.png',
-  ];
-  newMsg: { message: any; timestamp: Date; sender: any } | any;
-
-  //function for generating random profile images
-  getRandomImg(): string {
-    const randomImg = this.Img[Math.floor(Math.random() * this.Img.length)];
-    return randomImg;
-  }
-
   constructor(
     private storage: StorageService,
     private crudService: CrudService,
-    private socketService:SocketService,
+    private socketService: SocketService
   ) {}
 
-  ngOnDestroy() {
-    // this.socket.connect();
-  }
-
   ngOnInit(): void {
-    // this.socketService.connect();
-    // this.socket = io('http://localhost:3000',{reconnection: true});
-
-
     this.user = JSON.parse(localStorage.getItem('myData') as string);
     this.currentUser = this.user;
     this.selectedUser = '';
 
+    //listening to window reload event
     window.addEventListener('load', () => {
+      //reconnecting to the socket on reload
       this.socketService.reconnect();
+
+      //again adding the user which got disconnected on reload
       this.socketService.addonlineUser(this.currentUser.email);
-    console.log('reconnected to server');
+      console.log('reconnected to server');
+
+      //fetching all the online users in the socket
+      this.socketService.getonlineUsers().subscribe((data) => {
+        console.log('socket res: ', data);
+        this.onlineUsers = data;
+        console.log('Online Users: ', this.onlineUsers);
+      });
     });
 
     //listening to the one-on-one online conversations
-    this.socketService.getMessage().subscribe((data)=>{
+    this.socketService.getMessage().subscribe((data) => {
       console.log(data);
       setTimeout(() => {
         this.messages.push({
@@ -132,27 +93,26 @@ export class HomeComponent {
       console.log(this.messages);
     });
 
-
-      this.socketService.getonlineUsers().subscribe((data)=>{
-        console.log('socket res: ', data);
-        this.onlineUsers = data;
-        console.log('Online Users: ', this.onlineUsers);
-      })
-
+    //fetching all the online users in the socket
+    this.socketService.getonlineUsers().subscribe((data) => {
+      console.log('socket res: ', data);
+      this.onlineUsers = data;
+      console.log('Online Users: ', this.onlineUsers);
+    });
 
     //fetching all registered users
     this.crudService.getUsers().subscribe((res) => {
-      this.tempUSERS = res;
       setTimeout(() => {
-        for (let user in this.tempUSERS) {
-          // console.log(this.USERS[user]);
-          if (this.tempUSERS[user].email === this.currentUser.email) {
-            this.tempUSERS.splice(parseInt(user), 1);
+        this.USERS = res;
+        for (let user in this.USERS) {
+          //removing the current user from the USERS array
+          if (this.USERS[user].email === this.currentUser.email) {
+            this.USERS.splice(parseInt(user), 1);
           }
         }
-        this.USERS = this.tempUSERS
         console.log(this.USERS);
 
+        //fetching chat count of the undelivered messages for all the users
         for (let user in this.USERS) {
           console.log(this.USERS[user].email);
           this.crudService
@@ -160,13 +120,13 @@ export class HomeComponent {
             .subscribe((res) => {
               console.log(res);
               this.USERS[user].count = res;
-              // console.log(typeof this.USERS[user].count);
             });
         }
       }, 1000);
     });
   }
 
+  //automatic scroll to the bottom of the chat interface
   scrollToBottom(): void {
     setTimeout(() => {
       this.textareaRef.nativeElement.focus();
@@ -180,18 +140,17 @@ export class HomeComponent {
     this.selected = email;
     this.messages = []; //empty the msgs array
 
+    //updating the message delivery status
     this.crudService
-    .updateStatus(this.currentUser.email, this.selected)
-    .subscribe((res) => {
-      console.log('update status API call : ' + res);
-      for(let user in this.USERS){
-
-        if(this.USERS[user].email == this.selected){
-          this.USERS[user].count = 0;
+      .updateStatus(this.currentUser.email, this.selected)
+      .subscribe((res) => {
+        console.log('update status API call : ' + res);
+        for (let user in this.USERS) {
+          if (this.USERS[user].email == this.selected) {
+            this.USERS[user].count = 0;
+          }
         }
-      }
-    });
-
+      });
 
     //assigning the selectedUser with the complete details
     this.selectedUser = this.USERS.find((user) => user.email === email);
@@ -234,9 +193,6 @@ export class HomeComponent {
           console.log('All messages: ', this.messages);
         });
     }
-
-    // this.scrollToBottom();
-    // return this.selectedUser;
   }
 
   public sendMessage(message: string): void {
@@ -254,25 +210,10 @@ export class HomeComponent {
           this.selectedUser.email,
           this.currentUser.email,
           this.message.trim(),
-        ])
-        // this.socket.emit('message', [
-        //   this.chatID,
-        //   this.selectedUser.email,
-        //   this.currentUser.email,
-        //   this.message.trim(),
-        // ]);
+        ]);
 
         this.message = '';
       }
     }
   }
-
-  // findChatCount(email: string): string {
-  //   this.crudService
-  //     .getChatCount(this.currentUser.email, email)
-  //     .subscribe((res) => {
-  //       this.chatCount = res;
-  //     });
-  //   return this.chatCount;
-  // }
 }
