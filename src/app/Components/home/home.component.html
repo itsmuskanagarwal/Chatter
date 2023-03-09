@@ -10,7 +10,7 @@
         (click)="selectUserHandler(user.email)"
         [ngClass]="user.email == selected ? 'li_selected' : ''"
       >
-        <img class="img-size" src="./assets/p5.webp" alt="" />
+        <img class="img-size" src="{{user.profilePicture}}" alt="" />
         <div>
           <h2>
             {{ user.name }}
