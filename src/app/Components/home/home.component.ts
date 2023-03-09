@@ -32,6 +32,7 @@ export class HomeComponent {
       email: string;
       password: string;
       displayname: string;
+      profilePicture:string;
       count: number;
     }
   ] = [
@@ -41,6 +42,7 @@ export class HomeComponent {
       email: '',
       password: '',
       displayname: '',
+      profilePicture: '',
       count: 0,
     },
   ];
@@ -52,6 +54,7 @@ export class HomeComponent {
       email: string;
       password: string;
       displayname: string;
+      profilePicture:string;
       count: number;
     }
   ] = [
@@ -61,6 +64,7 @@ export class HomeComponent {
       email: '',
       password: '',
       displayname: '',
+      profilePicture:'',
       count: 0,
     },
   ];
